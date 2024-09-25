@@ -1,6 +1,7 @@
 <script setup>
 </script>
 
+
 <template>
 <div class="content">
   <header>
@@ -19,6 +20,7 @@
     <section class="main-section">
       <h1>aqui virá o conteudo</h1>
     </section>
+
   </main>
 </div>
 </template>

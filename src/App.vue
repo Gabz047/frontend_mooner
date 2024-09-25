@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
+
 <template>
   <RouterView />
 </template>
@@ -9,3 +10,4 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 
 </style>
+
