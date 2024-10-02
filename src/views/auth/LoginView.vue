@@ -26,14 +26,14 @@
 
                         <div class="box-help-login">
                         <p>Forgot Password</p>
-                        <p>Register</p>
+                        <RouterLink to="/sign-up"><p>Register</p></RouterLink>
                     </div>
                     </div>
 
                    
 
                     <div class="box-button">
-                    <button>Iniciar Sessão</button>
+                        <button>Iniciar Sessão</button>
                     </div>
                 </div>
 

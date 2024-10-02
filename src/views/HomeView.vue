@@ -9,6 +9,7 @@
       <h3>aqui tera a logo</h3>
     </div>
     <input type="text" class="search" placeholder="busque aqui as suas músicas">
+    <RouterLink to="/login">entrar</RouterLink>
     <div class="user">
       <h3>aqui será o usuário</h3>
     </div>
@@ -20,14 +21,12 @@
     <section class="main-section">
       <h1>aqui virá o conteudo</h1>
     </section>
-
   </main>
 </div>
 </template>
 
 <style scoped>
-* {
-}
+
 
 header{
   width: 96%;
