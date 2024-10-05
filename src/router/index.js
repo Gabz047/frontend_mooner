@@ -32,10 +32,10 @@ const router = createRouter({
     },
     {
       path: '/artist/:id',
-      name: 'sign-up',
+      name: 'artist',
       component: () => import('../views/ArtistDetailView.vue'),
       meta:{
-        auth: false
+        auth: true
       }
     },
     { 
