@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import HeaderGlobal from './components/global/HeaderGlobal.vue';
 </script>
 
 
