@@ -32,11 +32,14 @@ const router = createRouter({
     },
     {
       path: '/artist/:id',
-      name: 'sign-up',
-      component: () => import('../views/ArtistDetailView.vue'),
-      meta:{
-        auth: false
-      }
+      name: 'artist',
+      component: () => import('../views/ArtistDetailView.vue')
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/searchview.vue')
+      
     },
     { 
       path: '/:pathMatch(.*)*', 
