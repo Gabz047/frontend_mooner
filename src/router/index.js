@@ -38,6 +38,14 @@ const router = createRouter({
         auth: true
       }
     },
+    {
+      path: '/plans',
+      name: 'artist',
+      component: () => import('../views/PlansView.vue'),
+      meta:{
+        auth: true
+      }
+    },
     { 
       path: '/:pathMatch(.*)*', 
       name: 'NotFound', 

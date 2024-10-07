@@ -102,7 +102,7 @@
 }
 #btn-login{
     width: 100%;
-    padding: 20px;
+    padding: 15px;
     background-color: #8000ff;
     color: white;
     border: none;
@@ -111,8 +111,6 @@
     transition: 1s;
 }
 #btn-login:hover{
-    width: 100%;
-    padding: 20px;
     background-color: #490091;
 }
 .input-container {
