@@ -17,8 +17,8 @@ const store = useLoginStore() // deletar depois das config de rota
             <span @click="changevisibility = true" :style="changevisibility ? {backgroundColor: 'white', color: 'black'} : {color: 'white'}">Anual</span>
         </div>
         <div class="plans-card-container">
-            <CardPlans v-for="info in plans.filter(el => el.type === 'mensal')" :title="info.name" :advantages="info.advantages" :price="info.price" :notice="info.notice" :type_service="info.type" v-if="!changevisibility"/>
-            <CardPlans v-for="info in plans.filter(el => el.type === 'anual')" :title="info.name" :advantages="info.advantages" :price="info.price" :notice="info.notice"  :type_service="info.type" v-else/>   
+            <CardPlans v-for="info in plans.filter(el => el.type === 'mensal')" :title="info.name" :advantages="info.advantages" :price="info.price" :notice="info.notice" :type_service="info.type" :gradient="info.gradient" v-if="!changevisibility"/>
+            <CardPlans v-for="info in plans.filter(el => el.type === 'anual')" :title="info.name" :advantages="info.advantages" :price="info.price" :notice="info.notice"  :type_service="info.type" :gradient="info.gradient" v-else/>   
         </div>
         <img src="../assets/images/moon.png">
     </div>

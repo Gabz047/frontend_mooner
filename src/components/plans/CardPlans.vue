@@ -21,11 +21,19 @@ import ButtonGlobal from '../global/ButtonGlobal.vue';
         notice:{
             type: String,
             required: true
+        },
+        action_btn: {
+            type: Function,
+            required: true
+        },
+        gradient:{
+            type: String,
+            required: true
         }
     })
 </script>
 <template>
-    <div class="card-plan">
+    <div class="card-plan" :style="{background: gradient}">
         <p v-if="notice" id="notice">{{notice}}</p>
         <div class="plans-description">
             <h1>{{title}}</h1>
@@ -40,6 +48,6 @@ import ButtonGlobal from '../global/ButtonGlobal.vue';
                 <li v-for="advantage in advantages">{{advantage}}</li>
             </ul>
         </div>
-        <ButtonGlobal title="Obter" btn_id="btn-plans"></ButtonGlobal>
+        <ButtonGlobal title="Obter" font_size="17.5px" border="none" width="250px" border_radius="20px" color="blueviolet" @click="action_btn"></ButtonGlobal>
     </div>
 </template>

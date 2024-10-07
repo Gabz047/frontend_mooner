@@ -100,18 +100,15 @@
     justify-content: center;
     align-items: center;
 }
-#btn-login{
-    width: 100%;
-    padding: 15px;
-    background-color: #8000ff;
-    color: white;
-    border: none;
-    font-size: 25px;
-    border-radius: 10px;
+#btn_id{
+    padding: 10px;
     transition: 1s;
-}
-#btn-login:hover{
-    background-color: #490091;
+    &:hover{
+        filter: brightness(75%);
+    }
+    & p {
+        z-index: 10;
+    }
 }
 .input-container {
     position: relative;
