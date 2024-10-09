@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
 import { logininputs } from "@/utils/inputs/login";
 import { ref } from "vue";
-import LoginService from "@/services/auth/login";
+import { LoginService } from "@/services";
 import { useStorage } from "@vueuse/core";
 const loginservice = new LoginService()
 
-export const useLoginStore = defineStore('signup', ()=>{
+export const useLoginStore = defineStore('login', ()=>{
     const state = useStorage('storage', {
         user: {
             email: '',
@@ -14,7 +14,7 @@ export const useLoginStore = defineStore('signup', ()=>{
         access: '',
         refresh: ''
     })
-
+    const islogged = ref(false)
     const msg = ref(null)
     const err = ref(false)
     
@@ -34,5 +34,5 @@ export const useLoginStore = defineStore('signup', ()=>{
         }
     }
 
-    return { DoLogin, msg, err }
+    return { DoLogin, msg, err, islogged, state }
 })

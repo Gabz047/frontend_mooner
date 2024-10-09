@@ -1,10 +1,13 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import HeaderGlobal from './components/global/HeaderGlobal.vue';
+import { useLoginStore } from './stores/user/login';
+const store = useLoginStore()
 </script>
 
 
 <template>
+  <HeaderGlobal v-show="store.is_logged"/>
   <RouterView />
 </template>
 

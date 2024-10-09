@@ -33,7 +33,18 @@ const router = createRouter({
     {
       path: '/artist/:id',
       name: 'artist',
-      component: () => import('../views/ArtistDetailView.vue')
+      component: () => import('../views/ArtistDetailView.vue'),
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/plans',
+      name: 'artist',
+      component: () => import('../views/PlansView.vue'),
+      meta:{
+        auth: true
+      }
     },
     {
       path: '/search',

@@ -17,8 +17,8 @@ defineProps({
             <i :class="!err ? 'mdi mdi-check-circle' : 'mdi mdi-close-circle'"></i>
             <div>
                 <p v-html="msg"></p>
-                <ButtonGlobal btn_id="btn-confirm" title="ok" @click="$emit('confirm', err)"/>
-            </div>
+                <ButtonGlobal width="100px" font_size="15px" border="none" border_radius="10px" background_color="black" color="white" title="ok" @click="$emit('confirm', err)"/>
+            </div> 
         </div>
     </div>
 </template>
