@@ -2,4 +2,5 @@
 @import './css/main.css';
 @import './css/auth/auth.css';
 @import './css/plans/plans.css';
+@import './css/payments/payment.css';
 @import '@mdi/font/css/materialdesignicons.css';
