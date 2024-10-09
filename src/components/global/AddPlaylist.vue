@@ -1,31 +1,40 @@
 <script setup>
-import { ref } from 'vue'
-import { adjusteSize } from '@/utils/music/music';
-const add = ref(false)
+import { adjusteSize, verify_active } from '@/utils/music/music';
 const props = defineProps({
   data: {
     type: Array,
     required: true
+  },
+  has_playlist: {
+    type: Boolean,
+    default: false
+  },
+  is_on: {
+    type: Boolean,
+    default: false
   }
 })
 
+const emits = defineEmits([
+  'createPlaylist'
+])
 
 </script>
 <template>
-  <div
+  <div v-if="props.is_on"
     class="w-72 bg-[#313131] p-2 rounded-xl flex justify-center flex-col gap-5 max-h-72 absolute z-30 top-16 right-0"
   >
-    <div v-show="add == false">
+    <div v-show="props.has_playlist == false">
       <p class="text-white text-center p-1">Ainda não possui nenhuma playlist?</p>
       <span
-        @click="add = !add"
+        @click="emits('createPlaylist')"
         class="flex justify-center gap-3 items-center cursor-pointer duration-200 rounded-xl hover:invert hover:bg-black p-1"
       >
         <img class="h-8 w-8" src="@/assets/images/icons/add.svg" alt="" />
         <p class="text-white">Crie sua playlist</p>
       </span>
     </div>
-    <div v-show="add == true">
+    <div v-show="props.has_playlist == true">
       <p class="text-white text-center">A qual playlist deseja adicionar a música?</p>
       <div class="flex flex-col gap-5 overflow-auto max-h-52 mt-5 ">
         <div class="flex items-center p-2 rounded-md" v-for="item, index in props.data" :key="index">

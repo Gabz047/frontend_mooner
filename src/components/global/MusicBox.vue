@@ -1,68 +1,62 @@
 <script setup>
-import {computed, ref} from 'vue'
+import {ref, computed} from 'vue'
 import play from '../../assets/images/icons/play.svg'
 import pause from '../../assets/images/icons/pause.svg'
 import SettingsGlobal from './SettingsGlobal.vue';
 import AddPlaylist from './AddPlaylist.vue';
-import { data, data_playlist, adjusteSize } from '@/utils/music/music';
+import { data_playlist, adjusteSize, verify_active } from '@/utils/music/music';
 
 const getClick = ref(false)
-const settings= ref(false)
-const playlist = ref(false)
 
 const emits = defineEmits([
-    'settings', 'playlist'
+    'createPlaylist'
 ])
 
 const props = defineProps({
-    tittle: {
-        type: String,
-        required: true
-    },
-    artist: {
-        type: String,
+    music_data: {
+        type: Object,
         required: true
     },
     index: {
         type: Number,
         required: true
     },
-    settings: {
+    has_playlist: {
         type: Boolean,
-        required: false,
-        default: false
-    },
-    playlist: {
-        type: Boolean,
-        required: false,
-        default: false
+        required: true
     }
 })
+
+const settings = ref(false)
+const playlist = ref(false)
+
 </script>
 <template>
-    <div class="relative w-80">
-    <div class="flex items-center h-12 w-96 relative  music-box">
-        <p class=" text-2xl w-1/12 flex font-semibold text-white text-center">{{ props.index }}</p>
+   
+    <div class="w-80 relative top-10">
+    <div class="flex items-center h-12 w-96 relative music-box">
+        <div class="w-1/12 flex justify-center">
+        <p class=" text-2xl font-semibold text-white text-center">{{ props.index }}</p>
+        </div>
         <div class="flex w-11/12 h-full justify-between">
             <div class="h-full w-3/12 duration-200 relative z-10 music-box-img">
                 <img class="absolute top-3 left-[34px] w-6 h-6 z-20 brightness-200 music-play" @click="getClick = !getClick" :src="getClick ? play : pause">
                 <img class="w-full h-full rounded-l-md music-img" src="../../assets/images/imagemdefundoregistro.png">
             </div>
             <div class="w-7/12 flex flex-col justify-center pl-3 overflow-hidden">
-                <p class="font-semibold text-lg text-white">{{ adjusteSize(props.tittle, 18, 18) }}</p>
-                <p class="text-base text-white">{{props.artist}}</p>
+                <p class="font-semibold text-lg text-white">{{ adjusteSize(music_data.tittle, 18, 18) }}</p>
+                <p class="text-base text-white">{{music_data.artist}}</p>
             </div>
             <div class="w-2/12 flex justify-end items-center music-play">
-                <img  @click="emits('playlist')" src="../../assets/images/icons/add.svg" class="w-6 h-6">
-                <img @click="emits('settings')" src="../../assets/images/icons/settingsdot.svg" class="w-4 h-4">
+                <img  @click="playlist = !playlist, settings = false, verify_active = !verify_active" src="../../assets/images/icons/add.svg" class="w-6 h-6">
+                <img @click="settings = !settings, playlist = false, verify_active = !verify_active" src="../../assets/images/icons/settingsdot.svg" class="w-4 h-4">
             </div>
         </div>
     </div>
-    <SettingsGlobal :data="data" v-show="props.settings == true" />
-    <AddPlaylist :data="data_playlist" v-show="props.playlist == true"  />
+    <SettingsGlobal :is_on="settings" />
+    <AddPlaylist :is_on="playlist" @createPlaylist="emits('createPlaylist')" :has_playlist="props.has_playlist" :data="data_playlist" /> 
     </div>
     
-   
 </template>
 
 <style scoped>

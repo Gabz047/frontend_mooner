@@ -4,6 +4,7 @@ import heart from './heart.svg'
 import disc from './disc.svg'
 import artist from './artist.svg'
 import copy from './copy.svg'
+import unlike from './unlike.svg'
 
 export {
     trash,
@@ -11,5 +12,6 @@ export {
     heart,
     disc,
     artist,
-    copy
+    copy,
+    unlike
 }
