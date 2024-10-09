@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router';
 import ButtonGlobal from '../global/ButtonGlobal.vue';
 
     defineProps({
@@ -48,6 +49,6 @@ import ButtonGlobal from '../global/ButtonGlobal.vue';
                 <li v-for="advantage in advantages">{{advantage}}</li>
             </ul>
         </div>
-        <ButtonGlobal title="Obter" font_size="17.5px" border="none" width="250px" border_radius="20px" color="blueviolet" @click="action_btn"></ButtonGlobal>
+        <ButtonGlobal title="Obter" font_size="17.5px" border="none" width="250px" border_radius="20px" color="blueviolet" @click="router.push('/plans/payments')"></ButtonGlobal>
     </div>
 </template>
