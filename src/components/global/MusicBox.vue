@@ -44,7 +44,7 @@ const playlist = ref(false)
                 <img class="w-full h-full rounded-l-md music-img" src="../../assets/images/imagemdefundoregistro.png">
             </div>
             <div class="w-7/12 flex flex-col justify-center pl-3 overflow-hidden">
-                <p class="font-semibold text-lg text-white">{{ adjusteSize(music_data.tittle, 18, 18) }}</p>
+                <p class="font-semibold text-lg text-white">{{ adjusteSize(props.music_data.tittle, 18, 18) }}</p>
                 <p class="text-base text-white">{{music_data.artist}}</p>
             </div>
             <div class="w-2/12 flex justify-end items-center music-play">

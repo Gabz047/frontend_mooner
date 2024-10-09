@@ -49,7 +49,7 @@ const router = createRouter({
     {
       path: '/plans/payments',
       name: 'payments',
-      component: () => import('../views/PaymentsView.vue')
+      component: () => import('../views/PaymentsView.vue'),
       meta:{
         auth: true
       }
@@ -57,7 +57,7 @@ const router = createRouter({
     {
       path: '/search',
       name: 'search',
-      component: () => import('../views/searchview.vue')
+      component: () => import('../views/searchview.vue'),
       meta: {
         auth: true
       }
@@ -69,8 +69,8 @@ const router = createRouter({
     },
     {
       path: '/test',
-      name: 'test', 
-      component: ()=> import('../views/TestView.vue')
+      name: 'test',
+      component: ()=> import('../views/Test.vue')
     }
   ]
 })
