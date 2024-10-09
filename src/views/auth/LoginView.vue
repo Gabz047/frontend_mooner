@@ -1,15 +1,16 @@
 <script setup>
     import AuthComp from '@/components/auth/AuthComp.vue';
     import { logininputs } from '@/utils/inputs/login';
-    import { useLoginStore } from '@/stores/user/login';
+    import { useLoginStore } from '@/stores';
     import MsgGlobal from '@/components/global/MsgGlobal.vue';
-import router from '@/router';
+    import router from '@/router';
+    
     const store = useLoginStore()
-
-    function gotohome(is_logged){
+    function gotoplans(is_logged){
         if(!is_logged){
             store.msg = ''
-            router.push('/')
+            store.is_logged = true
+            router.push('/plans')
         }
         else{
             store.msg = ''
@@ -17,6 +18,7 @@ import router from '@/router';
     }
 </script>
 <template>
-    <MsgGlobal v-show="store.msg" :err="store.err" :msg="store.msg" @confirm="gotohome"/>
+    <MsgGlobal v-show="store.msg" :err="store.err" :msg="store.msg" @confirm="gotoplans"/>
+
     <AuthComp :is_login_page="true"  :inputs_page="logininputs" :action_btn="store.DoLogin" />
 </template>
