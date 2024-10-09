@@ -50,6 +50,17 @@ const router = createRouter({
       path: '/plans/payments',
       name: 'payments',
       component: () => import('../views/PaymentsView.vue')
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/searchview.vue')
+      meta: {
+        auth: true
+      }
     },
     { 
       path: '/:pathMatch(.*)*', 

@@ -18,5 +18,6 @@
 </script>
 <template>
     <MsgGlobal v-show="store.msg" :err="store.err" :msg="store.msg" @confirm="gotologin"></MsgGlobal>
-    <AuthComp :is_login_page="false"  :inputs_page="signupinputs" :action_btn="store.CreateUser" />
+
+    <AuthComp :inputs_page="signupinputs" :is_login_page="false" :action_btn="store.CreateUser"/>
 </template>
