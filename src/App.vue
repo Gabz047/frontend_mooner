@@ -5,7 +5,6 @@ import { useLoginStore } from './stores/user/login';
 const store = useLoginStore()
 </script>
 
-
 <template>
   <HeaderGlobal v-show="store.is_logged"/>
   <RouterView />

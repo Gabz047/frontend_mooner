@@ -49,12 +49,28 @@ const router = createRouter({
     {
       path: '/plans/payments',
       name: 'payments',
-      component: () => import('../views/PaymentsView.vue')
+      component: () => import('../views/PaymentsView.vue'),
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/searchview.vue'),
+      meta: {
+        auth: true
+      }
     },
     { 
       path: '/:pathMatch(.*)*', 
       name: 'NotFound', 
       component: ()=> import('../views/NotFound.vue')
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: ()=> import('../views/Test.vue')
     }
   ]
 })
