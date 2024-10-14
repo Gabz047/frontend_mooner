@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { plans } from '@/utils/plans/plans';
 import { useLoginStore } from '@/stores/user/login';
 const changevisibility = ref(false)
-const store = useLoginStore() // deletar depois das config de rota 
+const store = useLoginStore()
 </script>
 <template>
     <div :class="!store.is_logged ? 'container-plans' : 'container-plans-delete'">

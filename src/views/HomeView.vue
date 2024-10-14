@@ -9,16 +9,6 @@ import { artist } from '@/utils/artist-profile';
 </script>
 <template>
 <div class="content">
-  <header>
-    <div class="logo">
-      <h3>aqui tera a logo</h3>
-    </div>
-    <input type="text" class="search" placeholder="busque aqui as suas músicas">
-    <RouterLink to="/login">entrar</RouterLink>
-    <div class="user">
-      <h3>aqui será o usuário</h3>
-    </div>
-  </header>
   <main>
     <section class="history">
       <h1>aqui será a aba de playlists recentes</h1>

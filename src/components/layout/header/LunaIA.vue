@@ -6,9 +6,11 @@ import { useLoginStore } from '@/stores';
 import { useLunnaIAStore } from '@/stores';
 import { onMounted, onUpdated, ref} from 'vue';
 import LunaChat from './LunaChat.vue';
+import { UserMeService } from '@/services';
 const useranswer = ref('')
 const storeLunna = useLunnaIAStore()
 const storeUser = useLoginStore()
+const meService = new UserMeService()
 const pagina = ref(1)
 const chat = ref(null)
 const user = ref(null)
@@ -50,13 +52,9 @@ onUpdated(async() =>{
 
 onMounted( async () =>{
     const token = storeUser.state.access
-    const response = await api.get('usuarios/me/', {
-        headers:{
-            Authorization: `Bearer ${storeUser.state.access}`
-        } 
-    })
-    await storeLunna.GetChat(response.data.id, token, 1)
-    user.value = response.data.id
+    const me = await meService.GetMe(token)
+    await storeLunna.GetChat(me, token, pagina.value)
+    user.value = me
     scrolltoEnd()
 })
 </script>
