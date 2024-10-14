@@ -1,13 +1,4 @@
 <script setup>
-import router from '@/router';
-import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
-import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
-import { ref } from 'vue';
-
-  function gopageartist(id){
-    router.push(`/artist/${id}`)
-  }
-
   const data = ref([
     {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Podcasts', active: false}, {title: 'Artistas', active: false}
   ])

@@ -24,6 +24,8 @@
     background-color: #282828;
     padding: 10px;
     font-size: 15px;
+    width: 300px;
+    color: white;
 }
 #lunna-input::placeholder{
     color: white

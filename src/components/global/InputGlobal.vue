@@ -1,7 +1,7 @@
 <template>
-    <div class="input-container">
-        <input :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required"  v-model="model">
-        <label :for="field_name">{{field_name}}</label>
+    <div :class="container_class">
+        <input :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required" v-model="model">
+        <label :for="field_name" v-if="field_name">{{field_name}}</label>
     </div>
 </template>
 <script setup>
@@ -10,11 +10,13 @@
             type: String,
             required: false
         },
-        class_container:{
-            type: String
+        container_class:{
+            type: String,
+            required: true
         },
         id: {
-            type: String
+            type: String,
+            required: false
         },
         maxlength:{
             type: String,
@@ -35,7 +37,7 @@
         type: {
             type: String,
             required: true
-        }
+        },
     })
     const model = defineModel("value")
 </script>
