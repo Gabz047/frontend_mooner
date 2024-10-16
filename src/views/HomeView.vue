@@ -1,10 +1,13 @@
 <script setup>
+import { onMounted, ref } from 'vue';
 import router from '@/router';
+
 import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
 import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
 import MusicBox from '@/components/global/MusicBox.vue';
-import { onMounted, ref } from 'vue';
+import NavigationHeader from '@/components/layout/header/NavigationHeader.vue';
+import CreatePlaylist from '@/components/layout/header/CreatePlaylist.vue';
 
   const data_section = ref([
     {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Podcasts', active: false}, {title: 'Artistas', active: false}
@@ -61,11 +64,33 @@ onMounted(()=>{
   
 })
 
+const data_header = ref({
+  playlists: [
+    {img: '', title: 'Piuzinho Br', creator: 'Renas'},
+    {img: '', title: 'Zikinha Terp', creator: 'Terp'},
+    {img: '', title: 'Droga é o izaque nego', creator: 'Izaque'}
+  ],
+  following: [
+    {img: '', title: 'Matuê'},
+    {img: '', title: 'Ryu The Runner'},
+    {img: '', title: 'MatzeraSuvery'},
+    {img: '', title: 'Higor3kmDePe'}
+  ],
+  community: [
+    {img: '', title: 'Casa do ryu wessir', people: '20.000'},
+    {img: '', title: 'Matue fanbase', people: '40.000'},
+    {img: '', title: 'Haters do Oruam', people: '100.000.000'},
+    {img: '', title: 'Haters do Oruam', people: '100.000.000'},
+    {img: '', title: 'Haters do Oruam', people: '100.000.000'},
+    {img: '', title: 'Haters do Oruam', people: '100.000.000'}
+  ]
+})
+
 </script>
 <template>
   <main class="h-dvh w-dvw flex justify-between gap-4">
-    <section class="my-auto ml-2 h-[95%] rounded-lg w-3/12 bg-[#121212] "></section>
-    <section class="my-auto mr-2 h-[95%] rounded-lg w-9/12 bg-[#121212]">
+    <NavigationHeader :data_header="data_header" />
+    <section class="my-auto mr-2 h-[95%] rounded-lg w-[80%] bg-[#121212]">
       <ContainerNavigateButtons class="mt-5">
         <NavigateHomeButtons :has_active_bg="true" v-for="item,index in data_page" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_page)" />
       </ContainerNavigateButtons>
@@ -77,6 +102,8 @@ onMounted(()=>{
       <MusicGlobalContainer class="mt-3" :title="item.title" v-for="item, index in data_music" :key="index">
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="music.has_playlist" />
       </MusicGlobalContainer>
+
     </section>
+    <CreatePlaylist />
   </main>
 </template>
