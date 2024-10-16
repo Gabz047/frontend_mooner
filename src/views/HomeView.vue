@@ -6,11 +6,7 @@ import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
 import MusicBox from '@/components/global/MusicBox.vue';
 import { onMounted, ref } from 'vue';
 
-  function gopageartist(id){
-    router.push(`/artist/${id}`)
-  }
   const data_section = ref([
-  const data = ref([
     {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Podcasts', active: false}, {title: 'Artistas', active: false}
   ])
 
