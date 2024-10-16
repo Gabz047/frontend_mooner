@@ -4,9 +4,8 @@ import HeaderGlobal from './components/global/HeaderGlobal.vue';
 import { useLoginStore } from './stores/user/login';
 const store = useLoginStore()
 </script>
-
 <template>
-  <HeaderGlobal v-show="store.is_logged"/>
+  <HeaderGlobal v-show="store.state.access"/>
   <RouterView />
 </template>
 
