@@ -57,7 +57,7 @@ const router = createRouter({
     {
       path: '/search',
       name: 'search',
-      component: () => import('../views/searchview.vue'),
+      component: () => import('../views/SearchView.vue'),
       meta: {
         auth: true
       }
@@ -67,11 +67,6 @@ const router = createRouter({
       name: 'NotFound', 
       component: ()=> import('../views/NotFound.vue')
     },
-    {
-      path: '/test',
-      name: 'test',
-      component: ()=> import('../views/Test.vue')
-    }
   ]
 })
 export default router
