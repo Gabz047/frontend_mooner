@@ -6,7 +6,7 @@ const store = useLoginStore()
 </script>
 
 <template>
-  <HeaderGlobal v-show="store.is_logged"/>
+  <HeaderGlobal />
   <RouterView />
 </template>
 

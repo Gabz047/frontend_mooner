@@ -14,7 +14,6 @@ const store = useLoginStore()
 </template>
 <style scoped>
     header{
-        background-color: black;
         width: 100%;
         padding: 10px;
         display: flex;
