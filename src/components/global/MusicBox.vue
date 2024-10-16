@@ -24,6 +24,10 @@ const props = defineProps({
         type: Number,
         required: true
     },
+    has_index: {
+        type: Boolean,
+        default: true
+    },
     has_playlist: {
         type: Boolean,
         required: true
@@ -56,22 +60,19 @@ const togglePlay = async () => {
   }
 };
 </script>
-<template>
-<div class="w-80 relative p-2 " @click="saveonhistory">
-    <div class="flex items-center h-12 w-full relative  music-box">
+<template>   
+    <div class=" w-80 relative">
+    <div class="flex items-center h-10 w-72 relative music-box">
         <div class="w-1/12 flex justify-center">
-            <p class=" text-2xl font-semibold text-white text-center">{{ props.index }}</p>
+        <p class=" text-2xl font-semibold text-white text-center">{{ props.has_index ? '' : props.index }}</p>
         </div>
         <div class="flex w-11/12 h-full justify-between">
-            <div class="h-full w-4/12 duration-200 relative z-10 music-box-img">
-                <img class="absolute top-3 left-[34px] w-6 h-6 z-20 brightness-200 music-play" @click="togglePlay" :src="getClick ? play : pause">
-                <audio ref="audio">
-                    <source :src="props.music_data.player ? props.music_data.player.file : null" type="audio/mpeg">
-                </audio>
+            <div class="h-full w-3/12 duration-200 relative z-10 music-box-img">
+                <img class="absolute top-3 left-[25px] w-6 h-6 z-20 brightness-200 music-play" @click="getClick = !getClick" :src="getClick ? play : pause">
                 <img class="w-full h-full rounded-l-md music-img" src="../../assets/images/imagemdefundoregistro.png">
             </div>
-            <div class="w-4/12 flex flex-col justify-center pl-3 overflow-hidden">
-                <p class="font-semibold text-lg text-white">{{ adjusteSize(props.music_data.title, 18, 18) }}</p>
+            <div class="w-7/12 flex flex-col justify-center pl-3 overflow-hidden">
+                <p class="font-semibold text-lg text-white">{{ adjusteSize(props.music_data.title, 14, 14) }}</p>
                 <p class="text-base text-white">{{music_data.artist}}</p>
             </div>
             <div class="w-5/12 flex justify-end items-center music-play">
