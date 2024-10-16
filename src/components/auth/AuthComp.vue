@@ -29,7 +29,7 @@
             </div>
             <div class="auth-content">
                 <h1>{{is_login_page ? "Iniciar Sessão" : 'Registrar'}}</h1>
-                <InputGlobal v-for="info in inputs_page" :key="info.id" :type="info.type" :field_name="info.fieldname" :maxlength="info.maxlength" :is_required="info.required" :minlength="info.minlength" :placeholder="info.placeholder" v-model:value="info.value"></InputGlobal>
+                <InputGlobal v-for="info in inputs_page" :key="info.id" container_class="input-container" :type="info.type" :field_name="info.fieldname" :maxlength="info.maxlength" :is_required="info.required" :minlength="info.minlength" :placeholder="info.placeholder" v-model:value="info.value"></InputGlobal>
                 <div class="actions-container">
                     <div class="actions">
                         <RouterLink :to="is_login_page ? '/password' : '/password'">{{is_login_page ? 'esqueci a minha senha' : 'dúvidas'}}</RouterLink>
