@@ -1,5 +1,4 @@
 <script setup>
-import router from '@/router';
 import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
 import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';

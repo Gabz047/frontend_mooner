@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { findartist } from '@/utils/artist-profile';
-import { artistsongs } from '@/utils/artist-songs';
-import { artistalbuns } from '@/utils/artist-albuns';
+import { findartist } from '@/utils/artist/artist-profile';
+import { artistsongs } from '@/utils/artist/artist-songs';
+import { artistalbuns } from '@/utils/artist/artist-albuns';
 import { useRoute } from 'vue-router';
 const route = useRoute()
 const artist = ref([])

@@ -54,7 +54,7 @@ onMounted( async () =>{
     const token = storeUser.state.access
     const me = await meService.GetMe(token)
     await storeLunna.GetChat(me, token, pagina.value)
-    user.value = me
+    user.value = me.id
     scrolltoEnd()
 })
 </script>

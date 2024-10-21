@@ -4,6 +4,7 @@ import LunnaIAService from "./IA/luuna";
 import SearchService from "./search/search";
 import HistoryService from "./history/history";
 import UserMeService from "./me/userme";
+import SendEmailService from "./send_email/send_email";
 
 export {
     LoginService,
@@ -11,5 +12,6 @@ export {
     LunnaIAService, 
     SearchService,
     HistoryService,
-    UserMeService
+    UserMeService,
+    SendEmailService
 }

@@ -1,6 +1,12 @@
 <template>
-    <div :class="container_class">
+    <div :class="container_class" v-if="type !== 'choices'">
         <input :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required" v-model="model">
+        <label :for="field_name" v-if="field_name">{{field_name}}</label>
+    </div>
+    <div :class="container_class" v-else>
+        <select >
+            <option v-for="option, index in options" :key="index">{{option}}</option>
+        </select>
         <label :for="field_name" v-if="field_name">{{field_name}}</label>
     </div>
 </template>
@@ -33,6 +39,10 @@
         is_required:{
             type: String,
             required: false
+        },
+        options:{
+            type: Array,
+            required: true,
         },
         type: {
             type: String,

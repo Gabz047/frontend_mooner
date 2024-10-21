@@ -1,8 +1,7 @@
 <script setup>
 import { useLoginStore } from '@/stores/user/login';
-import UserOptions from '../user/UserOptions.vue';
+import UserOptions from '../user/artist/UserOptions.vue';
 const store = useLoginStore()
-
 </script>
 <template>
     <header>
@@ -27,6 +26,7 @@ const store = useLoginStore()
         display: flex;
         justify-content: space-between;
         align-items: center;
+        background-color: black;
         & p{
             color: white;
             font-weight: 200;
@@ -44,6 +44,7 @@ const store = useLoginStore()
     }
     #options{
         display: none;
+        margin-bottom: 20px;
     }
     .user-config:hover{
         background-color: blueviolet;
