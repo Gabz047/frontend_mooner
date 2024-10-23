@@ -6,27 +6,8 @@ import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
 import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
 import MusicBox from '@/components/global/MusicBox.vue';
-import NavigationHeader from '@/components/layout/header/NavigationHeader.vue';
-import CreatePlaylist from '@/components/layout/header/CreatePlaylist.vue';
-
-  const data_section = ref([
-    {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Podcasts', active: false}, {title: 'Artistas', active: false}
-  ])
-
-  const data_page = ref([
-    {title: 'Minha Biblioteca', active: true}, {title: 'Navegar', active: false}
-  ])
-
-  const data_music = ref([
-    {music: [], title: ''}, {music: [], title: 'Recomendamos para você'}
-  ])
-
-  const selectSection = (index, data) => {
-  for (let i = 0; i < data.length; i++) {
-    data[i].active = i === index ? data[i].active = true : false;
-  }
-};
-
+import { data_section, data_page, data_music_home, selectSection} from '@/utils/music/music';
+ 
 const music = ref([
   {title: 'Binding Lights', artist: 'The Weekend', 
     has_playlist: false
@@ -55,42 +36,21 @@ const music = ref([
 ])
 
 onMounted(()=>{
-  for (let i = 0; i < data_music.value.length; i++) {
+  for (let i = 0; i < data_music_home.value.length; i++) {
     for (let a = 0; a < music.value.length; a++) {
-      data_music.value[i].music.push(music.value[a]) 
+      data_music_home.value[i].music.push(music.value[a]) 
     }
     
   }
   
 })
 
-const data_header = ref({
-  playlists: [
-    {img: '', title: 'Piuzinho Br', creator: 'Renas'},
-    {img: '', title: 'Zikinha Terp', creator: 'Terp'},
-    {img: '', title: 'Droga é o izaque nego', creator: 'Izaque'}
-  ],
-  following: [
-    {img: '', title: 'Matuê'},
-    {img: '', title: 'Ryu The Runner'},
-    {img: '', title: 'MatzeraSuvery'},
-    {img: '', title: 'Higor3kmDePe'}
-  ],
-  community: [
-    {img: '', title: 'Casa do ryu wessir', people: '20.000'},
-    {img: '', title: 'Matue fanbase', people: '40.000'},
-    {img: '', title: 'Haters do Oruam', people: '100.000.000'},
-    {img: '', title: 'Haters do Oruam', people: '100.000.000'},
-    {img: '', title: 'Haters do Oruam', people: '100.000.000'},
-    {img: '', title: 'Haters do Oruam', people: '100.000.000'}
-  ]
-})
 
 </script>
 <template>
-  <main class="h-dvh w-dvw flex justify-between gap-4">
-    <NavigationHeader :data_header="data_header" />
-    <section class="my-auto mr-2 h-[95%] rounded-lg w-[80%] bg-[#121212]">
+  <main class=" w-full flex justify-end gap-4">
+    
+    <section class="my-auto mr-2 h-full rounded-lg w-[98%] bg-[#121212]">
       <ContainerNavigateButtons class="mt-5">
         <NavigateHomeButtons :has_active_bg="true" v-for="item,index in data_page" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_page)" />
       </ContainerNavigateButtons>
@@ -99,11 +59,10 @@ const data_header = ref({
         <NavigateHomeButtons :has_active_bg="false" v-for="item,index in data_section" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_section)" />
       </ContainerNavigateButtons>
 
-      <MusicGlobalContainer class="mt-3" :title="item.title" v-for="item, index in data_music" :key="index">
+      <MusicGlobalContainer class="mt-3" :title="item.title" v-for="item, index in data_music_home" :key="index">
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="music.has_playlist" />
       </MusicGlobalContainer>
 
     </section>
-    <CreatePlaylist />
   </main>
 </template>

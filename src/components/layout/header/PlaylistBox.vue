@@ -1,11 +1,14 @@
 <script setup>
 import { adjusteSize } from '@/utils/music/music'
+import { useNavigationStore } from '@/stores';
 
+const navigationStore = useNavigationStore()
 const props = defineProps({
   playlists: {
     type: Array
   }
 })
+
 </script>
 <template>
   <div v-for="item in props.playlists" class="w-[90%] flex items-center select-none cursor-pointer hover:brightness-[70%]">

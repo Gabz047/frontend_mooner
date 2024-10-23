@@ -3,14 +3,12 @@ import { useLoginStore } from '@/stores/user/login';
 const store = useLoginStore()
 </script>
 <template>
-    <header>
-        <div>
-            <RouterLink to="/"><img src="../../assets/images/Logo.png"></RouterLink>
-        </div>
+    <div class="flex justify-end w-[97.5%] mb-3 mx-auto right-0 h-8 text-white p-2">
+     
         <div>
             <p>{{store.state.user.email}}</p>
         </div>
-    </header>
+    </div>
 </template>
 <style scoped>
     header{

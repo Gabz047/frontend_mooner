@@ -1,5 +1,7 @@
 <script setup>
 import { data_playlist, adjusteSize, verify_active } from '@/utils/music/music';
+import { useNavigationStore } from '@/stores';
+const navigationStore = useNavigationStore()
 const props = defineProps({
     data_community: {
         type: Array

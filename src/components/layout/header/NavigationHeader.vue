@@ -1,44 +1,70 @@
 <script setup>
-import PlaylistBox from './PlaylistBox.vue';
-import FollowingBox from './FollowingBox.vue';
-import CommunityBox from './CommunityBox.vue';
+import PlaylistBox from './PlaylistBox.vue'
+import FollowingBox from './FollowingBox.vue'
+import CommunityBox from './CommunityBox.vue'
+import { data_header_icons, selectIcon, returnActive } from '@/utils/music/music'
+import LunaIA from './LunaIA.vue'
+import { computed } from 'vue';
 const props = defineProps({
-    data_header: {
-        type: Object,
-    },
+  data_header: {
+    type: Object
+  }
 })
+
+
+ 
 </script>
 <template>
-    <section class="my-auto ml-2 h-[95%] overflow-auto rounded-lg w-[20%] bg-[#121212] p-5">
-        <p class="text-xl text-white">Playlists</p>
-        <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-          <PlaylistBox :playlists="data_header.playlists" />
-        </div>
+  <section class="my-auto ml-2 max-h-full h-full  overflow-auto rounded-lg bg-[#121212] p-5" >
+    <div class="w-full flex justify-between">
+      <img class="h-12" src="@/assets/images/Logo.png" alt="" />
 
-        <p class="text-xl mt-5 text-white">Seguindo</p>
-        <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-          <FollowingBox :data_following="data_header.following" />
-        </div>
+      <div class="flex flex-col gap-1">
+        <img
+          v-for="(item, index) in data_header_icons"
+          :class="['w-7 h-[29px]', item.active ? ' rounded-lg' : ' brightness-[30%]']"
+          :src="item.icon"
+          :key="index"
+          alt="" @click="selectIcon(item)"
+        />
+      </div>
+    </div>
 
-        <p class="text-xl mt-5 text-white">Comunidades</p>
-        <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-          <CommunityBox :data_community="data_header.community" />
-        </div>
-    </section>
+    <div v-if="returnActive == 'home'">
+    <p class="text-xl text-white">Playlists</p>
+    <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
+      <PlaylistBox :playlists="props.data_header.playlists" />
+    </div>
+
+    <p class="text-xl mt-5 text-white">Seguindo</p>
+    <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
+      <FollowingBox :data_following="props.data_header.following" />
+    </div>
+
+    <p class="text-xl mt-5 text-white">Comunidades</p>
+    <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
+      <CommunityBox :data_community="props.data_header.community" />
+    </div>
+  </div>
+
+  <div class="flex h-[80%] mt-12" v-else>
+  <LunaIA class="w-full h-full " />
+  </div>
+  </section>
 </template>
 
 <style scoped>
 ::-webkit-scrollbar {
-  width: 3px;               /* width of the entire scrollbar */
+  width: 3px; /* width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;  
-  border-radius: 20px;      /* color of the tracking area */
+  background-color: transparent;
+  border-radius: 20px; /* color of the tracking area */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: transparent;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
+  background-color: transparent; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
 }
 </style>

@@ -42,7 +42,7 @@ const clickToAdd = ref(false)
 </script>
 <template>
     <div @click="!buttons ? clickToAdd = !clickToAdd : ''" class="w-80 relative rounded-md" :class="clickToAdd ? 'bg-[#6340AE]' : 'bg-none', !buttons ? 'p-1' : ''" >
-        <div :class=" !buttons ? clickToAdd ? 'absolute w-full h-full rounded-md bg-black opacity-90 top-0 left-0 z-30 flex justify-center items-center' : '' : ''">
+        <div :class=" !buttons ? clickToAdd ? 'absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-30 flex justify-center items-center' : '' : ''">
            <img v-if="!buttons && clickToAdd" class="size-8 z-50" src="@/assets/images/icons/verified.svg">
            <p v-if="!buttons && clickToAdd">Adicionado</p>
         </div>
