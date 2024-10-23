@@ -8,6 +8,6 @@ export default class UserMeService{
             }
         })
 
-        return data.id
+        return data
     }
 }

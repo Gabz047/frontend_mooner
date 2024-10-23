@@ -62,6 +62,11 @@ const router = createRouter({
         auth: true
       }
     },
+    {
+      path: '/beanartist',
+      name: 'beartist',
+      component: () => import('../views/BeAnArtistView.vue')
+    },
     { 
       path: '/:pathMatch(.*)*', 
       name: 'NotFound', 
