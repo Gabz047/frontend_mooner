@@ -4,7 +4,11 @@ import LunnaIAService from "./IA/luuna";
 import SearchService from "./search/search";
 import HistoryService from "./history/history";
 import UserMeService from "./me/userme";
-import SendEmailService from "./send_email/send_email";
+import ArtistService from "./artist/artist";
+import GenreService from "./genre/genre";
+import SongsService from "./songs/songs";
+import DocumentService from "./document/document";
+import ImageService from "./images/image";
 
 export {
     LoginService,
@@ -13,5 +17,9 @@ export {
     SearchService,
     HistoryService,
     UserMeService,
-    SendEmailService
+    ArtistService,
+    GenreService,
+    SongsService,
+    ImageService,
+    DocumentService
 }

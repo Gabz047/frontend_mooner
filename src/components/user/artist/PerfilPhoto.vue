@@ -1,25 +1,33 @@
 <script setup>
 import { ref } from 'vue';
 import { filterclasses, textfilter } from '@/utils/artist/artistfilters';
-    const image = ref(null)
-    const audio = ref(null)
+import { useSongsStore } from '@/stores/songs/songs';
+import { useDocumentStore, useImgStore } from '@/stores';
+    const SongStore = useSongsStore()
+    const DocumentStore = useDocumentStore()
+    const ImgStore = useImgStore()
+    const imageview = ref(null)
+    const audioview = ref(null)
     const musicerrmsg = ref(null)
     const imageerrmsg = ref(null)
-    function changefile(e){
+
+    async function changefile(e){
         const file = e.target.files[0]
         if(file.type !== "audio/mpeg"){
-            image.value = URL.createObjectURL(file)
+            imageview.value = URL.createObjectURL(file)
             imageerrmsg.value = ''
+            SongStore.newsong.cover = await ImgStore.CreateNewImg(file)
         }
         else{
             imageerrmsg.value = 'arquivo incompativel'
         }   
     }
-    function changeaudio(e){
+    async function changeaudio(e){
         const file = e.target.files[0]
-        if(file.type ===  "audio/mpeg"){
-            audio.value = URL.createObjectURL(file)
+        if(file.type === "audio/mpeg"){
+            audioview.value = URL.createObjectURL(file)
             musicerrmsg.value = ''
+            SongStore.newsong.player = await DocumentStore.CreateNewDoc(file)
         }
         else{
             musicerrmsg.value = 'selecione um arquivo mp3'
@@ -36,15 +44,15 @@ import { filterclasses, textfilter } from '@/utils/artist/artistfilters';
 <div class="flex flex-col justify-center items-center gap-20 h-full">
     <label for="perfil" :class="imageerrmsg ? 'w-80 h-80 text-red-500' : filterclasses(is_music, imageerrmsg)" >
         <div class="flex flex-col size-7  w-full h-full justify-center items-center gap-5">
-            <span v-if="!image">+</span>
-            <img :src="image" class="w-72 h-80"  v-else>
+            <span v-if="!imageview">+</span>
+            <img :src="imageview" class="w-72 h-80"  v-else>
             <span >{{ imageerrmsg ? imageerrmsg : textfilter(is_music, musicerrmsg) }}</span>
         </div>
     </label>
     <label for="audio" v-if="is_music">
         <div :class=" musicerrmsg? 'flex flex-col text-red-500 size-7 w-full h-full justify-center items-center gap-5' : 'flex flex-col text-white size-7 w-full h-full justify-center items-center gap-5'" >
-            <span v-if="!audio">+</span>
-            <audio v-else :src="audio" controls></audio>
+            <span v-if="!audioview">+</span>
+            <audio v-else :src="audioview" controls></audio>
             <span >{{musicerrmsg ? musicerrmsg : 'seu som'}}</span>
         </div>
         <div>

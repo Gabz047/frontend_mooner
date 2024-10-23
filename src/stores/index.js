@@ -5,6 +5,10 @@ import { useSearchStore } from "./search/search";
 import { useHistoryStore } from "./history/history";
 import { useBeArtistStore } from "./becomeartist/beanartist";
 import { useArtistProgress } from "./becomeartist/beartistprogress";
+import { useDocumentStore } from "./file/document";
+import { useSongsStore } from "./songs/songs";
+import { useGenreStore } from "./genre/genre";
+import { useImgStore } from "./file/image";
 
 export {
     useSignUpStore,
@@ -14,4 +18,8 @@ export {
     useHistoryStore,
     useBeArtistStore,
     useArtistProgress,
+    useDocumentStore,
+    useImgStore,
+    useSongsStore,
+    useGenreStore
 }

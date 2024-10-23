@@ -1,22 +1,34 @@
 <script setup>
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import InputGlobal from '@/components/global/InputGlobal.vue';
-import PerfilPhoto from './PerfilPhoto.vue';
-import { useBeArtistStore } from '@/stores';
-const BeartistStore = useBeArtistStore()
+import MsgGlobal from '@/components/global/MsgGlobal.vue';
+import { useBeArtistStore, useArtistProgress} from '@/stores';
+const StoreCreateArtist = useBeArtistStore()
+const StoreProgressArtist = useArtistProgress()
+
 defineProps({
     fields_input: {
         type: Array,
         required: true
     }
 })
+
+function nextsection(err){
+        if(!err){
+            StoreCreateArtist.msg = null
+            StoreProgressArtist.state.progress_artist[0].is_activate = true
+        }
+        else{
+            StoreCreateArtist.msg = null
+        }
+    }
+
 </script>
 <template>
     <div class="flex flex-col w-screen h-full justify-center items-center p-5 gap-5 overflow-hidden" >
-        <PerfilPhoto :is_music="false"/>
-        <InputGlobal  v-for="fields in fields_input" :key="fields.id" :field_name="fields.fieldname" :maxlength="fields.maxlength" :minlength="fields.minlength" :is_required="fields.required" :type="fields.type" v-model:value="fields.value" container_class="artist-fields-container"/>
-        <textarea placeholder="sobre voce"></textarea>
-        <ButtonGlobal  title="enviar" background="purple" color="white" width="150px" border_radius="10px" font_size="17px" @click="BeartistStore.CreateArtist"/>
+        <InputGlobal  v-for="fields in fields_input" :key="fields.id" :field_name="fields.fieldname" :maxlength="fields.maxlength" :minlength="fields.minlength" :is_required="fields.required" :type="fields.type" :placeholder="fields.placeholder"  v-model:value="fields.value"  container_class="artist-fields-container"/>
+        <ButtonGlobal  title="enviar" background="purple" color="white" width="150px" border_radius="10px" font_size="17px" @click="StoreCreateArtist.CreateArtist"/>
+        <MsgGlobal v-show="StoreCreateArtist.msg" :msg="StoreCreateArtist.msg" :err="StoreCreateArtist.err" @confirm="nextsection"/>
     </div>
 </template>
 <style>
@@ -47,16 +59,8 @@ defineProps({
     font-size: 40px;
   }
 
-.artist-fields-container input + label,
-.artist-fields-container input:not(:placeholder-shown) + label {
-    top: 0;
-    left: 10px;
-    transform: translateY(-100%);
-    font-size: 17px;
-    color: white
-}
-textarea{
-    width: 50%;
+.artist-fields-container > textarea{
+    width: 100%;
     padding: 10px; 
     border-radius: 10px; 
     height: 350px;
@@ -65,5 +69,16 @@ textarea{
     color: #fff; 
     font-size: 15px;
     outline: none;
+}
+
+.artist-fields-container input + label,
+.artist-fields-container textarea + label,
+.artist-fields-container input:not(:placeholder-shown) + label,
+.artist-fields-container textarea + label{
+    top: 0;
+    left: 10px;
+    transform: translateY(-100%);
+    font-size: 17px;
+    color: white
 }
 </style>

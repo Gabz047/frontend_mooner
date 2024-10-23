@@ -19,6 +19,5 @@
 </script>
 <template>
     <MsgGlobal v-show="store.msg" :err="store.err" :msg="store.msg" @confirm="gotoplans"/>
-
     <AuthComp :is_login_page="true"  :inputs_page="logininputs" :action_btn="store.DoLogin" />
 </template>

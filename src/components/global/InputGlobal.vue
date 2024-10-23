@@ -1,11 +1,9 @@
 <template>
-    <div :class="container_class" v-if="type !== 'choices'">
-        <input :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required" v-model="model">
-        <label :for="field_name" v-if="field_name">{{field_name}}</label>
-    </div>
-    <div :class="container_class" v-else>
-        <select >
-            <option v-for="option, index in options" :key="index">{{option}}</option>
+    <div :class="container_class">
+        <input  :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required" v-if="type !== 'textarea' && type !== 'choices'"  v-model="model" />
+        <textarea :placeholder="placeholder" v-if="type === 'textarea'" v-model="model"/>
+        <select v-if="type === 'choices'" v-model="model" >
+            <option v-for="option in options" :key="option.id" >{{option.description}}</option>
         </select>
         <label :for="field_name" v-if="field_name">{{field_name}}</label>
     </div>
@@ -50,4 +48,6 @@
         },
     })
     const model = defineModel("value")
+
+   
 </script>

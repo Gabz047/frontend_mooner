@@ -1,6 +1,7 @@
 import { useStorage } from "@vueuse/core"
 import { defineStore } from "pinia"
-
+import { useGenreStore } from "../genre/genre"
+const GenreStore = useGenreStore()
 export const useArtistProgress = defineStore('artistprogress', () =>{
     const state = useStorage('storage_artist', {
         progress_artist: [
@@ -30,30 +31,29 @@ export const useArtistProgress = defineStore('artistprogress', () =>{
                 value: ''
             },
             {
-                fieldname: 'telefone',
-                required: true,
-                value: ''
-            },
-            {
                 fieldname: 'instagram(opcional)',
                 required: false,
+                type: "text",
                 value: ''
             },
             {
                 fieldname: "twitter(opcional)",
                 required: true,
+                type: "text",
                 value: ''
             },
             {
                 fieldname: 'youtube(opcional)',
                 required: true,
+                type: "text",
                 value: ''
             },
             {
-                fieldname: 'facebook(opcional)',
+                fieldname: 'Biografia',
                 required: true,
-                value: ''
-            },
+                type: 'textarea',
+                value: '',
+            }
         ],
         artist_create_song_fields: [
             {
@@ -66,24 +66,17 @@ export const useArtistProgress = defineStore('artistprogress', () =>{
                 fieldname: 'generos',
                 type: 'choices',
                 required: true,
-                options: []
+                options: [],
+                value: ''
             },
             {
-                fieldname:'paises',
-                type: 'choices',
+                fieldname: 'letra da música (opcional)',
+                type: 'textarea',
                 required: true,
-                options: []
-            },
+                value: ''
+            }
         ]
     })
 
-    function resetALL(){
-        for(let i = 0; i < state.value.progress_artist.length; i++){
-            state.value.progress_artist[i].is_activate = false
-        }
-        for(let i = 0; i < state.value.progress_artist_fields.length; i++){
-            state.value.progress_artist_fields[i].value = ''
-        }
-    }
-    return {state, resetALL}
+    return {state}
 })
