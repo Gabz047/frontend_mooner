@@ -1,9 +1,9 @@
 import { defineStore } from "pinia"
 import { signupinputs } from "@/utils/inputs/signup"
-import { emailvalidation } from "@/utils/validations/email_validation"
-import { passwordvalidation } from "@/utils/validations/password_validation"
+import { emailvalidation } from "@/utils/validations/auth/email_validation"
+import { passwordvalidation } from "@/utils/validations/auth/password_validation"
 import { ref } from "vue"
-import SignUpService from "@/services/auth/signup"
+import { SignUpService } from "@/services"
 const signupervice = new SignUpService()
 
 export const useSignUpStore = defineStore('signup', () =>{
@@ -11,8 +11,10 @@ export const useSignUpStore = defineStore('signup', () =>{
         email: '',
         password: ''
     }
+    
     const msg = ref(null)
     const err = ref(false)
+    
     async function CreateUser(){
         if(!signupinputs.value[0].value && !signupinputs.value[1].value && !signupinputs.value[2].value){
             err.value = true
@@ -34,5 +36,6 @@ export const useSignUpStore = defineStore('signup', () =>{
             msg.value = 'usuario criado com sucesso'
         }
     }
+
     return { CreateUser, msg, err }
 })

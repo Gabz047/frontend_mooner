@@ -17,8 +17,8 @@ defineProps({
             <i :class="!err ? 'mdi mdi-check-circle' : 'mdi mdi-close-circle'"></i>
             <div>
                 <p v-html="msg"></p>
-                <ButtonGlobal btn_id="btn-confirm" title="ok" @click="$emit('confirm', err)"/>
-            </div>
+                <ButtonGlobal width="100px" font_size="15px" border="none" border_radius="10px" background="black" color="white" title="ok" @click="$emit('confirm', err)"/>
+            </div> 
         </div>
     </div>
 </template>
@@ -30,7 +30,8 @@ defineProps({
         width: 100%;
         height: 100%;
         z-index: 9999;
-        position: absolute;
+        position: fixed;
+        bottom: 0px;
         background-color: rgba(0, 0, 0, 0.5);
     }
     .msg-card{

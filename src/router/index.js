@@ -33,19 +33,45 @@ const router = createRouter({
     {
       path: '/artist/:id',
       name: 'artist',
-      component: () => import('../views/ArtistDetailView.vue')
+      component: () => import('../views/ArtistDetailView.vue'),
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/plans',
+      name: 'artist',
+      component: () => import('../views/PlansView.vue'),
+      meta:{
+        auth: true
+      }
+    },
+    {
+      path: '/plans/payments',
+      name: 'payments',
+      component: () => import('../views/PaymentsView.vue'),
+      meta:{
+        auth: true
+      }
     },
     {
       path: '/search',
       name: 'search',
-      component: () => import('../views/searchview.vue')
-      
+      component: () => import('../views/SearchView.vue'),
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: '/beanartist',
+      name: 'beartist',
+      component: () => import('../views/BeAnArtistView.vue')
     },
     { 
       path: '/:pathMatch(.*)*', 
       name: 'NotFound', 
       component: ()=> import('../views/NotFound.vue')
-    }
+    },
   ]
 })
 export default router

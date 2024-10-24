@@ -1,0 +1,48 @@
+.container-payments{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    height: 100vh;
+    gap: 20px;
+    color: white;
+    padding: 20px;
+}
+.container-payments-card{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    & div{
+        padding: 20px;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.method-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & img{
+        width: 350px;
+    }
+}
+.method-container div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.mdi-qrcode-scan, .mdi-credit-card, .mdi-barcode{
+    font-size: 40px;
+}
+.credit-card-container{
+    display: flex;
+    
+}

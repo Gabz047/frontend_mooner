@@ -1,5 +1,5 @@
 import { computed } from "vue";
-import { signupinputs } from "../inputs/signup";
+import { signupinputs } from "../../inputs/signup";
 
 export const emailvalidation = computed(() =>{
     if(!signupinputs.value[0].value){
