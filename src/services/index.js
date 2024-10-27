@@ -9,7 +9,7 @@ import GenreService from "./genre/genre";
 import SongsService from "./songs/songs";
 import DocumentService from "./document/document";
 import ImageService from "./images/image";
-
+import PaymentMethodService from "./payments/paymentMethod";
 export {
     LoginService,
     SignUpService,
@@ -21,5 +21,6 @@ export {
     GenreService,
     SongsService,
     ImageService,
-    DocumentService
+    DocumentService,
+    PaymentMethodService,
 }

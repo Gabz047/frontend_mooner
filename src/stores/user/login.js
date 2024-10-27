@@ -1,19 +1,21 @@
 import { defineStore } from "pinia";
 import { logininputs } from "@/utils/inputs/login";
 import { computed, ref } from "vue";
-import { LoginService } from "@/services";
+import { LoginService, UserMeService } from "@/services";
 import { useStorage } from "@vueuse/core";
 const loginservice = new LoginService()
-
+const meService = new UserMeService()
 export const useLoginStore = defineStore('login', ()=>{
     const state = useStorage('storage', {
         user: {
             email: '',
-            password: ''
+            password: '',
+            premium: ''
         },
         access: '',
         refresh: ''
     })
+    
     const msg = ref(null)
     const err = ref(false)
     const access = computed(() => state.value.access)
@@ -31,6 +33,8 @@ export const useLoginStore = defineStore('login', ()=>{
             msg.value = `logado com sucesso seja muito bem vindo ao Mooner ${logininputs.value[0].value}!`
             state.value.access = token.access
             state.value.refresh = token.refresh
+            const me = await meService.GetMe(token.access)
+            state.value.user.premium = me.premium
         }
     }
 

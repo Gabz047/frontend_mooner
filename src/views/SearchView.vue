@@ -31,8 +31,6 @@ onMounted( () =>{
       <div class="flex w-full flex-col  h-full p-4">
         <div class="flex justify-center items-center gap-1">
           <InputGlobal placeholder="Pesquise algo aqui..." class="w-full" type="text" id="search-music" @input="searchStore.searchforitens(storeUser.access, search)" v-model:value="search"/>
-          <img src="../assets/images/PainelControler.png" @click="issettings = !issettings" v-if="issettings">
-          <SettingsComp @closesettings="issettings = !issettings" v-else/>
         </div>
         <div class="w-100 flex justify-end p-5 mr-4">
             <div class="bg-zinc-800 flex justify-center cursor-default items-center  gap-3 w-28 rounded-3xl p-2 "  @click="historysection = !historysection">
@@ -40,12 +38,15 @@ onMounted( () =>{
                 <h1 class=" text-white" v-if="historysection">X</h1>
             </div>  
         </div>
-        <MusicGlobalContainer class="bg-stone-950 overflow-y">
-          <HistoryComp v-for="itens in historyStore.HistoryComputed" :key="itens.id" :id="itens.id" :date="itens.date" :song="itens.song" :is_history="!historysection" v-if="search.length === 0 && historyStore.HistoryFilterComputed.length === 0"/>
-          <HistoryComp v-for="filteritens in historyStore.HistoryFilterComputed" :key="filteritens.id" :id="filteritens.id" :date="filteritens.date" :song="filteritens.song" :is_history="!historysection"  v-else-if="historyStore.HistoryFilterComputed.length > 0" />
-          <MusicBox v-for="songs in searchStore.research" :key="songs.id" :music_data="songs" v-else-if="searchStore.research.length > 0"/>
-          <h1 v-else>Resultados não encontrados</h1> 
-        </MusicGlobalContainer>
+        <div class="flex justify-between">
+        <MusicGlobalContainer justify="justify-center" height="h-28" class="bg-stone-950 overflow-y">
+              <HistoryComp v-for="itens in historyStore.HistoryComputed" :key="itens.id" :id="itens.id" :date="itens.date" :song="itens.song" :is_history="!historysection" v-if="search.length === 0 && historyStore.HistoryFilterComputed.length === 0"/>
+              <HistoryComp v-for="filteritens in historyStore.HistoryFilterComputed" :key="filteritens.id" :id="filteritens.id" :date="filteritens.date" :song="filteritens.song" :is_history="!historysection"  v-else-if="historyStore.HistoryFilterComputed.length > 0" />
+              <MusicBox v-for="songs in searchStore.research"  :key="songs.id" :music_data="songs"  v-else-if="searchStore.research.length > 0"  @click="historyStore.CreateSongHistory(storeUser.access, songs.id)"/>
+              <h1 v-else>Resultados não encontrados</h1>
+        </MusicGlobalContainer> 
+        <SettingsComp />
+      </div>
       </div>
     </section>
   </main>

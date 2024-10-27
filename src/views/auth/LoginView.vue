@@ -7,10 +7,15 @@
     
     const store = useLoginStore()
     function gotoplans(is_logged){
-        if(!is_logged){
+        if(!is_logged && !store.state.user.premium){
             store.msg = ''
             store.is_logged = true
             router.push('/plans')
+        }
+        else if(!is_logged && store.state.user.premium){
+            store.msg = ''
+            store.is_logged = true
+            router.push('/')
         }
         else{
             store.msg = ''

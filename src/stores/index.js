@@ -9,6 +9,7 @@ import { useDocumentStore } from "./file/document";
 import { useSongsStore } from "./songs/songs";
 import { useGenreStore } from "./genre/genre";
 import { useImgStore } from "./file/image";
+import { usePaymentStore } from "./payments/payment";
 
 export {
     useSignUpStore,
@@ -21,5 +22,6 @@ export {
     useDocumentStore,
     useImgStore,
     useSongsStore,
-    useGenreStore
+    useGenreStore,
+    usePaymentStore
 }

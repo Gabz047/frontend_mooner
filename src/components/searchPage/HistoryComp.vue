@@ -28,11 +28,8 @@ const storeHistory = useHistoryStore()
     }
 </script>
 <template>
-    <div class="w-100">
-        
-    </div>
-      <div class="w-100  flex justify-between items-center flex-wrap ">
+    <div class="">
         <MusicBox :music_data="song" v-if="is_history" />
         <HistoryMusicBox :history="song"  @deletesong="deletesong" v-else/>
-      </div>
+    </div>
 </template>

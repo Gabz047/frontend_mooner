@@ -1,6 +1,6 @@
 <template>
     <div :class="container_class">
-        <input  :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required" v-if="type !== 'textarea' && type !== 'choices'"  v-model="model" />
+        <input :style="{backgroundColor: bgcolor, color: color, borderRadius: rounded}" :type="type" :placeholder="placeholder" :maxlength="maxlength" :minlength="minlength" :id="id" :required="is_required"  v-if="type !== 'textarea' && type !== 'choices'"  v-model="model" />
         <textarea :placeholder="placeholder" v-if="type === 'textarea'" v-model="model"/>
         <select v-if="type === 'choices'" v-model="model" >
             <option v-for="option in options" :key="option.id" >{{option.description}}</option>
@@ -46,6 +46,18 @@
             type: String,
             required: true
         },
+        bgcolor:{
+            type: String,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        },
+        rounded: {
+            type: String,
+            required: true
+        }
     })
     const model = defineModel("value")
 
