@@ -1,8 +1,8 @@
 import { useStorage } from "@vueuse/core"
 import { defineStore } from "pinia"
 import { useGenreStore } from "../genre/genre"
-const GenreStore = useGenreStore()
 export const useArtistProgress = defineStore('artistprogress', () =>{
+    const GenreStore = useGenreStore()
     const state = useStorage('storage_artist', {
         progress_artist: [
             {   

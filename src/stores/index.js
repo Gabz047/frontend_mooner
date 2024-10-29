@@ -32,7 +32,7 @@ export {
     useFollowingStore,
     useAlbumStore,
     useCommunityStore,
-    useLikedSongStore
+    useLikedSongStore,
     useBeArtistStore,
     useArtistProgress,
     useDocumentStore,

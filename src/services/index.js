@@ -31,7 +31,7 @@ export {
     CommunityService,
     CommunityPostsService,
     LikedSongService,
-    AlbumService
+    AlbumService,
     GenreService,
     ImageService,
     DocumentService

@@ -69,7 +69,7 @@ const currentPage = computed(()=> {
     </div>
 
    <section class="min-w-full min-h-full flex" :class="currentPage" >
-   <HeaderGlobal v-if="verifyCurrentPage && store.state.access"  />
+   <HeaderGlobal class="bg-red-400" v-if="verifyCurrentPage && loginStore.access"  />
   <RouterView class=" min-h-full min-w-full" />
   </section>
   </main>
