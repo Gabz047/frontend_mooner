@@ -10,7 +10,6 @@ import { UserMeService } from '@/services';
 const useranswer = ref('')
 const storeLunna = useLunnaIAStore()
 const storeUser = useLoginStore()
-const meService = new UserMeService()
 const pagina = ref(1)
 const chat = ref(null)
 const user = ref(null)
@@ -52,7 +51,7 @@ onUpdated(async() =>{
 
 onMounted( async () =>{
     const token = storeUser.state.access
-    const me = await meService.GetMe(token)
+    const me = await UserMeService.GetMe(token)
     await storeLunna.GetChat(me, token, pagina.value)
     user.value = me
     scrolltoEnd()

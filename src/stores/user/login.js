@@ -19,6 +19,7 @@ export const useLoginStore = defineStore('login', ()=>{
     const err = ref(false)
 
     const access = computed(() => state.value.access)
+    const user = computed(()=> state.user)
     
     async function DoLogin(){
         state.value.user.email = logininputs.value[0].value
@@ -35,5 +36,5 @@ export const useLoginStore = defineStore('login', ()=>{
             state.value.refresh = token.refresh
         }
     }
-    return { DoLogin, msg, err, islogged, state, access }
+    return { DoLogin, msg, err, islogged, state, access, user }
 })

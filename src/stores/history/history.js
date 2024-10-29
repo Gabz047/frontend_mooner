@@ -1,7 +1,7 @@
 import { HistoryService, UserMeService } from "@/services"
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
-const meService = new UserMeService()
+
 const historyservice = new HistoryService()
 
 export const useHistoryStore = defineStore('history', () =>{
@@ -9,7 +9,7 @@ export const useHistoryStore = defineStore('history', () =>{
     const filterhistory = ref([])
 
     async function CreateSongHistory(token, song){
-        const user = await meService.GetMe(token)
+        const user = await UserMeService.GetMe(token)
         const songapi = await historyservice.GetHistory(user, token)
         const findsong = songapi.find((s) => s.id === song)
 
@@ -19,11 +19,11 @@ export const useHistoryStore = defineStore('history', () =>{
         console.log(findsong)
     }   
     async function FilterHistory(token, link){
-        const user = await meService.GetMe(token)
+        const user = await UserMeService.GetMe(token)
         filterhistory.value = await historyservice.FilterHistory(user, token, link)
     }
     async function GetHistory(token){
-        const user = await meService.GetMe(token)
+        const user = await UserMeService.GetMe(token)
         history.value = await historyservice.GetHistory(user, token)
     }
     async function DeleteSongHistory(id, token){

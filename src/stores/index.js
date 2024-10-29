@@ -4,6 +4,9 @@ import { useLunnaIAStore } from "./IA/luuna";
 import { useSearchStore } from "./search/search";
 import { useHistoryStore } from "./history/history";
 import { useNavigationStore } from "./navigation/navigation";
+import { useSongStore } from "./mooner/song";
+import { usePlaylistStore } from "./mooner/playlists";
+import { useUserStore } from "./user/user";
 
 export {
     useSignUpStore,
@@ -11,5 +14,8 @@ export {
     useLunnaIAStore,
     useSearchStore,
     useHistoryStore,
-    useNavigationStore
+    useNavigationStore,
+    useSongStore,
+    usePlaylistStore,
+    useUserStore
 }

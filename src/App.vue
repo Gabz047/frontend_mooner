@@ -3,10 +3,13 @@ import {computed, onMounted, ref} from 'vue'
 import { RouterView } from 'vue-router'
 import HeaderGlobal from './components/global/HeaderGlobal.vue';
 import { useLoginStore } from './stores/user/login';
+import { usePlaylistStore, useUserStore } from './stores';
 import NavigationHeader from './components/layout/header/NavigationHeader.vue';
-import { returnActive } from './utils/music/music';
+import { data_playlist, returnActive } from './utils/music/music';
 import router from './router';
-const store = useLoginStore()
+const loginStore = useLoginStore()
+const userStore = useUserStore()
+const playlistStore = usePlaylistStore()
 
 const data_header = ref({
   playlists: [
@@ -38,24 +41,37 @@ const setStyle = ref('')
 
 
 const currentPage = computed(()=> {
-  switch (router.currentRoute.value.path) {
-    case '/':
-      return 'flex-col col-start-2 col-end-2 row-start-1 row-end-2'
-    case '/login': 
-    return 'col-start-1 col-end-3 row-start-1 row-end-2'
+  if (router.currentRoute.value.path != '/login' && router.currentRoute.value.path != '/sign-up' && router.currentRoute.value.path != '/plans') {
+  return 'flex-col col-start-2 col-end-2 row-start-1 row-end-3'
+  } else {
+  return 'col-start-1 col-end-3 row-start-1 row-end-3'
   }
+  })
+
+  const verifyCurrentPage = computed(()=> {
+  if (router.currentRoute.value.path != '/login' && router.currentRoute.value.path != '/sign-up' && router.currentRoute.value.path != '/plans') {
+  return true
+  } else {
+  return false
+  }
+  })
+
+  onMounted(async()=>{
+    await userStore.getUser(loginStore.access)
+    
+    await playlistStore.getPlaylistsByOwner(userStore.myuser.id, loginStore.access)
   })
 </script>
 
 <template>
    <main class="w-dvw h-dvh grid grid-rows-2 grid-cols-[23%_77%]">
     <div class="relative col-start-1 col-end-1 w-full">
-   <NavigationHeader v-if="router.currentRoute.value.path != '/login'" class="fixed z-40 duration-150" :data_header="data_header" :class="returnActive == 'home' ? 'w-[23%]' : 'w-[28%]'" />
+   <NavigationHeader v-if="verifyCurrentPage" class="fixed z-40 duration-150" :data_playlist="playlistStore.playlistsByOwner" :class="returnActive == 'home' ? 'w-[23%]' : 'w-[28%]'" />
     </div>
 
-   <section class="w-full flex" :class="currentPage" >
-   <HeaderGlobal v-if="router.currentRoute.value.path != '/login'"  />
-  <RouterView />
+   <section class="min-w-full min-h-full flex" :class="currentPage" >
+   <HeaderGlobal v-if="verifyCurrentPage"  />
+  <RouterView class=" min-h-full min-w-full" />
   </section>
   </main>
 </template>

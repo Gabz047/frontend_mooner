@@ -6,8 +6,14 @@ import { data_header_icons, selectIcon, returnActive } from '@/utils/music/music
 import LunaIA from './LunaIA.vue'
 import { computed } from 'vue';
 const props = defineProps({
-  data_header: {
-    type: Object
+  data_playlist: {
+    type: Array
+  },
+  data_community: {
+    type: Array
+  },
+  data_following: {
+    type: Array
   }
 })
 
@@ -33,17 +39,17 @@ const props = defineProps({
     <div v-if="returnActive == 'home'">
     <p class="text-xl text-white">Playlists</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <PlaylistBox :playlists="props.data_header.playlists" />
+      <PlaylistBox :playlists="props.data_playlist" />
     </div>
 
     <p class="text-xl mt-5 text-white">Seguindo</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <FollowingBox :data_following="props.data_header.following" />
+      <FollowingBox :data_following="props.data_following" />
     </div>
 
     <p class="text-xl mt-5 text-white">Comunidades</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <CommunityBox :data_community="props.data_header.community" />
+      <CommunityBox :data_community="props.data_community" />
     </div>
   </div>
 
