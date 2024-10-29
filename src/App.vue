@@ -68,8 +68,8 @@ const currentPage = computed(()=> {
    <NavigationHeader v-if="verifyCurrentPage" class="fixed z-40 duration-150" :data_playlist="playlistStore.playlistsByOwner" :class="returnActive == 'home' ? 'w-[23%]' : 'w-[28%]'" />
     </div>
 
-   <section class="min-w-full min-h-full flex" :class="currentPage" >
-   <HeaderGlobal class="bg-red-400" v-if="verifyCurrentPage && loginStore.access"  />
+   <section class="col-start-2 col-end-3 row-start-1 row-end-3 min-w-full min-h-full flex items-center" :class="currentPage" >
+   <HeaderGlobal v-if="verifyCurrentPage && loginStore.access"  />
   <RouterView class=" min-h-full min-w-full" />
   </section>
   </main>
