@@ -4,10 +4,7 @@ import UserOptions from '../user/artist/UserOptions.vue';
 const store = useLoginStore()
 </script>
 <template>
-    <header>
-        <div>
-            <RouterLink to="/"><img src="../../assets/images/Logo.png"></RouterLink>
-        </div>
+    <div class="flex justify-end w-[97.5%] mb-3 mx-auto right-0 h-8 text-white p-2">
         <div class="user-config">
             <div class="flex items-center mt-2  gap-2">
                 <img class="w-9 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
@@ -17,7 +14,7 @@ const store = useLoginStore()
                 <UserOptions/>
             </div>
         </div>
-    </header>
+    </div>
 </template>
 <style scoped>
     header{

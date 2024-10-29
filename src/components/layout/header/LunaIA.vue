@@ -10,7 +10,6 @@ import { UserMeService } from '@/services';
 const useranswer = ref('')
 const storeLunna = useLunnaIAStore()
 const storeUser = useLoginStore()
-const meService = new UserMeService()
 const pagina = ref(1)
 const chat = ref(null)
 const user = ref(null)
@@ -52,7 +51,7 @@ onUpdated(async() =>{
 
 onMounted( async () =>{
     const token = storeUser.state.access
-    const me = await meService.GetMe(token)
+    const me = await UserMeService.GetMe(token)
     await storeLunna.GetChat(me, token, pagina.value)
     user.value = me.id
     scrolltoEnd()
@@ -68,13 +67,13 @@ onMounted( async () =>{
             <img src="../../../assets/images/luuna.png">
             <h1>Ola eu sou Lunna</h1>
         </div>
-        <div >
+        <div>
             <div class="chat-container" ref="chat">
                 <LunaChat v-for="chat in storeLunna.chatorder" :key="chat.id" :answer="chat.answer" :response="chat.response"/>
             </div>
             <div class="lunna-chat">
                 <InputGlobal placeholder="ola" id="luuna-input" v-model:value="useranswer"/>
-                <ButtonGlobal width="60px" height="55px" background="#6340AE" border="none" border_radius="20px"  :is_arrow="true" @click="Answer"/>
+                <ButtonGlobal class="flex justify-center items-center"width="50px" height="40px" background="#6340AE" border="none" border_radius="10px"  :is_arrow="true" @click="Answer"/>
             </div>
         </div>
     </div>
