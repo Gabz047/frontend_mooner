@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, reactive } from 'vue'
-import { SongService } from '@/services'
+import { LikedSongService } from '@/services'
 
 /**
  * Store for managing organs data.
@@ -23,30 +23,55 @@ import { SongService } from '@/services'
  * @function useSpecieStore
  * @returns {SpecieStore} The OrganStore instance.
  */
-export const useSongStore = defineStore('song', () => {
+export const useLikedSongStore = defineStore('likedSong', () => {
   const state = reactive({
-    songs: [],
-    selectedSong: {},
-    songsByTitle: [],
+    likedSongs: [],
+    likedSongsByUser: [],
+    likedSongsBySong: [],
+    selectedLikedSong: {},
     loading: false,
     error: null,
     connection: false
   })
-  const songs = computed(() => state.songs)
-  const songsByTitle = computed(() => state.songsByTitle)
-  const selectedSong = computed(()=> state.selectedSong)
-  const isLoading = computed(() => state.loading)
-  const songsCount = computed(() => state.songs.length)
+  const likedSongs = computed(() => state.likedSongs)
+  const likedSongsByUser = computed(() => state.likedSongsByUser)
+  const likedSongsBySong = computed(() => state.likedSongsBySong)
+  const selectedLikedSong = computed(()=> state.selectedLikedSong)
+
 
   /**
    * Fetches organs data.
    * @async
    * @function getSpecies
    */
-  const getSongs = async (token) => {
+  const getLikedSongs = async (token) => {
     state.loading = true
     try {
-      state.songs = await SongService.getSong(token)
+      state.likedSongs = await LikedSongService.getLikedSongs(token)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+      state.connection = true
+    }
+  }
+
+  const getLikedSongsByUser = async (user,token) => {
+    state.loading = true
+    try {
+      state.likedSongsByUser = await LikedSongService.getLikedSongsByUser(user, token)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+      state.connection = true
+    }
+  }
+  
+  const getLikedSongsBySong = async (song,token) => {
+    state.loading = true
+    try {
+      state.likedSongsBySong = await LikedSongService.getLikedSongsBySong(user, token)
     } catch (error) {
       state.error = error
     } finally {
@@ -60,29 +85,29 @@ export const useSongStore = defineStore('song', () => {
    * @async
    * @function getOrgansBySystem
    */
-   const getSongsByName = async (name,token) => {
-    state.loading = true
-    try {
-      const response = await SongService.getSongByName(name,token)  
-      state.songsByTitle = response
-    } catch (error) {
-      state.error = error
-    } finally {
-      state.loading = false
-      state.connection = true
-    }
-  }
-
+   
   /**
    * Creates a new organ.
    * @async
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createSong = async (newSong, token) => {
+  const createLikedSong = async (newLikedSong, token) => {
     state.loading = true
     try {
-      state.songs.push(await SongService.createSong(newSong, token))
+      state.likedSongs.push(await LikedSongService.createLikedSong(newLikedSong, token))
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const deleteLikedSong = async (id) => {
+    state.loading = true
+    try {
+      const index = state.likedSongs.findIndex((s) => s.id === id)
+      state.likedSongs.splice(index, 1)
     } catch (error) {
       state.error = error
     } finally {
@@ -96,46 +121,18 @@ export const useSongStore = defineStore('song', () => {
    * @function updateSpecie
    * @param {Object} specie - The organ object to update.
    */
-  const updateOrgan = async (organ) => {
-    state.loading = true
-    try {
-      const index = state.organs.findIndex((s) => s.id === organ.id)
-      state.organs[index] = await OrganService.getOrgans()
-    } catch (error) {
-      state.error = error
-    } finally {
-      state.loading = false
-    }
-  }
-  /**
-   * Deletes a organ.
-   * @async
-   * @function deleteSpecie
-   * @param {number} id - The ID of the organ to delete.
-   */
-  const deleteOrgan = async (id) => {
-    state.loading = true
-    try {
-      const index = state.organs.findIndex((s) => s.id === id)
-      state.organs.splice(index, 1)
-    } catch (error) {
-      state.error = error
-    } finally {
-      state.loading = false
-    }
-  }
+
 
   return {
     state,
-    isLoading,
-    songsCount,
-    songs,
-    songsByTitle,
-    selectedSong,
-    getSongs,
-    getSongsByName,
-    createSong,
-    updateOrgan,
-    deleteOrgan
+    likedSongs,
+    likedSongsByUser,
+    likedSongsBySong,
+    selectedLikedSong,
+    getLikedSongs,
+    getLikedSongsByUser,
+    getLikedSongsBySong,
+    createLikedSong,
+    deleteLikedSong
   }
 })

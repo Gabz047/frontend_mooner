@@ -3,16 +3,16 @@ import api from "@/plugins/api";
 /**
  * Service class for handling slides related options
  */
-class FollowingService {
+class LikedSongService {
 
     /**
      * Retrieves all slides
      * @returns {Promise<Array>} A promise that resolves to an array of slides
      * @throws {Error} If an error occurs while retrieving the slides
      */
-    async getFollowings(token) {
+    async getLikedSongs(token) {
         try {
-            const { data } = await api.get('/following', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get('/liked-songs', {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: GetCommunity - return success")
             return data.results;
         } catch (error) {
@@ -21,9 +21,9 @@ class FollowingService {
         }
     }
 
-    async getFollowingsByUser(user, token) {
+    async getLikedSongsByUser(user, token) {
         try {
-            const {data} = await api.get(`/communitys/?user_id=${user}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/liked-songs/?user=${user}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getCommunityByAutor', error);
@@ -31,9 +31,9 @@ class FollowingService {
         }
     }
 
-    async getFollowingsByArtist(artist, token) {
+    async getLikedSongsBySong(song, token) {
         try {
-            const {data} = await api.get(`/communitys/?artist_id=${artist}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/liked-songs/?song=${song}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getCommunityByAutor', error);
@@ -59,9 +59,9 @@ class FollowingService {
      * @returns {Promise<Object>} A promise that resolves to the created slides Object
      * @throws {Error} If an error occurs while creating the slide
      */
-    async createFollowing(newFollow, token) {
+    async createLikedSong(newLikedSong, token) {
         try {
-            const { data } = await api.post('/following/', newFollow, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.post('/liked-songs/', newLikedSong, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddCommunity - return success")
             return data.results;
         } catch (error) {
@@ -77,6 +77,19 @@ class FollowingService {
      * @returns {Promise<Object>} A promise that resolves to the updated slides Object
      * @throws {Error} If an error occurs while updating the slide
      */
+
+    async deleteLikedSong(idLikedSong) {
+        try {
+            const { data } = await api.delete(`/liked-songs/${idLikedSong}`, {headers: {'authorization': `Bearer ${token}`}});
+            console.log( "Service: DeletePost - return success")
+            return data.results;
+        } catch (error) {
+            console.log("Service: DeletePost - return error", error);
+            throw error;
+        }
     }
 
-export default new FollowingService();
+    }
+    
+
+export default new LikedSongService();

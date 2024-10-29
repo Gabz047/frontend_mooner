@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, reactive } from 'vue'
-import { SongService } from '@/services'
+import { AlbumService } from '@/services'
 
 /**
  * Store for managing organs data.
@@ -23,30 +23,33 @@ import { SongService } from '@/services'
  * @function useSpecieStore
  * @returns {SpecieStore} The OrganStore instance.
  */
-export const useSongStore = defineStore('song', () => {
+export const useAlbumStore = defineStore('album', () => {
   const state = reactive({
-    songs: [],
-    selectedSong: {},
-    songsByTitle: [],
+    albuns: [],
+    albunsByAutor: [],
+    albunsBySongs: [],
+    albunsBySearch: [],
+    selectedAlbum: {},
     loading: false,
     error: null,
     connection: false
   })
-  const songs = computed(() => state.songs)
-  const songsByTitle = computed(() => state.songsByTitle)
-  const selectedSong = computed(()=> state.selectedSong)
-  const isLoading = computed(() => state.loading)
-  const songsCount = computed(() => state.songs.length)
+  const albuns = computed(() => state.albuns)
+  const albunsByAutor = computed(() => state.albunsByAutor)
+  const albunsBySongs = computed(() => state.albunsBySongs)
+  const albunsBySearch = computed(() => state.albunsBySearch)
+  const selectedAlbum = computed(()=> state.selectedAlbum)
+
 
   /**
    * Fetches organs data.
    * @async
    * @function getSpecies
    */
-  const getSongs = async (token) => {
+  const getAlbuns = async (token) => {
     state.loading = true
     try {
-      state.songs = await SongService.getSong(token)
+      state.albuns = await AlbumService.getAlbuns(token)
     } catch (error) {
       state.error = error
     } finally {
@@ -60,11 +63,37 @@ export const useSongStore = defineStore('song', () => {
    * @async
    * @function getOrgansBySystem
    */
-   const getSongsByName = async (name,token) => {
+   const getAlbunsByAutor = async (autor,token) => {
     state.loading = true
     try {
-      const response = await SongService.getSongByName(name,token)  
-      state.songsByTitle = response
+      const response = await AlbumService.getAlbunsByAutor(autor,token)  
+      state.albunsByAutor = response
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+      state.connection = true
+    }
+  }
+
+  const getAlbunsBySongs = async (songs,token) => {
+    state.loading = true
+    try {
+      const response = await AlbumService.getAlbunsBySongs(songs,token)  
+      state.albunsBySongs = response
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+      state.connection = true
+    }
+  }
+
+  const getAlbunsBySearch = async (search,token) => {
+    state.loading = true
+    try {
+      const response = await AlbumService.getAlbunsBySearch(search,token)  
+      state.albunsBySearch = response
     } catch (error) {
       state.error = error
     } finally {
@@ -79,10 +108,10 @@ export const useSongStore = defineStore('song', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createSong = async (newSong, token) => {
+  const createAlbum = async (newAlbum, token) => {
     state.loading = true
     try {
-      state.songs.push(await SongService.createSong(newSong, token))
+      state.albuns.push(await AlbumService.createAlbum(newAlbum, token))
     } catch (error) {
       state.error = error
     } finally {
@@ -96,46 +125,17 @@ export const useSongStore = defineStore('song', () => {
    * @function updateSpecie
    * @param {Object} specie - The organ object to update.
    */
-  const updateOrgan = async (organ) => {
-    state.loading = true
-    try {
-      const index = state.organs.findIndex((s) => s.id === organ.id)
-      state.organs[index] = await OrganService.getOrgans()
-    } catch (error) {
-      state.error = error
-    } finally {
-      state.loading = false
-    }
-  }
-  /**
-   * Deletes a organ.
-   * @async
-   * @function deleteSpecie
-   * @param {number} id - The ID of the organ to delete.
-   */
-  const deleteOrgan = async (id) => {
-    state.loading = true
-    try {
-      const index = state.organs.findIndex((s) => s.id === id)
-      state.organs.splice(index, 1)
-    } catch (error) {
-      state.error = error
-    } finally {
-      state.loading = false
-    }
-  }
+
 
   return {
     state,
-    isLoading,
-    songsCount,
-    songs,
-    songsByTitle,
-    selectedSong,
-    getSongs,
-    getSongsByName,
-    createSong,
-    updateOrgan,
-    deleteOrgan
+    albuns,
+    albunsByAutor,
+    albunsBySongs,
+    albunsBySearch,
+    getAlbuns,
+    getAlbunsByAutor,
+    getAlbunsBySearch,
+    createAlbum
   }
 })

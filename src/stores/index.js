@@ -7,6 +7,11 @@ import { useNavigationStore } from "./navigation/navigation";
 import { useSongStore } from "./mooner/song";
 import { usePlaylistStore } from "./mooner/playlists";
 import { useUserStore } from "./user/user";
+import { useArtistStore } from "./user/artist";
+import { useFollowingStore } from "./user/following";
+import { useAlbumStore } from "./mooner/albuns";
+import { useCommunityStore } from "./mooner/community";
+import { useLikedSongStore } from "./mooner/likedSong";
 
 export {
     useSignUpStore,
@@ -17,5 +22,10 @@ export {
     useNavigationStore,
     useSongStore,
     usePlaylistStore,
-    useUserStore
+    useUserStore,
+    useArtistStore,
+    useFollowingStore,
+    useAlbumStore,
+    useCommunityStore,
+    useLikedSongStore
 }

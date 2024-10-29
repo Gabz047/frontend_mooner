@@ -41,6 +41,16 @@ class AlbumService {
         }
     }
     
+    async getAlbunsBySearch(search, token) {
+        try {
+            const {data} = await api.get(`/albuns/?search=${search}`, {headers: {'authorization': `Bearer ${token}`}});
+        return data.results
+        } catch (error) {
+            console.log('Error in getCommunityByAutor', error);
+            throw error;
+        }
+    }
+    
     // async getPlaylistsByName(song, token) {
     //     try {
     //         const {data} = await api.get(`/playlists/?name=${song}`, {headers: {'authorization': `Bearer ${token}`}});

@@ -6,6 +6,12 @@ import HistoryService from "./history/history";
 import UserMeService from "./me/userme";
 import SongService from './music/song'
 import PlaylistService from './music/playlist'
+import ArtistService from './me/artists'
+import FollowingService from './me/following'
+import CommunityService from './music/community'
+import CommunityPostsService from './music/communityPosts'
+import LikedSongService from './music/likedSongs'
+import AlbumService from './music/albuns'
 
 export {
     LoginService,
@@ -15,5 +21,11 @@ export {
     HistoryService,
     UserMeService,
     SongService,
-    PlaylistService
+    PlaylistService,
+    ArtistService,
+    FollowingService,
+    CommunityService,
+    CommunityPostsService,
+    LikedSongService,
+    AlbumService
 }
