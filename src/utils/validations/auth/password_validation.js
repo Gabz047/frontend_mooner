@@ -1,5 +1,5 @@
 import { computed } from "vue";
-import { signupinputs } from "../inputs/signup";
+import { signupinputs } from "../../inputs/signup";
 export const passwordvalidation = computed(() =>{
     if(!signupinputs.value[1].value){
         return 'senha indefinida !!!<br>dica: preencha seu campo de senha'

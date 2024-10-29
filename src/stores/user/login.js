@@ -14,10 +14,8 @@ export const useLoginStore = defineStore('login', ()=>{
         access: '',
         refresh: ''
     })
-    const islogged = ref(false)
     const msg = ref(null)
     const err = ref(false)
-
     const access = computed(() => state.value.access)
     const user = computed(()=> state.user)
     
@@ -36,5 +34,11 @@ export const useLoginStore = defineStore('login', ()=>{
             state.value.refresh = token.refresh
         }
     }
-    return { DoLogin, msg, err, islogged, state, access, user }
+
+    function AutoLogin(){
+        if(state.value.user.email && state.value.user.password){
+            DoLogin(state.value.user)
+        }
+    }
+    return { DoLogin, AutoLogin, msg, err, state, access, user }
 })

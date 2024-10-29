@@ -62,7 +62,6 @@ const currentPage = computed(()=> {
     await playlistStore.getPlaylistsByOwner(userStore.myuser.id, loginStore.access)
   })
 </script>
-
 <template>
    <main class="w-dvw h-dvh grid grid-rows-2 grid-cols-[23%_77%]">
     <div class="relative col-start-1 col-end-1 w-full">
@@ -70,7 +69,7 @@ const currentPage = computed(()=> {
     </div>
 
    <section class="min-w-full min-h-full flex" :class="currentPage" >
-   <HeaderGlobal v-if="verifyCurrentPage"  />
+   <HeaderGlobal v-if="verifyCurrentPage && store.state.access"  />
   <RouterView class=" min-h-full min-w-full" />
   </section>
   </main>

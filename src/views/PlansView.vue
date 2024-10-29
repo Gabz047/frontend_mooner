@@ -7,7 +7,7 @@ const changevisibility = ref(false)
 const store = useLoginStore()
 </script>
 <template>
-    <div :class="!store.is_logged ? 'container-plans' : 'container-plans-delete'">
+    <div class='container-plans-delete'>
     <div class="title-plans">
         <h1 >Planos Premium</h1>
         <p >Aproveite o maximo que temos a oferecer</p>

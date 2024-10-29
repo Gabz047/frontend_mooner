@@ -12,6 +12,11 @@ import { useFollowingStore } from "./user/following";
 import { useAlbumStore } from "./mooner/albuns";
 import { useCommunityStore } from "./mooner/community";
 import { useLikedSongStore } from "./mooner/likedSong";
+import { useBeArtistStore } from "./becomeartist/beanartist";
+import { useArtistProgress } from "./becomeartist/beartistprogress";
+import { useDocumentStore } from "./file/document";
+import { useGenreStore } from "./genre/genre";
+import { useImgStore } from "./file/image";
 
 export {
     useSignUpStore,
@@ -28,4 +33,9 @@ export {
     useAlbumStore,
     useCommunityStore,
     useLikedSongStore
+    useBeArtistStore,
+    useArtistProgress,
+    useDocumentStore,
+    useImgStore,
+    useGenreStore
 }

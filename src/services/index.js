@@ -12,6 +12,10 @@ import CommunityService from './music/community'
 import CommunityPostsService from './music/communityPosts'
 import LikedSongService from './music/likedSongs'
 import AlbumService from './music/albuns'
+import GenreService from "./genre/genre";
+import DocumentService from "./document/document";
+import ImageService from "./images/image";
+
 
 export {
     LoginService,
@@ -28,4 +32,7 @@ export {
     CommunityPostsService,
     LikedSongService,
     AlbumService
+    GenreService,
+    ImageService,
+    DocumentService
 }
