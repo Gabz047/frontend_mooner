@@ -5,7 +5,8 @@ import disc from './disc.svg'
 import artist from './artist.svg'
 import copy from './copy.svg'
 import unlike from './unlike.svg'
-
+import house from './house.svg'
+import luuna from '../../images/luuna.png'
 export {
     trash,
     wave,
@@ -13,5 +14,7 @@ export {
     disc,
     artist,
     copy,
-    unlike
+    unlike,
+    house,
+    luuna
 }
