@@ -12,8 +12,9 @@ class SongService {
      */
     async getSong(token) {
         try {
-            const { data } = await api.get('/song', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get('/songs', {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: GetSong - return success")
+            console.log(data.results)
             return data.results;
         } catch (error) {
             console.log("Service: GetSong - return error", error);
@@ -23,7 +24,7 @@ class SongService {
 
     async getSongByTitle(name, token) {
         try {
-            const {data} = await api.get(`/song/?search=${name}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/songs/?search=${name}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getSongByTitle', error);
@@ -39,7 +40,7 @@ class SongService {
      */
     async createSong(newSong, token) {
         try {
-            const { data } = await api.post('/song/', newSong, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.post('/songs/', newSong, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddSong - return success")
             return data.results;
         } catch (error) {
@@ -57,7 +58,7 @@ class SongService {
      */
     async updatesong(song, token) {
         try {
-            const { data } = await api.put(`/song/${song.id}/`, song, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.put(`/songs/${song.id}/`, song, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: UpdateSong - return success")
             return data.results;
         } catch (error) {
@@ -74,7 +75,7 @@ class SongService {
      */
     async deletesong(idPost) {
         try {
-            const { data } = await api.delete(`/song/${idPost}`, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.delete(`/songs/${idPost}`, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: DeletePost - return success")
             return data.results;
         } catch (error) {

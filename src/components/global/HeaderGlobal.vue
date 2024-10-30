@@ -1,14 +1,20 @@
 <script setup>
 import { useLoginStore } from '@/stores/user/login';
 import UserOptions from '../user/artist/UserOptions.vue';
-const store = useLoginStore()
+import { onMounted } from 'vue';
+const loginStore = useLoginStore()
+
+onMounted(()=>{
+    console.log('lo')
+    console.log(loginStore.user.email)
+})
 </script>
 <template>
-    <div class="flex justify-end w-[97.5%] mb-3 mx-auto right-0 min-h-10 text-white p-2 bg-red-300 items-center">
+    <div class="flex justify-end w-[97.5%] mb-3 mx-auto right-0 min-h-10 text-white items-end">
         <div class="user-config">
             <div class="flex items-center gap-2">
-                <img class="w-9 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
-                <p >{{store.state.user.email}}</p>
+                <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
+                <p >{{loginStore.user.email}}</p>
             </div>
             <div id="options">
                 <UserOptions/>

@@ -53,7 +53,7 @@ const clickToAdd = ref(false)
         <div class="flex w-11/12 h-full" :class="props.buttons ? 'justify-between' : 'justify-normal'">
             <div class="h-full w-3/12 duration-200 relative z-10 music-box-img">
                 <img class="absolute top-2 left-[22px] w-6 h-6 z-20 brightness-200 music-play" @click="getClick = !getClick" :src="getClick ? play : pause">
-                <img class="w-full h-full rounded-l-md music-img" src="../../assets/images/imagemdefundoregistro.png">
+                <img class="w-full h-full rounded-l-md music-img" :src="music_data.cover.url">
             </div>
             <div class="w-7/12 flex flex-col justify-center pl-3 overflow-hidden">
                 <p class="font-semibold text-lg text-white">{{ adjusteSize(props.music_data.title, 14, 14) }}</p>

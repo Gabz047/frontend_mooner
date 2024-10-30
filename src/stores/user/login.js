@@ -17,7 +17,7 @@ export const useLoginStore = defineStore('login', ()=>{
     const msg = ref(null)
     const err = ref(false)
     const access = computed(() => state.value.access)
-    const user = computed(()=> state.user)
+    const user = computed(()=> state.value.user)
     
     async function DoLogin(){
         state.value.user.email = logininputs.value[0].value
