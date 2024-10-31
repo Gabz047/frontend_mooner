@@ -45,7 +45,11 @@ export const useBeArtistStore = defineStore('beartist', () =>{
             err.value = false
             await ArtistService.createArtist(newartist, loginstore.access)
         }
-        
     }
-    return { CreateArtist, msg, err }
+    async function FilterArtists(search){
+        const token = loginstore.access
+        const artists = await artistservice.GetArtists(token, search)
+        return artists
+    }
+    return { CreateArtist, FilterArtists,  msg, err }
 })

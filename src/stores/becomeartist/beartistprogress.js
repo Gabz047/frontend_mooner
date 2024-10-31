@@ -1,8 +1,6 @@
 import { useStorage } from "@vueuse/core"
 import { defineStore } from "pinia"
-import { useGenreStore } from "../genre/genre"
 export const useArtistProgress = defineStore('artistprogress', () =>{
-    const GenreStore = useGenreStore()
     const state = useStorage('storage_artist', {
         progress_artist: [
             {   
@@ -67,7 +65,7 @@ export const useArtistProgress = defineStore('artistprogress', () =>{
                 type: 'choices',
                 required: true,
                 options: [],
-                value: ''
+                value: '',
             },
             {
                 fieldname: 'letra da música (opcional)',
@@ -75,6 +73,10 @@ export const useArtistProgress = defineStore('artistprogress', () =>{
                 required: true,
                 value: ''
             }
+        ],
+        Select_song_option: [
+            { title: 'Música', active: true }, 
+            { title: 'Album', active: false }
         ]
     })
 

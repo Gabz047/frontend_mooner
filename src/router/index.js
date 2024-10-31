@@ -50,6 +50,20 @@ const router = createRouter({
       ],
     },
     {
+      path: '/beanartist',
+      name: 'beartist',
+      component: () => import('../views/BeAnArtistView.vue')
+    },
+    {
+      path: '/artistpainel',
+      name: 'artistpainel',
+      component: () => import('../views/ArtistPainelView.vue')
+    },
+    { 
+      path: '/:pathMatch(.*)*', 
+      name: 'NotFound', 
+      component: ()=> import('../views/NotFound.vue')
+    },
       path: "/",
       name: "blankLayout",
       component: () => import('../layout/blankLayout.vue'),

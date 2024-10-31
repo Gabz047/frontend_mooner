@@ -8,4 +8,12 @@ export default class ArtistService{
         })
         return response
     }
+    async GetArtists(token, search){
+        const {data} = await api.get(`artists/?artistic_name=${search}`,{
+            headers: {
+                Authorization: `Bearer ${token}` 
+            }
+        })
+        return data.results
+    }
 }

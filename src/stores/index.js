@@ -18,6 +18,7 @@ import { useDocumentStore } from "./file/document";
 import { useGenreStore } from "./genre/genre";
 import { useImgStore } from "./file/image";
 import { usePaymentStore } from "./payments/payment";
+import { useAlbumStore } from "./album/album";
 
 export {
     useSignUpStore,
@@ -39,6 +40,6 @@ export {
     useDocumentStore,
     useImgStore,
     useGenreStore,
-    usePaymentStore
-    useGenreStore
+    usePaymentStore,
+    useAlbumStore
 }

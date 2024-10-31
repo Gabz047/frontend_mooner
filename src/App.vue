@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted} from 'vue'
 import { RouterView } from 'vue-router'
+import HeaderGlobal from './components/global/HeaderGlobal.vue';
+import { useLoginStore } from './stores/user/login';
 import { useUserStore, usePlaylistStore, useLoginStore } from '@/stores';
 
 const userStore = useUserStore()

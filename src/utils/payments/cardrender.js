@@ -29,11 +29,6 @@ export const renderPaymentBrick = async (bricksBuilder, amount, name) => {
           console.error(error);
         },
       },
-      qr_code: {
-        enabled: true,
-        type: 'qr_code',
-        size: '150x150',
-      },
     };
     window.paymentBrickController = await bricksBuilder.create(
       "payment",

@@ -12,6 +12,7 @@ onMounted(() => {
     const id = route.params.id
     artist.value = findartist(id)
 })
+
 </script>
 <template>
     <main class="main-container">
