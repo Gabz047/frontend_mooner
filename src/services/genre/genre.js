@@ -1,6 +1,7 @@
 import api from "@/plugins/api";
 
-export default class GenreService{
+ 
+class GenreService{
     async GetGenre(token){
         const { data } = await api.get('genre/', {
             headers: {
@@ -10,3 +11,5 @@ export default class GenreService{
         return data.results
     }
 }
+
+export default new GenreService()
