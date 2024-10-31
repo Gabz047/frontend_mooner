@@ -32,7 +32,6 @@ export {
     useUserStore,
     useArtistStore,
     useFollowingStore,
-    useAlbumStore,
     useCommunityStore,
     useLikedSongStore,
     useBeArtistStore,

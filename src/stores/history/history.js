@@ -16,7 +16,6 @@ export const useHistoryStore = defineStore('history', () =>{
     async function CreateSongHistory(token, song){ 
         const songapi = await historyservice.GetHistory(user.email, token)
         const user = await UserMeService.GetMe(token)
-        const songapi = await historyservice.GetHistory(user, token)
         const findsong = songapi.find((s) => s.id === song)
 
         if(!findsong){

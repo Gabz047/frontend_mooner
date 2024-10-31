@@ -5,7 +5,6 @@ import { LoginService, UserMeService } from "@/services";
 import { useStorage } from "@vueuse/core";
 import router from "@/router";
 const loginservice = new LoginService()
-const meService = new UserMeService()
 export const useLoginStore = defineStore('login', ()=>{
     const state = useStorage('storage', {
         user: {
@@ -36,7 +35,7 @@ export const useLoginStore = defineStore('login', ()=>{
             msg.value = `logado com sucesso seja muito bem vindo ao Mooner ${logininputs.value[0].value}!`
             state.value.access = token.access
             state.value.refresh = token.refresh
-            const me = await meService.GetMe(token.access)
+            const me = await UserMeService.getUser(token.access)
             state.value.user.premium = me.premium
             state.value.user.is_artist = me.is_artist
         }
