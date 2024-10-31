@@ -3,6 +3,7 @@ import { logininputs } from "@/utils/inputs/login";
 import { computed, ref } from "vue";
 import { LoginService, UserMeService } from "@/services";
 import { useStorage } from "@vueuse/core";
+import router from "@/router";
 const loginservice = new LoginService()
 const meService = new UserMeService()
 export const useLoginStore = defineStore('login', ()=>{
@@ -10,7 +11,8 @@ export const useLoginStore = defineStore('login', ()=>{
         user: {
             email: '',
             password: '',
-            premium: ''
+            premium: '',
+            is_artist: false
         },
         access: '',
         refresh: ''
@@ -35,6 +37,7 @@ export const useLoginStore = defineStore('login', ()=>{
             state.value.refresh = token.refresh
             const me = await meService.GetMe(token.access)
             state.value.user.premium = me.premium
+            state.value.user.is_artist = me.is_artist
         }
     }
 
@@ -43,5 +46,11 @@ export const useLoginStore = defineStore('login', ()=>{
             DoLogin(state.value.user)
         }
     }
-    return { DoLogin, AutoLogin, msg, err, state, access }
+
+    function Logout(){
+        state.value.access = ''
+        state.value.refresh = ''
+        router.push('/login')
+    }
+    return { DoLogin, Logout, AutoLogin, msg, err, state, access }
 })

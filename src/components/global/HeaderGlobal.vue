@@ -1,7 +1,7 @@
 <script setup>
 import { useLoginStore } from '@/stores/user/login';
 import UserOptions from '../user/artist/UserOptions.vue';
-const store = useLoginStore()
+const Loginstore = useLoginStore()
 </script>
 <template>
     <header>
@@ -11,10 +11,10 @@ const store = useLoginStore()
         <div class="user-config">
             <div class="flex items-center mt-2  gap-2">
                 <img class="w-9 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
-                <p :class="store.state.user.premium ? 'btn-dourado' : 'text-white'">{{store.state.user.email}}</p>
+                <p :class="Loginstore.state.user.premium ? 'btn-dourado' : 'text-white'">{{Loginstore.state.user.email}}</p>
             </div>
             <div id="options">
-                <UserOptions/>
+                <UserOptions :is_artist="Loginstore.state.user.is_artist" :logout="Loginstore.Logout"/>
             </div>
         </div>
     </header>

@@ -11,6 +11,7 @@ const artistservice = new ArtistService()
 
 
 export const useBeArtistStore = defineStore('beartist', () =>{
+
     const newartist = reactive({
         user: null,
         artistic_name: null,
@@ -47,7 +48,11 @@ export const useBeArtistStore = defineStore('beartist', () =>{
             err.value = false
             await artistservice.CreateNewArtist(newartist, loginstore.access)
         }
-        
     }
-    return { CreateArtist, msg, err }
+    async function FilterArtists(search){
+        const token = loginstore.access
+        const artists = await artistservice.GetArtists(token, search)
+        return artists
+    }
+    return { CreateArtist, FilterArtists,  msg, err }
 })

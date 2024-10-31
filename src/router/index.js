@@ -67,6 +67,11 @@ const router = createRouter({
       name: 'beartist',
       component: () => import('../views/BeAnArtistView.vue')
     },
+    {
+      path: '/artistpainel',
+      name: 'artistpainel',
+      component: () => import('../views/ArtistPainelView.vue')
+    },
     { 
       path: '/:pathMatch(.*)*', 
       name: 'NotFound', 

@@ -8,6 +8,6 @@ export default class SongsService{
             }
         })
 
-        return response.status
+        return response
     }
 }

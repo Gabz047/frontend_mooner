@@ -5,6 +5,7 @@ import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
 import MusicBox from '@/components/global/MusicBox.vue';
 import { onMounted, ref } from 'vue';
 
+
   const data_section = ref([
     {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Podcasts', active: false}, {title: 'Artistas', active: false}
   ])
@@ -55,9 +56,7 @@ onMounted(()=>{
     for (let a = 0; a < music.value.length; a++) {
       data_music.value[i].music.push(music.value[a]) 
     }
-    
   }
-  
 })
 
 </script>

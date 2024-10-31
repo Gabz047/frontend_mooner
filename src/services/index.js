@@ -10,7 +10,10 @@ import SongsService from "./songs/songs";
 import DocumentService from "./document/document";
 import ImageService from "./images/image";
 import PaymentMethodService from "./payments/paymentMethod";
+import AlbumService from "./album/album";
+
 export {
+    AlbumService,
     LoginService,
     SignUpService,
     LunnaIAService, 
