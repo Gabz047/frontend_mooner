@@ -1,8 +1,9 @@
 <script setup>
 import router from '@/router';
 import ButtonGlobal from '../global/ButtonGlobal.vue';
-
-    defineProps({
+import { usePaymentStore } from '@/stores';
+const paymentstore = usePaymentStore()
+const props = defineProps({
         title: {
             type: String,
             required: true
@@ -32,6 +33,10 @@ import ButtonGlobal from '../global/ButtonGlobal.vue';
             required: true
         }
     })
+    function gotopaymentPage(){
+        paymentstore.getAssign(props.title)
+        router.push('/plans/payments')
+    }
 </script>
 <template>
     <div class="card-plan" :style="{background: gradient}">
@@ -49,6 +54,6 @@ import ButtonGlobal from '../global/ButtonGlobal.vue';
                 <li v-for="advantage in advantages">{{advantage}}</li>
             </ul>
         </div>
-        <ButtonGlobal title="Obter" font_size="17.5px" border="none" width="250px" border_radius="20px" color="blueviolet" @click="router.push('/plans/payments')"></ButtonGlobal>
+        <ButtonGlobal title="Obter" font_size="17.5px" border="none" background="white" width="250px" border_radius="20px" color="blueviolet" @click="gotopaymentPage"></ButtonGlobal>
     </div>
 </template>

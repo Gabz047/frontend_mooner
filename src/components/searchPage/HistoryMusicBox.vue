@@ -4,6 +4,10 @@
         history: {
             type: Object,
             Required: true
+        },
+        is_search_settings:{
+            type: Boolean,
+            required: true
         }
     })
 </script>

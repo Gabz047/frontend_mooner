@@ -62,11 +62,3 @@ import { useDocumentStore, useImgStore } from '@/stores';
     <input type="file" id="perfil" @change="changefile">
     <input type="file" id="audio" @change="changeaudio">
 </template>
-<style scoped>
-    #perfil{
-        display: none;
-    }
-    #audio{
-        display: none;
-    }
-</style>

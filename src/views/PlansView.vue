@@ -2,9 +2,7 @@
 import CardPlans from '@/components/plans/CardPlans.vue';
 import { ref } from 'vue';
 import { plans } from '@/utils/plans/plans';
-import { useLoginStore } from '@/stores/user/login';
 const changevisibility = ref(false)
-const store = useLoginStore()
 </script>
 <template>
     <div class='container-plans-delete'>

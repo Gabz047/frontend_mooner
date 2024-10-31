@@ -17,6 +17,7 @@ import { useArtistProgress } from "./becomeartist/beartistprogress";
 import { useDocumentStore } from "./file/document";
 import { useGenreStore } from "./genre/genre";
 import { useImgStore } from "./file/image";
+import { usePaymentStore } from "./payments/payment";
 
 export {
     useSignUpStore,
@@ -37,5 +38,7 @@ export {
     useArtistProgress,
     useDocumentStore,
     useImgStore,
+    useGenreStore,
+    usePaymentStore
     useGenreStore
 }

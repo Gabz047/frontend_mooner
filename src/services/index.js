@@ -15,7 +15,7 @@ import AlbumService from './music/albuns'
 import GenreService from "./genre/genre";
 import DocumentService from "./document/document";
 import ImageService from "./images/image";
-
+import PaymentMethodService from "./payments/paymentMethod";
 
 export {
     LoginService,
@@ -34,5 +34,6 @@ export {
     AlbumService,
     GenreService,
     ImageService,
-    DocumentService
+    DocumentService,
+    PaymentMethodService,
 }
