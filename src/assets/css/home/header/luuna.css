@@ -5,27 +5,32 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
-    width: 400px;
+    width: 100%;
 }
 .lunna-chat{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    height: 40px;
 }
 .lunna-container{
     background-color: black;
     padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 #sendsvg{
-    width: 35px;
+    width: 23px;
 }
 #luuna-input{
     background-color: #282828;
     padding: 10px;
     font-size: 15px;
-    width: 300px;
+    width: 250px;
     color: white;
+    border-radius: 20px;
 }
 #lunna-input::placeholder{
     color: white

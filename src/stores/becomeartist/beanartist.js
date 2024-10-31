@@ -5,13 +5,10 @@ import { reactive, ref } from "vue"
 import { artistnamevalidation } from "@/utils/validations/artist/artisticnamevalidation"
 import { aboutvalidation } from "@/utils/validations/artist/aboutvalidation"
 import { ArtistService } from "@/services"
-const loginstore = useLoginStore()
-const ArtistProgressStore = useArtistProgress()
-const artistservice = new ArtistService()
-
 
 export const useBeArtistStore = defineStore('beartist', () =>{
-
+    const loginstore = useLoginStore()
+    const ArtistProgressStore = useArtistProgress()
     const newartist = reactive({
         user: null,
         artistic_name: null,
@@ -46,7 +43,7 @@ export const useBeArtistStore = defineStore('beartist', () =>{
             newartist.about = ArtistProgressStore.state.progress_artist_fields[4].value
             msg.value = 'verifique seu email'
             err.value = false
-            await artistservice.CreateNewArtist(newartist, loginstore.access)
+            await ArtistService.createArtist(newartist, loginstore.access)
         }
     }
     async function FilterArtists(search){

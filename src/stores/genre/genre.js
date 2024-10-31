@@ -9,7 +9,7 @@ export const useGenreStore = defineStore('genre', () =>{
     const genre = ref([])
     
     async function GetGenre(){
-        const genres = await genreService.GetGenre(LoginStore.access)
+        const genres = await GenreService.GetGenre(LoginStore.access)
         genre.value = genres
         return genres
     }

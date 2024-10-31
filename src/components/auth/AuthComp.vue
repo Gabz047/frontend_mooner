@@ -17,7 +17,7 @@
     })
 </script>
 <template>
-<div class="container">
+<div class="container bg-red-800">
     <div :class="is_login_page ? 'main-login' : 'main-signup'">
     </div>
     <div class="content-container">

@@ -2,7 +2,7 @@ import { HistoryService, UserMeService } from "@/services"
 import { useStorage } from "@vueuse/core"
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
-const meService = new UserMeService()
+
 const historyservice = new HistoryService()
 
 export const useHistoryStore = defineStore('history', () =>{
@@ -13,9 +13,10 @@ export const useHistoryStore = defineStore('history', () =>{
     const filterhistory = ref([])
     const searchhistory = ref([])
 
-    async function CreateSongHistory(token, song){
-        const user = await meService.GetMe(token)
+    async function CreateSongHistory(token, song){ 
         const songapi = await historyservice.GetHistory(user.email, token)
+        const user = await UserMeService.GetMe(token)
+        const songapi = await historyservice.GetHistory(user, token)
         const findsong = songapi.find((s) => s.id === song)
 
         if(!findsong){

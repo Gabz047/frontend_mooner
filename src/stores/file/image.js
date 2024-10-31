@@ -10,6 +10,9 @@ export const useImgStore = defineStore('image', ()=>{
         file: null,
     })
     
+const imageService = new ImageService()
+
+export const useImgStore = defineStore('image', ()=>{
     async function CreateNewImg(file){
         state.value.file = file
         const key = await imageService.CreateImage(file, LoginStore.access)

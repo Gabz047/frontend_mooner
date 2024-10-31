@@ -4,9 +4,15 @@ import LunnaIAService from "./IA/luuna";
 import SearchService from "./search/search";
 import HistoryService from "./history/history";
 import UserMeService from "./me/userme";
-import ArtistService from "./artist/artist";
+import SongService from './music/song'
+import PlaylistService from './music/playlist'
+import ArtistService from './me/artists'
+import FollowingService from './me/following'
+import CommunityService from './music/community'
+import CommunityPostsService from './music/communityPosts'
+import LikedSongService from './music/likedSongs'
+import AlbumService from './music/albuns'
 import GenreService from "./genre/genre";
-import SongsService from "./songs/songs";
 import DocumentService from "./document/document";
 import ImageService from "./images/image";
 import PaymentMethodService from "./payments/paymentMethod";
@@ -20,9 +26,15 @@ export {
     SearchService,
     HistoryService,
     UserMeService,
+    SongService,
+    PlaylistService,
     ArtistService,
+    FollowingService,
+    CommunityService,
+    CommunityPostsService,
+    LikedSongService,
+    AlbumService,
     GenreService,
-    SongsService,
     ImageService,
     DocumentService,
     PaymentMethodService,
