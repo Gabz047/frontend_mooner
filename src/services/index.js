@@ -16,7 +16,6 @@ import GenreService from "./genre/genre";
 import DocumentService from "./document/document";
 import ImageService from "./images/image";
 import PaymentMethodService from "./payments/paymentMethod";
-import AlbumService from "./album/album";
 
 export {
     AlbumService,
@@ -33,7 +32,6 @@ export {
     CommunityService,
     CommunityPostsService,
     LikedSongService,
-    AlbumService,
     GenreService,
     ImageService,
     DocumentService,

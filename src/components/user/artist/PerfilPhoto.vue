@@ -2,10 +2,11 @@
 import { onMounted, ref } from 'vue';
 import { filterclasses, textfilter } from '@/utils/artist/artistfilters';
 import { useSongsStore } from '@/stores/songs/songs';
-import { useAlbumStore, useDocumentStore, useImgStore } from '@/stores';
+import { useAlbumStore, useDocumentStore, useImgStore, useLoginStore } from '@/stores';
 import { fileToDataURL } from '@/utils/file/convertBase64';
 const SongStore = useSongsStore();
 const DocumentStore = useDocumentStore();
+const LoginStore = useLoginStore()
 const AlbumStore = useAlbumStore();
 const ImgStore = useImgStore();
 
@@ -30,12 +31,11 @@ async function changefile(e) {
     if (file.type.startsWith("image/") && !props.isAlbum) {
         imageview.value = await fileToDataURL(file);
         imageerrmsg.value = '';
-        SongStore.newsong.cover = await ImgStore.CreateNewImg(file);
+        SongStore.newsong.cover = await ImgStore.CreateNewImg(file,LoginStore.access);
     } else if (file.type.startsWith("image/") && props.isAlbum) {
         AlbumStore.state.file = await fileToDataURL(file);
         imageview.value = AlbumStore.state.file
-        AlbumStore.state.cover = await ImgStore.CreateNewImg(file);
-        console.log(AlbumStore.state.file);
+        AlbumStore.state.cover = await ImgStore.CreateNewImg(file, LoginStore.access);
         imageerrmsg.value = '';
     } else {
         imageerrmsg.value = 'Arquivo incompatível';
@@ -47,7 +47,7 @@ async function changeaudio(e) {
     if (file.type === "audio/mpeg") {
         audioview.value = URL.createObjectURL(file);
         musicerrmsg.value = '';
-        SongStore.newsong.player = await DocumentStore.CreateNewDoc(file);
+        SongStore.newsong.player = await DocumentStore.CreateNewDoc(file, LoginStore.access);
     } else {
         musicerrmsg.value = 'Selecione um arquivo MP3';
     }

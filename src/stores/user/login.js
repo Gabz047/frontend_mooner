@@ -52,5 +52,5 @@ export const useLoginStore = defineStore('login', ()=>{
         state.value.refresh = ''
         router.push('/login')
     }
-    return { DoLogin, Logout, AutoLogin, msg, err, state, access }
+    return { DoLogin, Logout, AutoLogin, msg, err, user, state, access }
 })

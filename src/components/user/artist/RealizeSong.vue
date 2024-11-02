@@ -5,7 +5,7 @@ import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import { onMounted } from 'vue';
 import { useGenreStore } from '@/stores/genre/genre';
 import { useSongsStore } from '@/stores/songs/songs';
-import { useAlbumStore, useArtistProgress } from '@/stores';
+import { useAlbumStore, useArtistProgress, useLoginStore } from '@/stores';
 import MsgGlobal from '@/components/global/MsgGlobal.vue';
 import router from '@/router';
 import FeatInput from './FeatInput.vue';
@@ -14,6 +14,7 @@ const GenreStore = useGenreStore()
 const ArtistProgressStore = useArtistProgress()
 const SongsStore = useSongsStore()
 const AlbumStore = useAlbumStore()
+const LoginStore = useLoginStore()
 const props = defineProps({
     fields: {
         type: Array,
@@ -55,7 +56,7 @@ function Finished(err) {
 }
 
 onMounted(async () => {
-    ArtistProgressStore.state.artist_create_song_fields[1].options = await GenreStore.GetGenre()
+    ArtistProgressStore.state.artist_create_song_fields[1].options = await GenreStore.GetGenre(LoginStore.access)
 })
 </script>
 <template>
@@ -81,7 +82,7 @@ onMounted(async () => {
             <div class="flex flex-col gap-3 justify-center items-center" v-else>
                 <AlbumSongsPainel :file="AlbumStore.state.file" :name="AlbumStore.state.name" :songs="AlbumStore.state.songs"/>
                 <ButtonGlobal title="Finalizar album" background="#6340AE" color="white" width="350px"
-                border_radius="10px" font_size="17px" @click="AlbumStore.CreateNewAlbum"/>
+                border_radius="10px" font_size="17px" @click="AlbumStore.CreateNewAlbum(LoginStore.access, LoginStore.user.email)"/>
             </div>
             </div>
         </div>

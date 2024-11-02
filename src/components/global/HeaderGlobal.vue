@@ -1,14 +1,7 @@
 <script setup>
 import { useLoginStore } from '@/stores/user/login';
 import UserOptions from '../user/artist/UserOptions.vue';
-const Loginstore = useLoginStore()
-import { onMounted } from 'vue';
 const loginStore = useLoginStore()
-
-onMounted(()=>{
-    console.log('lo')
-    console.log(loginStore.user.email)
-})
 </script>
 <template>
     <div class="flex justify-end w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white items-end">
@@ -18,26 +11,12 @@ onMounted(()=>{
                 <p :class="loginStore.user.premium ? 'btn-dourado' : 'text-white'" >{{loginStore.user.email}}</p>
             </div>
             <div id="options">
-                <UserOptions :is_artist="Loginstore.state.user.is_artist" :logout="Loginstore.Logout"/>
+                <UserOptions :is_artist="loginStore.user.is_artist" :logout="loginStore.Logout"/>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
-    header{
-        width: 100%;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: black;
-        & p{
-            margin-right: 10px
-        }
-        & img{
-            margin-left: 10px
-        }
-    }  
     .user-config{
         position: absolute;
         right: 0;

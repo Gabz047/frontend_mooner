@@ -1,15 +1,13 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-import { useLoginStore } from "../user/login"
 import { GenreService } from "@/services"
-const genreService = new GenreService()
-const LoginStore = useLoginStore()
+const genreService = GenreService
 
 export const useGenreStore = defineStore('genre', () =>{
     const genre = ref([])
     
-    async function GetGenre(){
-        const genres = await GenreService.GetGenre(LoginStore.access)
+    async function GetGenre(token){
+        const genres = await genreService.GetGenre(token)
         genre.value = genres
         return genres
     }
