@@ -16,23 +16,19 @@ const router = createRouter({
       children: [
         {
           path: '/',
-          name: 'home',
-          component: HomeView,
-          
+          name: 'Minha Biblioteca',
+          component: HomeView
         },
-        
+        {
+          path: '/:genre',
+          name: 'genre',
+          component: () => import('../views/GenreView.vue'),
+        },
         {
           path: '/artist/:id',
           name: 'artist',
           component: () => import('../views/ArtistDetailView.vue'),
         
-        },
-       
-        {
-          path: '/search',
-          name: 'search',
-          component: () => import('../views/SearchView.vue'),
-          
         },
         {
           path: '/beanartist',
@@ -43,21 +39,18 @@ const router = createRouter({
           path: '/:pathMatch(.*)*', 
           name: 'NotFound', 
           component: ()=> import('../views/NotFound.vue'),
-          meta: {
-            auth: false
-          }
+        },
+        {
+          path: '/artistpainel',
+          name: 'artistpainel',
+          component: () => import('../views/ArtistPainelView.vue')
+        },
+        { 
+          path: '/:pathMatch(.*)*', 
+          name: 'NotFound', 
+          component: ()=> import('../views/NotFound.vue')
         },
       ],
-    },
-    {
-      path: '/artistpainel',
-      name: 'artistpainel',
-      component: () => import('../views/ArtistPainelView.vue')
-    },
-    { 
-      path: '/:pathMatch(.*)*', 
-      name: 'NotFound', 
-      component: ()=> import('../views/NotFound.vue')
     },
     {
       path: "/",
@@ -95,6 +88,17 @@ const router = createRouter({
           meta:{
             auth: true
           }
+        },
+        {
+          path: '/navigation',
+          name: 'Navegar',
+          component: () => import('../views/NavigationView.vue')
+        },
+        {
+          path: '/historico',
+          name: 'Historico',
+          component: () => import('../views/HistoryView.vue'),
+          
         },
       ]
     },

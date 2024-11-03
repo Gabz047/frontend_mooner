@@ -2,6 +2,7 @@ import {ref, computed} from 'vue'
 import { trash, wave, heart, disc, artist, copy, unlike, house, luuna } from "@/assets/images/icons/settingsIndex"
 import Logo from '@/assets/images/Logo.png'
 import monn from '@/assets/images/monn.jpg'
+import router from '@/router'
 
 export const verify_active = ref(false)
 
@@ -67,8 +68,9 @@ export  const data_music_home = ref([
     {music: [], title: ''}, {music: [], title: 'Recomendamos para você'}, {music: [], title: 'Artistas que Você Gosta'}, {music: [], title: 'Descobertas da Semana'}
   ])
 
-export const selectSection = (index, data) => {
+export const selectSection = (index, data, title) => {
     for (let i = 0; i < data.length; i++) {
       data[i].active = i === index ? data[i].active = true : false;
     }
+    router.push({name: title})
   };

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { SongService } from '@/services'
 
 /**
@@ -24,19 +24,35 @@ import { SongService } from '@/services'
  * @returns {SpecieStore} The OrganStore instance.
  */
 export const useSongStore = defineStore('song', () => {
+
   const state = reactive({
     songs: [],
     selectedSong: {},
     songsByTitle: [],
+    songsByGenre: [],
     loading: false,
     error: null,
     connection: false
   })
+
+  const newsong = reactive({
+    title: null,
+    artists: [],
+    lyrics: null,
+    genre: null,
+    cover: null,
+    player: null
+  })
+
+  const msg = ref('')
+  const err = ref(false)
+  
   const songs = computed(() => state.songs)
   const songsByTitle = computed(() => state.songsByTitle)
   const selectedSong = computed(()=> state.selectedSong)
   const isLoading = computed(() => state.loading)
   const songsCount = computed(() => state.songs.length)
+  const songsByGenre = computed(() => state.songsByGenre)
 
   /**
    * Fetches organs data.
@@ -63,7 +79,7 @@ export const useSongStore = defineStore('song', () => {
    const getSongsByName = async (name,token) => {
     state.loading = true
     try {
-      const response = await SongService.getSongByName(name,token)  
+      const response = await SongService.getSongByTitle(name,token)  
       state.songsByTitle = response
     } catch (error) {
       state.error = error
@@ -79,10 +95,21 @@ export const useSongStore = defineStore('song', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createSong = async (newSong, token) => {
+  const createSong = async (token) => {
     state.loading = true
     try {
-      state.songs.push(await SongService.createSong(newSong, token))
+        newsong.title = ArtistProgressStore.state.artist_create_song_fields[0].value
+        newsong.genre = ArtistProgressStore.state.artist_create_song_fields[1].value
+        newsong.lyrics = ArtistProgressStore.state.artist_create_song_fields[2].value  
+        if(!newsong.title || !newsong.player || !newsong.cover){
+            err.value = true
+            msg.value = 'preencha os campos corretamente'
+        }
+        else{
+            msg.value = 'musica lançada com sucesso'
+            state.songs.push(await SongService.createSong(token))
+            err.value = false
+        } 
     } catch (error) {
       state.error = error
     } finally {
@@ -125,6 +152,22 @@ export const useSongStore = defineStore('song', () => {
     }
   }
 
+  const GetSongByGenre = async (genre, token) =>{
+    state.loading = true
+    try {
+      const response = await SongService.getSongByGenre(genre, token)  
+      state.songsByGenre = response
+      console.log(response)
+      console.log(genre)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+      state.connection = true
+    }
+  }
+  
+
   return {
     state,
     isLoading,
@@ -132,10 +175,14 @@ export const useSongStore = defineStore('song', () => {
     songs,
     songsByTitle,
     selectedSong,
+    songsByGenre,
+    err,
+    msg,
     getSongs,
     getSongsByName,
     createSong,
     updateOrgan,
-    deleteOrgan
+    deleteOrgan,
+    GetSongByGenre,
   }
 })

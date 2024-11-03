@@ -18,7 +18,9 @@ const loginStore = useLoginStore()
   })
 </script>
 <template>
+<KeepAlive>
   <RouterView />
+</KeepAlive>
 </template>
 
 <style>

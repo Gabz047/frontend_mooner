@@ -32,6 +32,17 @@ class SongService {
         }
     }
 
+    async getSongByGenre(genre, token){
+        try {
+            const { data } = await api.get(`/songs/?search=${genre}`, {headers: {'authorization': `Bearer ${token}`}});
+            console.log( "Service: AddSong - return success")
+            return data.results;
+        } catch (error) {
+            console.log("Service: AddSong - return error", error);
+            throw error;
+        }
+    }
+
     /**
      * Creates a new Slide
      * @param {Object} newSlide - The new slide to be created 

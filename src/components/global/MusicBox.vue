@@ -47,21 +47,21 @@ const clickToAdd = ref(false)
 </script>
 <template>
     <div @click="!buttons ? clickToAdd = !clickToAdd : ''" class="w-80 relative rounded-md" :class="clickToAdd ? 'bg-[#6340AE]' : 'bg-none', !buttons ? 'p-1' : ''" >
-        <div :class=" !buttons ? clickToAdd ? 'absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-30 flex justify-center items-center' : '' : ''">
-           <img v-if="!buttons && clickToAdd" class="size-8 z-50" src="@/assets/images/icons/verified.svg">
-           <p v-if="!buttons && clickToAdd">Adicionado</p>
+        <div :class=" !buttons  ? clickToAdd ? 'absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-30 flex justify-center items-center' : '' : ''">
+           <img v-if="!buttons && clickToAdd " class="size-8 z-50" src="@/assets/images/icons/verified.svg">
+           <p v-if="!buttons && clickToAdd ">Adicionado</p>
         </div>
-    <div class="w-64 relative">
-    <div class="flex items-center h-10 w-72 relative music-box z-20">
+    <div class="w-80 relative" :class="is_search_history ? 'bg-neutral-800 rounded-md' : null">
+    <div class="flex items-center h-10 w-full relative gap-3 music-box z-20">
         <div class="w-1/12 flex justify-center" v-if="props.has_index">
-        <p class=" text-2xl font-semibold text-white text-center">{{ props.has_index ? props.index : '' }}</p>
+            <p class=" text-2xl font-semibold text-white text-center">{{ props.has_index ? props.index : '' }}</p>
         </div>
-        <div class="flex w-11/12 h-full" :class="props.buttons || is_search_history ? 'justify-between' : 'justify-normal'">
-            <div class="h-full w-3/12 duration-200 relative z-10 music-box-img">
-                <img class="absolute top-2 left-[22px] w-6 h-6 z-20 brightness-200 music-play" @click="getClick = !getClick" :src="getClick ? play : pause">
-                <img class="w-full h-full rounded-l-md music-img" :src="music_data.cover.url">
+        <div class="flex w-full h-full">
+            <div class="h-full w-4/12 duration-200 relative z-10 music-box-img">
+                <img class="absolute top-2 left-[25px] w-6 h-6 z-20 brightness-200 music-play" @click="getClick = !getClick" :src="getClick ? play : pause">
+                <img class="h-full w-full rounded-l-md music-img" :src="music_data.cover.url ? music_data.cover.url : music_data.cover.file ? music_data.cover.file : null">
             </div>
-            <div class="w-7/12 flex flex-col justify-center pl-3 overflow-hidden">
+            <div class="w-11/12 flex flex-col justify-center pl-3 overflow-hidden">
                 <p :class="is_search_history ? 'font-semibold text-base text-white' : 'font-semibold text-lg text-white'">{{ adjusteSize(props.music_data.title, 14, 14) }}</p>
                 <div class="flex gap-2">
                     <p :class="is_search_history ? 'text-' : 'text-base[10px] text-white  flex'" v-for="artists in music_data.artists" :key="artist.id">{{artists.artistic_name}}</p>

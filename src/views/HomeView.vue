@@ -12,7 +12,6 @@ import MusicBox from '@/components/global/MusicBox.vue';
 import { data_section, data_page, data_music_home, selectSection} from '@/utils/music/music';
 
 onMounted(async ()=>{
-  
   await songStore.getSongs(loginStore.access)
   console.log(songStore.songs)
   for (let i = 0; i < data_music_home.value.length; i++) {
@@ -29,7 +28,7 @@ onMounted(async ()=>{
     
     <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] bg-[#121212]">
       <ContainerNavigateButtons class="mt-5">
-        <NavigateHomeButtons :has_active_bg="true" v-for="item,index in data_page" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_page)" />
+        <NavigateHomeButtons :has_active_bg="true" v-for="item,index in data_page" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_page, item.title)" />
       </ContainerNavigateButtons>
 
       <ContainerNavigateButtons justify="justify-start" class="mt-2 px-5">

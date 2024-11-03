@@ -5,6 +5,7 @@ import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
 import HistoryComp from '@/components/searchPage/HistoryComp.vue';
 import SettingsComp from '@/components/searchPage/SettingsComp.vue';
 import { useHistoryStore, useLoginStore, useSearchStore } from '@/stores';
+import HistoryConnect from '@/components/searchPage/HistoryConnect.vue';
 import { onMounted, onUpdated, ref } from 'vue';
 const historysection = ref(false)
 const issettings = ref(true)
@@ -24,19 +25,11 @@ onMounted( () =>{
 <template>
 <div class="w-100 h-screen flex justify-center">
   <main class="p-6 h-full w-full bg-black flex" >
-    <section class="history">
-      <h1>aqui será a aba de playlists recentes</h1>
-    </section>
     <section class="bg-stone-950 w-full rounded-3xl">
       <div class="flex w-full flex-col  h-full p-4">
-        <div class="flex justify-center items-center gap-1">
+        <div >
           <InputGlobal placeholder="Pesquise algo aqui..." class="w-full" type="text" id="search-music" @input="searchStore.searchforitens(storeUser.access, search)" v-model:value="search"/>
-        </div>
-        <div class="w-100 flex justify-end p-5 mr-4">
-            <div class="bg-zinc-800 flex justify-center cursor-default items-center  gap-3 w-28 rounded-3xl p-2 "  @click="historysection = !historysection">
-                <h1 class=" text-white">Historico</h1>
-                <h1 class=" text-white" v-if="historysection">X</h1>
-            </div>  
+          <HistoryConnect title="Navegar"/>
         </div>
         <div class="flex justify-between">
         <MusicGlobalContainer justify="justify-center" height="h-28" class="bg-stone-950 overflow-y">
@@ -61,12 +54,5 @@ onMounted( () =>{
   padding: 10px;
   font-size: 14px;
   width: 100%;
-}
-.history {
-  height: 90vh;
-  width: 20%;
-  background-color: gray;
-  margin: 1.7rem;
-  border-radius: 10px;
 }
 </style>
