@@ -6,7 +6,7 @@ import { onMounted, onUpdated, ref } from 'vue';
 
 
 const LoginStore = useLoginStore()
-const MeService = new UserMeService()
+const MeService = UserMeService
 const ArtistProgressStore = useArtistProgress()
 function gotoemail(){
     window.open("https://mail.google.com/mail/u/0/#inbox", "_blank");
@@ -17,7 +17,7 @@ const EmailVerified = ref(false)
 onMounted(async () =>{
     const token = LoginStore.access
     while(true){
-        const user = await MeService.GetMe(token) 
+        const user = await MeService.getUser(token) 
         if(user.is_artist){
             EmailVerified.value = user.is_artist
             break

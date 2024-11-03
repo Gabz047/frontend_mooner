@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { ArtistService } from '@/services'
-
+import { aboutvalidation } from '@/utils/validations/artist/aboutvalidation'
+import { artistnamevalidation } from '@/utils/validations/artist/artisticnamevalidation'
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -32,9 +33,22 @@ export const useArtistStore = defineStore('artist', () => {
     error: null,
     connection: false
   })
+
+  const newartist = reactive({
+    user: null,
+    artistic_name: null,
+    instagram: null,
+    twitter: null,
+    youtube: null,
+    about: null
+  })
+
+  const msg = ref(null)
+  const err = ref(false)
+
   const artists = computed(() => state.artists)
   const artistsByName = computed(() => state.artistsByName)
-  const selectedArtist = computed(()=> state.selectedArtist)
+  const selectedArtist = computed(() => state.selectedArtist)
   const isLoading = computed(() => state.loading)
 
 
@@ -55,15 +69,15 @@ export const useArtistStore = defineStore('artist', () => {
     }
   }
 
-   /**
-   * Fetches organs data.
-   * @async
-   * @function getOrgansBySystem
-   */
-   const getArtistsByName = async (name,token) => {
+  /**
+  * Fetches organs data.
+  * @async
+  * @function getOrgansBySystem
+  */
+  const getArtistsByName = async (name, token) => {
     state.loading = true
     try {
-      const response = await ArtistService.getArtistsByName(name,token)  
+      const response = await ArtistService.getArtistsByName(name, token)
       state.songsByTitle = response
     } catch (error) {
       state.error = error
@@ -79,10 +93,26 @@ export const useArtistStore = defineStore('artist', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createArtist = async (newArtist, token) => {
+  const createArtist = async (newartist, token) => {
     state.loading = true
     try {
-      state.artists.push(await ArtistService.createArtist(newArtist, token))
+      if (artistnamevalidation.value !== true && aboutvalidation.value !== true) {
+        err.value = true
+        msg.value = 'preencha os campos obrigatórios'
+      }
+      else if (artistnamevalidation.value !== true) {
+        err.value = true
+        msg.value = aboutvalidation.value
+      }
+      else if (aboutvalidation.value !== true) {
+        err.value = true
+        msg.value = aboutvalidation.value
+      }
+      else {
+        msg.value = 'verifique seu email'
+        err.value = false
+        state.artists.push(await ArtistService.createArtist(newartist, token))
+      }
     } catch (error) {
       state.error = error
     } finally {
@@ -103,6 +133,8 @@ export const useArtistStore = defineStore('artist', () => {
     isLoading,
     artists,
     artistsByName,
+    msg,
+    err,
     selectedArtist,
     getArtists,
     getArtistsByName,

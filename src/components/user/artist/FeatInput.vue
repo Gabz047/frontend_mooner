@@ -1,10 +1,8 @@
 <script setup >
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
-import InputGlobal from '@/components/global/InputGlobal.vue';
 import { computed, ref } from 'vue';
-import { useBeArtistStore, useSongsStore } from '@/stores';
+import { useBeArtistStore } from '@/stores';
 const artistStore = useBeArtistStore()
-const SongsStore = useSongsStore()
 const artists = ref([])
 const searchartist = ref('')
 const feats = ref([])

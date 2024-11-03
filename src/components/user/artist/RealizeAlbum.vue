@@ -3,8 +3,7 @@ import InputGlobal from '@/components/global/InputGlobal.vue';
 import PerfilPhoto from './PerfilPhoto.vue';
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import RealizeSong from './RealizeSong.vue';
-import { useAlbumStore, useSongsStore } from '@/stores';
-const SongStore = useSongsStore()
+import { useAlbumStore} from '@/stores';
 const AlbumStore = useAlbumStore()
 
 defineProps({

@@ -2,9 +2,17 @@
 import { useLoginStore } from '@/stores/user/login';
 import UserOptions from '../user/artist/UserOptions.vue';
 const loginStore = useLoginStore()
+
+defineProps({
+    is_blink_layout: {
+        type: Boolean,
+        required: true
+    }
+})
 </script>
 <template>
-    <div class="flex justify-end w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white items-end">
+    <div class="flex justify-between p-8  items-center w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white">
+        <RouterLink to="/"><img src="../../assets/images/Logo.png" v-if="is_blink_layout"></RouterLink>
         <div class="user-config">
             <div class="flex items-center gap-2">
                 <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
@@ -21,6 +29,7 @@ const loginStore = useLoginStore()
         position: absolute;
         right: 0;
         margin-right: 20px;
+        padding: 10px;
     }
     #options{
         display: none;
