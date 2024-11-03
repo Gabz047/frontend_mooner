@@ -22,7 +22,8 @@ function userPremium(){
 onMounted(async () =>{
     const price = paymentStore.typeAssign.assign.price
     const name_product = paymentStore.typeAssign.assign.name
-    await renderPaymentBrick(bricksBuilder, price, name_product);
+
+    await renderPaymentBrick(bricksBuilder, price, Loginstore.access, name_product);
 })
 </script>
 <template>

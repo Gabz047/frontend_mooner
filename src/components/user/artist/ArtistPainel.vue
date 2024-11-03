@@ -26,7 +26,7 @@
         <NavigateHomeButtons :has_active_bg="true" v-for="item, index in ArtistProgressStore.state.Select_song_option" :key="index" :title="item.title"
             :active="item.active" @goSection="selectSection(index, data_page)" />
     </ContainerNavigateButtons>
-    <RealizeSong :fields="fields" :msg="songStore.msg" :err="songStore.err" :create_song_function="songStore.CreateNewSong" v-if="ArtistProgressStore.state.Select_song_option[0].active"/>
+    <RealizeSong :fields="fields" :msg="songStore.msg" :err="songStore.err" :create_song_function="songStore.createSong" v-if="ArtistProgressStore.state.Select_song_option[0].active"/>
     <RealizeAlbum :fields="fields"  v-if="ArtistProgressStore.state.Select_song_option[1].active"/>
 </div>
 </template>

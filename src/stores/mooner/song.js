@@ -173,6 +173,7 @@ export const useSongStore = defineStore('song', () => {
     isLoading,
     songsCount,
     songs,
+    newsong,
     songsByTitle,
     selectedSong,
     songsByGenre,

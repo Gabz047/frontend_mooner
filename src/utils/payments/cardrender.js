@@ -3,7 +3,7 @@ import { costumization } from "./settings/costumization";
 const LoginStore = useLoginStore()
 const paymentstore = usePaymentStore()
 
-export const renderPaymentBrick = async (bricksBuilder, amount, name) => {
+export const renderPaymentBrick = async (bricksBuilder, amount, token, name) => {
     const settings = {
       initialization: {
         amount: amount,
@@ -23,7 +23,7 @@ export const renderPaymentBrick = async (bricksBuilder, amount, name) => {
                 formData,
                 description: settings.initialization.description
             }
-            paymentstore.createPayment(payload)
+            paymentstore.createPayment(payload, token)
         },
         onError: (error) => {
           console.error(error);
