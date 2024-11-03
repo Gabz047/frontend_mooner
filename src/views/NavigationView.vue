@@ -79,7 +79,6 @@ async function FilterSong(){
 }
 </script>
 <template>
-    <HeaderGlobal/>
     <ContainerNavigateButtons>
         <NavigateHomeButtons  :has_active_bg="true" v-for="item,index in data_page" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_page, item.title)" />
     </ContainerNavigateButtons>
