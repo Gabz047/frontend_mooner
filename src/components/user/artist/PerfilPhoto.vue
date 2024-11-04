@@ -2,7 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { filterclasses, textfilter } from '@/utils/artist/artistfilters';
 import { useSongStore } from '@/stores';
-import { useAlbumStore, useDocumentStore, useImgStore, useLoginStore } from '@/stores';
+import { useAlbumStore } from '@/stores/mooner/albuns';
+import { useDocumentStore, useImgStore, useLoginStore } from '@/stores';
 import { fileToDataURL } from '@/utils/file/convertBase64';
 const SongStore = useSongStore();
 const DocumentStore = useDocumentStore();
@@ -33,9 +34,9 @@ async function changefile(e) {
         imageerrmsg.value = '';
         SongStore.newsong.cover = await ImgStore.CreateNewImg(file, LoginStore.access);
     } else if (file.type.startsWith("image/") && props.isAlbum) {
-        AlbumStore.state.file = await fileToDataURL(file);
-        imageview.value = AlbumStore.state.file
-        AlbumStore.state.cover = await ImgStore.CreateNewImg(file, LoginStore.access);
+        AlbumStore.stateStorage.file = await fileToDataURL(file);
+        imageview.value = AlbumStore.stateStorage.file
+        AlbumStore.stateStorage.cover = await ImgStore.CreateNewImg(file, LoginStore.access);
         imageerrmsg.value = '';
     } else {
         imageerrmsg.value = 'Arquivo incompatível';
@@ -54,9 +55,9 @@ async function changeaudio(e) {
 }
 
 onMounted(async() =>{
-    if(props.isAlbum && AlbumStore.state.file){
-        imageview.value = AlbumStore.state.file
-        SongStore.newsong.cover = AlbumStore.state.cover
+    if(props.isAlbum && AlbumStore.stateStorage.file){
+        imageview.value = AlbumStore.stateStorage.file
+        SongStore.newsong.cover = AlbumStore.stateStorage.cover
     }
 })
 </script>

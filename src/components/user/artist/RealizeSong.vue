@@ -4,7 +4,8 @@ import PerfilPhoto from './PerfilPhoto.vue';
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import { onMounted } from 'vue';
 import { useGenreStore } from '@/stores/genre/genre';
-import { useAlbumStore, useArtistProgress, useLoginStore, useSongStore } from '@/stores';
+import { useAlbumStore } from '@/stores/mooner/albuns';
+import { useArtistProgress, useLoginStore, useSongStore } from '@/stores';
 import MsgGlobal from '@/components/global/MsgGlobal.vue';
 import router from '@/router';
 import FeatInput from './FeatInput.vue';
@@ -31,10 +32,6 @@ const props = defineProps({
         type: Boolean,
         required: true
     },
-    create_song_function: {
-        type: Function,
-        required: true
-    }
 })
 
 function Finished(err) {
@@ -46,6 +43,11 @@ function Finished(err) {
     else if(!err && props.is_album){
         AlbumStore.msg = null
         ArtistProgressStore.state.progress_artist[2].is_activate = true
+        AlbumStore.stateStorage.value.name = ''
+        AlbumStore.stateStorage.value.cover = ''
+        AlbumStore.stateStorage.value.songs = []
+        AlbumStore.stateStorage.value.file = ''
+        AlbumStore.stateStorage.value.albumcreated = false
         router.push('/')
     }
     else {
@@ -79,9 +81,9 @@ onMounted(async () => {
                 <img class="w-full" src="../../../assets/images/mooner_music.png">
             </div>
             <div class="flex flex-col gap-3 justify-center items-center" v-else>
-                <AlbumSongsPainel :file="AlbumStore.state.file" :name="AlbumStore.state.name" :songs="AlbumStore.state.songs"/>
+                <AlbumSongsPainel :file="AlbumStore.stateStorage.file" :name="AlbumStore.stateStorage.name" :songs="AlbumStore.stateStorage.songs"/>
                 <ButtonGlobal title="Finalizar album" background="#6340AE" color="white" width="350px"
-                border_radius="10px" font_size="17px" @click="AlbumStore.CreateNewAlbum(LoginStore.access, LoginStore.user.email)"/>
+                border_radius="10px" font_size="17px" @click="AlbumStore.createAlbum(LoginStore.access, LoginStore.user.email)"/>
             </div>
             </div>
         </div>

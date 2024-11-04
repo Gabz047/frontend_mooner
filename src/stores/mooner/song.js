@@ -45,10 +45,10 @@ export const useSongStore = defineStore('song', () => {
 
   const msg = ref('')
   const err = ref(false)
-  
+
   const songs = computed(() => state.songs)
   const songsByTitle = computed(() => state.songsByTitle)
-  const selectedSong = computed(()=> state.selectedSong)
+  const selectedSong = computed(() => state.selectedSong)
   const isLoading = computed(() => state.loading)
   const songsCount = computed(() => state.songs.length)
   const songsByGenre = computed(() => state.songsByGenre)
@@ -70,15 +70,15 @@ export const useSongStore = defineStore('song', () => {
     }
   }
 
-   /**
-   * Fetches organs data.
-   * @async
-   * @function getOrgansBySystem
-   */
-   const getSongsByName = async (name,token) => {
+  /**
+  * Fetches organs data.
+  * @async
+  * @function getOrgansBySystem
+  */
+  const getSongsByName = async (name, token) => {
     state.loading = true
     try {
-      const response = await SongService.getSongByTitle(name,token)  
+      const response = await SongService.getSongByTitle(name, token)
       state.songsByTitle = response
     } catch (error) {
       state.error = error
@@ -94,27 +94,55 @@ export const useSongStore = defineStore('song', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createSong = async (title, genre, lyrics , token, email) => {
+  const createSong = async (title, genre, lyrics, token, email) => {
     state.loading = true
     try {
-        newsong.title = title
-        newsong.genre = genre
-        newsong.lyrics = lyrics  
-        newsong.artists.push(email)
-        newsong.artists.reverse()
-        if(!newsong.title || !newsong.player || !newsong.cover || !newsong.genre){
-            err.value = true
-            msg.value = 'preencha os campos corretamente'
-        }
-        else{
-            msg.value = 'musica lançada com sucesso'
-            state.songs.push(await SongService.createSong(newsong, token))
-            err.value = false
-        } 
+      newsong.title = title
+      newsong.genre = genre
+      newsong.lyrics = lyrics
+      newsong.artists.push(email)
+      newsong.artists.reverse()
+      if (!newsong.title || !newsong.player || !newsong.cover || !newsong.genre) {
+        err.value = true
+        msg.value = 'preencha os campos corretamente'
+      }
+      else {
+        msg.value = 'musica lançada com sucesso'
+        state.songs.push(await SongService.createSong(newsong, token))
+        err.value = false
+      }
     } catch (error) {
       state.error = error
     } finally {
       state.loading = false
+    }
+  }
+
+  const createSongForAlbum = async (title, genre, lyrics, token, email) => {
+    state.loading = true
+    newsong.title = title
+    newsong.genre = genre
+    newsong.lyrics = lyrics
+    newsong.artists.push(email)
+    newsong.artists.reverse()
+    try{
+      if (!newsong.title || !newsong.player || !newsong.cover || !newsong.genre) {
+        err.value = true
+        msg.value = 'preencha os campos corretamente'
+      }
+      else {
+        const songcreated = await SongService.createSong(newsong, token)
+        console.log(songcreated)
+        newsong.artists.splice(1, newsong.artists.length - 1)
+        return songcreated
+      }
+    }
+    catch(error){
+      state.error = error
+    }
+    finally{
+      state.loading = false
+      state.connection = true
     }
   }
 
@@ -153,10 +181,10 @@ export const useSongStore = defineStore('song', () => {
     }
   }
 
-  const GetSongByGenre = async (genre, token) =>{
+  const GetSongByGenre = async (genre, token) => {
     state.loading = true
     try {
-      const response = await SongService.getSongByGenre(genre, token)  
+      const response = await SongService.getSongByGenre(genre, token)
       state.songsByGenre = response
       console.log(response)
       console.log(genre)
@@ -167,7 +195,7 @@ export const useSongStore = defineStore('song', () => {
       state.connection = true
     }
   }
-  
+
 
   return {
     state,
@@ -186,5 +214,6 @@ export const useSongStore = defineStore('song', () => {
     updateOrgan,
     deleteOrgan,
     GetSongByGenre,
+    createSongForAlbum,
   }
 })

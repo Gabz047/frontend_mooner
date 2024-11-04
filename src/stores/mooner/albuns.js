@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, reactive } from 'vue'
 import { AlbumService } from '@/services'
 import { useStorage } from '@vueuse/core'
+import { ref } from 'vue'
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -47,11 +48,12 @@ export const useAlbumStore = defineStore('album', () => {
 
   const msg = ref('')
   const err = ref(false)
+  
   const newAlbum = reactive({
-    name: state.value.name,
+    name: stateStorage.value.name,
     autor: '',
     songs: [],
-    cover: state.value.cover
+    cover: stateStorage.value.cover
   })
   
   const albuns = computed(() => state.albuns)
@@ -128,20 +130,18 @@ export const useAlbumStore = defineStore('album', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createAlbum = async (token) => {
+  const createAlbum = async (token, user) => {
     state.loading = true
+    console.log('função chamada')
     try {
       newAlbum.autor = user
-      for(let i = 0; i < state.value.songs.length; i++){
-        newAlbum.songs.push(state.value.songs[i].id)
+      console.log('no try')
+      for(let i = 0; i < stateStorage.value.songs.length; i++){
+        newAlbum.songs.push(stateStorage.value.songs[i].id)
+        console.log('caiu no for')
       }
       msg.value = 'album criado com sucesso'
       state.albuns.push(await AlbumService.createAlbum(newAlbum, token))
-      state.value.name = ''
-      state.value.cover = ''
-      state.value.songs = []
-      state.value.file = ''
-      state.value.albumcreated = false
     } catch (error) {
       state.error = error
     } finally {
@@ -163,6 +163,9 @@ export const useAlbumStore = defineStore('album', () => {
     albunsByAutor,
     albunsBySongs,
     albunsBySearch,
+    stateStorage,
+    msg, 
+    err,
     getAlbuns,
     getAlbunsByAutor,
     getAlbunsBySearch,

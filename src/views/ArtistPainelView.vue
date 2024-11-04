@@ -1,6 +1,6 @@
 <script setup>
     import ArtistPainel from '@/components/user/artist/ArtistPainel.vue';
-    import { useArtistProgress, useLoginStore } from '@/stores';
+    import { useArtistProgress} from '@/stores';
     const ArtistProgressStore = useArtistProgress()
 </script>
 <template>

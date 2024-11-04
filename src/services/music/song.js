@@ -51,9 +51,9 @@ class SongService {
      */
     async createSong(newSong, token) {
         try {
-            const { data } = await api.post('/songs/', newSong, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.post('songs/', newSong, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddSong - return success")
-            return data.results;
+            return data
         } catch (error) {
             console.log("Service: AddSong - return error", error);
             throw error;
