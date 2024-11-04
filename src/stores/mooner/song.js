@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { SongService } from '@/services'
-
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -95,19 +94,21 @@ export const useSongStore = defineStore('song', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createSong = async (token) => {
+  const createSong = async (title, genre, lyrics , token, email) => {
     state.loading = true
     try {
-        newsong.title = ArtistProgressStore.state.artist_create_song_fields[0].value
-        newsong.genre = ArtistProgressStore.state.artist_create_song_fields[1].value
-        newsong.lyrics = ArtistProgressStore.state.artist_create_song_fields[2].value  
-        if(!newsong.title || !newsong.player || !newsong.cover){
+        newsong.title = title
+        newsong.genre = genre
+        newsong.lyrics = lyrics  
+        newsong.artists.push(email)
+        newsong.artists.reverse()
+        if(!newsong.title || !newsong.player || !newsong.cover || !newsong.genre){
             err.value = true
             msg.value = 'preencha os campos corretamente'
         }
         else{
             msg.value = 'musica lançada com sucesso'
-            state.songs.push(await SongService.createSong(token))
+            state.songs.push(await SongService.createSong(newsong, token))
             err.value = false
         } 
     } catch (error) {

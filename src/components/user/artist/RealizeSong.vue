@@ -4,15 +4,14 @@ import PerfilPhoto from './PerfilPhoto.vue';
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import { onMounted } from 'vue';
 import { useGenreStore } from '@/stores/genre/genre';
-import { useSongsStore } from '@/stores/songs/songs';
-import { useAlbumStore, useArtistProgress, useLoginStore } from '@/stores';
+import { useAlbumStore, useArtistProgress, useLoginStore, useSongStore } from '@/stores';
 import MsgGlobal from '@/components/global/MsgGlobal.vue';
 import router from '@/router';
 import FeatInput from './FeatInput.vue';
 import AlbumSongsPainel from './AlbumSongsPainel.vue';
 const GenreStore = useGenreStore()
 const ArtistProgressStore = useArtistProgress()
-const SongsStore = useSongsStore()
+const SongsStore = useSongStore()
 const AlbumStore = useAlbumStore()
 const LoginStore = useLoginStore()
 const props = defineProps({
@@ -73,7 +72,7 @@ onMounted(async () => {
                     </div>
                 </div>
                 <ButtonGlobal title="Enviar música" background="#6340AE" color="white" width="350px"
-                    border_radius="10px" font_size="17px" @click="create_song_function" />
+                    border_radius="10px" font_size="17px" @click="$emit('createsong', LoginStore.access, LoginStore.user.email)" />
             </div>
             <div class="w-[350px] flex flex-col items-center gap-20" v-if="!is_album">
                 <h1 class="text-start text-white text-4xl">Aqui suas músicas alcançam até a lua!</h1>

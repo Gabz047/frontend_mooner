@@ -34,15 +34,6 @@ export const useArtistStore = defineStore('artist', () => {
     connection: false
   })
 
-  const newartist = reactive({
-    user: null,
-    artistic_name: null,
-    instagram: null,
-    twitter: null,
-    youtube: null,
-    about: null
-  })
-
   const msg = ref(null)
   const err = ref(false)
 
@@ -78,7 +69,7 @@ export const useArtistStore = defineStore('artist', () => {
     state.loading = true
     try {
       const response = await ArtistService.getArtistsByName(name, token)
-      state.songsByTitle = response
+      state.artistsByName = response
     } catch (error) {
       state.error = error
     } finally {
