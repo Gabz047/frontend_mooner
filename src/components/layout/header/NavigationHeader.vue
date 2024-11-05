@@ -21,7 +21,7 @@ const props = defineProps({
  
 </script>
 <template>
-  <section class="my-auto ml-2 max-h-full h-full  overflow-auto rounded-lg bg-[#121212] p-5" >
+  <section class="my-auto max-h-full h-full border-r border-neutral-700 overflow-auto rounded-lg bg-[#121212] p-5" >
     <div class="w-full flex justify-between">
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
 

@@ -1,25 +1,22 @@
 <script setup >
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
-import InputGlobal from '@/components/global/InputGlobal.vue';
-import { computed, ref } from 'vue';
-import { useBeArtistStore, useSongsStore } from '@/stores';
-const artistStore = useBeArtistStore()
-const SongsStore = useSongsStore()
-const artists = ref([])
+import { ref } from 'vue';
+import { useArtistStore, useLoginStore } from '@/stores';
+import { useSongStore } from '@/stores';
+const SongsStore = useSongStore()
+const ArtistStore = useArtistStore()
+const LoginStore = useLoginStore()
 const searchartist = ref('')
 const feats = ref([])
 
-const ArtistComputed = computed(() =>{
-    return artists.value
-})
-
 async function filterArtists(){
-    artists.value = await artistStore.FilterArtists(searchartist.value)
+    const response = await ArtistStore.getArtistsByName(searchartist.value, LoginStore.access)
+    console.log(response)
 }
 
 function addfeats(){
     feats.value.push(searchartist.value)
-    SongsStore.newsong.artists.push(artists.value[0].user)
+    SongsStore.newsong.artists.push(ArtistStore.artistsByName[0].user)
     searchartist.value = ''
 }   
 
@@ -33,7 +30,7 @@ function addfeats(){
         </div>
         <input disabled :value="feats" class="w-full bg-neutral-700 rounded-2xl text-purple-600 p-2">
         <div class="w-[292px] text-[10px] bottom-[-280px] p-2 flex justify-center flex-col left-[615px] h-6 bg-zinc-600 text-white absolute " v-if="searchartist">
-            <p v-for="artist in ArtistComputed" class="text-white w-full hover:bg-purple-700" :key="artist.id" v-if="ArtistComputed.length > 0">{{ artist.artistic_name }}</p>
+            <p v-for="artist in ArtistStore.artistsByName" class="text-white w-full hover:bg-purple-700" :key="artist.id" v-if="ArtistStore.artistsByName.length > 0">{{ artist.artistic_name }}</p>
             <p v-else>resultados não encontrados</p>
         </div>
     </div>

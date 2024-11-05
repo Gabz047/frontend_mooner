@@ -1,23 +1,20 @@
 <script setup>
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import InputGlobal from '@/components/global/InputGlobal.vue';
-import api from '@/plugins/api';
 import { useLoginStore } from '@/stores';
 import { useLunnaIAStore } from '@/stores';
 import { onMounted, onUpdated, ref} from 'vue';
 import LunaChat from './LunaChat.vue';
-import { UserMeService } from '@/services';
 const useranswer = ref('')
 const storeLunna = useLunnaIAStore()
 const storeUser = useLoginStore()
 const pagina = ref(1)
 const chat = ref(null)
-const user = ref(null)
 const counter = ref(0)
 
 async function Answer(){
     counter.value = 0
-    storeLunna.CreateAnswer({usuario: user.value, answer: useranswer.value}, storeUser.state.access)
+    await storeLunna.CreateAnswer({usuario: storeUser.user.email, answer: useranswer.value}, storeUser.state.access)
     useranswer.value = ''
 } 
 
@@ -42,7 +39,7 @@ async function getPagination(token, command){
 
 onUpdated(async() =>{
     const token = storeUser.state.access
-    await storeLunna.GetChat(user.value, token, pagina.value)
+    await storeLunna.GetChat(storeUser.user.email, token, pagina.value)
     counter.value++
     if(counter.value <= 50){
         scrolltoEnd()
@@ -51,23 +48,21 @@ onUpdated(async() =>{
 
 onMounted( async () =>{
     const token = storeUser.state.access
-    const me = await UserMeService.GetMe(token)
-    await storeLunna.GetChat(me, token, pagina.value)
-    user.value = me.id
+    await storeLunna.GetChat(storeUser.user.email, token, pagina.value)
     scrolltoEnd()
 })
 </script>
 <template>
     <div class="lunna-container">
-        <div class="pagination" :style="storeLunna.chat.next && !storeLunna.chat.previous  ? {justifyContent: 'end'} : {justifyContent: 'space-between'}">
-            <p @click="getPagination(storeUser.state.access, 'previous')" v-if="storeLunna.chat.previous" id="prev">anterior</p>
-            <p @click="getPagination(storeUser.state.access, 'next')" v-if="storeLunna.chat.next" id="next">proximo</p>
+        <div class="pagination" :style="storeLunna.state.chat.next && !storeLunna.state.chat.previous  ? {justifyContent: 'end'} : {justifyContent: 'space-between'}">
+            <p @click="getPagination(storeUser.state.access, 'previous')" v-if="storeLunna.state.chat.previous" id="prev">anterior</p>
+            <p @click="getPagination(storeUser.state.access, 'next')" v-if="storeLunna.state.chat.next" id="next">proximo</p>
         </div>
         <div class="luuna-desc">
             <img src="../../../assets/images/luuna.png">
             <h1>Ola eu sou Lunna</h1>
         </div>
-        <div>
+        <div class="flex flex-col gap-5">
             <div class="chat-container" ref="chat">
                 <LunaChat v-for="chat in storeLunna.chatorder" :key="chat.id" :answer="chat.answer" :response="chat.response"/>
             </div>

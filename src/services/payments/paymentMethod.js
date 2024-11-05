@@ -1,8 +1,10 @@
 import api from "@/plugins/api";
 
-export default class PaymentMethodService{
-    async CreatePayment(payload){
-        const response = await api.post('payment/', payload)
+class PaymentMethodService{
+    async CreatePayment(payload, token){
+        const response = await api.post('payment/', payload, {headers: {Authorization: `Bearer ${token}`}})
         return response
     }
 }
+
+export default new PaymentMethodService 

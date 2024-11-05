@@ -11,7 +11,6 @@ import { useArtistStore } from "./user/artist";
 import { useFollowingStore } from "./user/following";
 import { useCommunityStore } from "./mooner/community";
 import { useLikedSongStore } from "./mooner/likedSong";
-import { useBeArtistStore } from "./becomeartist/beanartist";
 import { useArtistProgress } from "./becomeartist/beartistprogress";
 import { useDocumentStore } from "./file/document";
 import { useGenreStore } from "./genre/genre";
@@ -33,7 +32,7 @@ export {
     useFollowingStore,
     useCommunityStore,
     useLikedSongStore,
-    useBeArtistStore,
+
     useArtistProgress,
     useDocumentStore,
     useImgStore,

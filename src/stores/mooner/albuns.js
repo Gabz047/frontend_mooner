@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import { computed, reactive } from 'vue'
 import { AlbumService } from '@/services'
-
+import { useStorage } from '@vueuse/core'
+import { ref } from 'vue'
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -23,6 +24,8 @@ import { AlbumService } from '@/services'
  * @function useSpecieStore
  * @returns {SpecieStore} The OrganStore instance.
  */
+
+  
 export const useAlbumStore = defineStore('album', () => {
   const state = reactive({
     albuns: [],
@@ -34,6 +37,25 @@ export const useAlbumStore = defineStore('album', () => {
     error: null,
     connection: false
   })
+
+  const stateStorage = useStorage('albumstorage', {
+    name: '',
+    file: '',
+    songs: [],
+    cover: '',
+    albumcreated: false
+})
+
+  const msg = ref('')
+  const err = ref(false)
+  
+  const newAlbum = reactive({
+    name: stateStorage.value.name,
+    autor: '',
+    songs: [],
+    cover: stateStorage.value.cover
+  })
+  
   const albuns = computed(() => state.albuns)
   const albunsByAutor = computed(() => state.albunsByAutor)
   const albunsBySongs = computed(() => state.albunsBySongs)
@@ -108,9 +130,17 @@ export const useAlbumStore = defineStore('album', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createAlbum = async (newAlbum, token) => {
+  const createAlbum = async (token, user) => {
     state.loading = true
+    console.log('função chamada')
     try {
+      newAlbum.autor = user
+      console.log('no try')
+      for(let i = 0; i < stateStorage.value.songs.length; i++){
+        newAlbum.songs.push(stateStorage.value.songs[i].id)
+        console.log('caiu no for')
+      }
+      msg.value = 'album criado com sucesso'
       state.albuns.push(await AlbumService.createAlbum(newAlbum, token))
     } catch (error) {
       state.error = error
@@ -133,6 +163,9 @@ export const useAlbumStore = defineStore('album', () => {
     albunsByAutor,
     albunsBySongs,
     albunsBySearch,
+    stateStorage,
+    msg, 
+    err,
     getAlbuns,
     getAlbunsByAutor,
     getAlbunsBySearch,
