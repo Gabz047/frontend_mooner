@@ -3,25 +3,20 @@ import { useStorage } from "@vueuse/core"
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
 
-const historyservice = new HistoryService()
-
 export const useHistoryStore = defineStore('history', () =>{
     const historyStorage = useStorage('history', {
         is_sorted: false
     })
     const history = ref([])
-    const filterhistory = ref([])
     const searchhistory = ref([])
 
-    async function CreateSongHistory(token, song){ 
-        const songapi = await historyservice.GetHistory(user.email, token)
-        const user = await UserMeService.GetMe(token)
-        const findsong = songapi.find((s) => s.id === song)
+    async function CreateSongHistory(email, token, song){ 
+        const songapi = await HistoryService.GetHistory(email, token)
+        const findsong = songapi.find((s) => s.song.id === song)
 
         if(!findsong){
-          await historyservice.CreateHistory(user.email, token, song)
+          await HistoryService.CreateHistory(email, token, song)
         }
-        console.log(findsong)
     } 
     function SortedHistory(){
         if(historyStorage.value.is_sorted){
@@ -33,27 +28,24 @@ export const useHistoryStore = defineStore('history', () =>{
             historyStorage.value.is_sorted = true
         }   
     }
-    async function FilterHistory(token, link){
-        const user = await meService.GetMe(token)
-        searchhistory.value = await historyservice.FilterHistory(user.email, token, link)
+    async function SearchHistory(email, token, search){
+        searchhistory.value = await HistoryService.FilterHistory(email, token, search)
         console.log(searchhistory.value)
     }
-    async function GetHistory(token){
-        const user = await meService.GetMe(token)
-        history.value = await historyservice.GetHistory(user.email, token)
+    async function GetHistory(email, token){
+        history.value = await HistoryService.GetHistory(email, token)
     }
     async function DeleteSongHistory(id, token){
-        await historyservice.DeleteHistory(id, token)
+        await HistoryService.DeleteHistory(id, token)
         const findindex = history.value.findIndex(i => i.id === id)
         history.value.splice(findindex, 1)
     }
-    async function DeleteAll(token){
-        const user = await meService.GetMe(token)
-        await historyservice.DeleteAllHistory(user.email, token)
+    async function DeleteAll(email, token){
+        await HistoryService.DeleteAllHistory(email, token)
         history.value = []
     }
     const HistoryComputed = computed(() => { return history.value })
-    const HistoryFilterComputed = computed(() => {return filterhistory.value})
+    const HistoryFilterComputed = computed(() => {return searchhistory.value})
 
-    return { historyStorage, searchhistory, DeleteAll, SortedHistory, CreateSongHistory, DeleteSongHistory, GetHistory,FilterHistory, HistoryComputed, HistoryFilterComputed }
+    return { historyStorage, searchhistory, DeleteAll, SortedHistory, CreateSongHistory, DeleteSongHistory, GetHistory, SearchHistory, HistoryComputed, HistoryFilterComputed }
 })

@@ -86,7 +86,7 @@ const router = createRouter({
         },
         {
           path: '/historico',
-          name: 'Historico',
+          name: 'Historico',  
           component: () => import('../views/HistoryView.vue'),
           
         },

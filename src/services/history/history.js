@@ -1,44 +1,61 @@
 import api from "@/plugins/api";
 
-export default class HistoryService{
+class HistoryService{
     async CreateHistory(user, token, song){
-        const response = await api.post('history/', {usuario: user.email, song: song}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        return response.results
+        try{
+            const response = await api.post('history/', {usuario: user, song: song}, {headers: {Authorization: `Bearer ${token}`}})
+            return response
+        }
+        catch(error){
+            console.log('Error on CreateHistory', error)
+            throw error
+        }
     }
     async GetHistory(user, token){
-        const {data} = await api.get(`history/?usuario=${user.email}`,{
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        return data.results
+        try{
+            const {data} = await api.get(`history/?usuario__email=${user}`,{headers: {Authorization: `Bearer ${token}`}})
+            return data.results
+        }
+        catch(error){
+            console.log('Error on GetHistory', error)
+            throw error
+        }
+        
     } 
-    async FilterHistory(user, token, link){
-        const { data } = await api.get(`history/?usuario=${user}` + link, {
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        })
-        return data.results
+    async FilterHistory(user, token, search){
+        try{
+            const { data } = await api.get(`history/?usuario__email=${user}&search=${search}`, {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return data.results
+        }
+        catch(error){
+            console.log('Error on filter History')
+            throw error
+        }
     }
     async DeleteHistory(id, token){
-        const response = await api.delete(`history/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        return response.status
+        try{
+            const {data} = await api.delete(`history/${id}/`, {headers: {Authorization: `Bearer ${token}`}})
+            return data
+        }
+        catch(error){
+            console.log('Error on DeleteHistory', error)
+            throw error
+        }
+        
     }
     async DeleteAllHistory(user, token){
-        const { data } = await api.delete(`history/destroy/?usuario=${user}`, {
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        })
-        return data.results
+        try{
+            const { data } = await api.delete(`history/destroy/?usuario__email=${user}`, {headers:{Authorization: `Bearer ${token}`}})
+            return data
+        }
+        catch(error){
+            console.log('Error on DeleteAllHistory', error)
+        }
     }
 }
+
+export default new HistoryService()
