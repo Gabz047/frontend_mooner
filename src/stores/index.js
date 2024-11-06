@@ -1,7 +1,6 @@
 import { useSignUpStore } from "./user/signup";
 import { useLoginStore } from "./user/login";
 import { useLunnaIAStore } from "./IA/luuna";
-import { useSearchStore } from "./search/search";
 import { useHistoryStore } from "./history/history";
 import { useNavigationStore } from "./navigation/navigation";
 import { useSongStore } from "./mooner/song";
@@ -16,13 +15,12 @@ import { useDocumentStore } from "./file/document";
 import { useGenreStore } from "./genre/genre";
 import { useImgStore } from "./file/image";
 import { usePaymentStore } from "./payments/payment";
-import { useAlbumStore } from "./album/album";
+import { useAlbumStore } from "./mooner/albuns";
 
 export {
     useSignUpStore,
     useLoginStore,
     useLunnaIAStore,
-    useSearchStore,
     useHistoryStore,
     useNavigationStore,
     useSongStore,
@@ -32,11 +30,10 @@ export {
     useFollowingStore,
     useCommunityStore,
     useLikedSongStore,
-
+    useAlbumStore,
     useArtistProgress,
     useDocumentStore,
     useImgStore,
     useGenreStore,
     usePaymentStore,
-    useAlbumStore
 }

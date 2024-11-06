@@ -7,16 +7,12 @@ const storeHistory = useHistoryStore()
 const storeUser = useLoginStore()
 const search = ref('')
 
-const link = computed(() => {return `&search=${search.value}`})
-
-function filter(){
-    storeHistory.FilterHistory(storeUser.access, link.value)
-}
-
 function deleteALL(){
-    storeHistory.DeleteAll(storeUser.access)
+    storeHistory.DeleteAll(storeUser.user.email, storeUser.access)
 }
-
+async function SearchHistory(){
+    await storeHistory.SearchHistory(storeUser.user.email, storeUser.access, search.value)
+}
 </script>
 <template>
     <div class="bg-zinc-800 text-white w-64 h-[340px] rounded-xl flex flex-col gap-3 p-2">
@@ -34,13 +30,13 @@ function deleteALL(){
             </label>
         </div>
         <div class="w-60">
-            <InputGlobal container_class="search-input" placeholder="procure algo do historico" @input="filter" v-model:value="search"/>
+            <InputGlobal container_class="search-input" placeholder="procure algo do historico"  v-model:value="search" @input="SearchHistory"/>
             <div class="h-52 w-full overflow-y-auto overflow-x-hidden p-2">
-                <div class="p-1" v-for="songs in storeHistory.searchhistory" :key="songs.id" v-if="search.length > 0" >
-                    <MusicBox :is_search_history="true" :music_data="songs.song"/>
+                <div class="p-1" v-for="songs in storeHistory.HistoryComputed" :key="songs.id" v-if="search.length === 0" >
+                    <MusicBox :is_history="true" :is_search_history="true" :music_data="songs.song"/>
                 </div>
-                <div v-for="songs in storeHistory.HistoryComputed" class="p-1" v-else>
-                    <MusicBox :is_search_history="true"  :music_data="songs.song" />
+                <div v-for="songs in storeHistory.HistoryFilterComputed" class="p-1" v-else>
+                    <MusicBox :is_search_history="true" :is_history="true" :music_data="songs.song" />
                 </div>
             </div>
         </div>

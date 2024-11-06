@@ -48,8 +48,9 @@ export const useLoginStore = defineStore('login', ()=>{
     }
 
     function Logout(){
-        state.value.access = ''
-        state.value.refresh = ''
+        state.value.user = null
+        state.value.access = null
+        state.value.refresh = null
         router.push('/login')
     }
     return { DoLogin, Logout, AutoLogin, msg, err, user, state, access }

@@ -7,7 +7,7 @@ import router from '@/router'
 export const verify_active = ref(false)
 
 export const data =  ref([
-    {tittle: 'Remover', img: trash},
+    {tittle: 'Remover', img: trash, history: true },
     {tittle: 'Iniciar MoonWave', img: wave},
     {tittle: 'Curtir', img: [heart, unlike], liked: false},
     {tittle: 'Album', img: disc},
