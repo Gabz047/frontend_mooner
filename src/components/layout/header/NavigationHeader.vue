@@ -4,7 +4,17 @@ import FollowingBox from './FollowingBox.vue'
 import CommunityBox from './CommunityBox.vue'
 import { data_header_icons, selectIcon, returnActive } from '@/utils/music/music'
 import LunaIA from './LunaIA.vue'
-import { computed } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
+import { usePlaylistStore, useLoginStore, useUserStore, useCommunityStore, useQueueStore} from '@/stores'
+
+const userStore = useUserStore()
+const playlistStore = usePlaylistStore()
+const loginStore = useLoginStore()
+const communityStore = useCommunityStore()
+const queueStore = useQueueStore()
+
+const token = loginStore.access
+const user = userStore.myuser
 const props = defineProps({
   data_playlist: {
     type: Array
@@ -17,11 +27,35 @@ const props = defineProps({
   }
 })
 
+const playlistBody = reactive({
+  name: `Playlist de ${user.email}`,
+  owners: [user.email],
+  songs: [] 
+})
+
+
+const goConsole = () => {
+  console.log(playlistBody)
+}
+const communityBody = reactive({
+  name: `Comunidade de ${user.email}`,
+  description: `Seja bem vindo a comunidade de ${user.email}`,
+  autor: user.email,
+})
+
+const createPlaylist = async (playlist, token) => {
+  console.log(playlist)
+  await playlistStore.createPlaylist(playlist, token)
+}
+
+const createCommunity = async (community, token) => {
+  communityStore.createCommunity(community, token)
+}
 
  
 </script>
 <template>
-  <section class="my-auto h-[90%] border-r border-neutral-700 overflow-auto rounded-lg bg-[#121212] p-5" >
+  <section class="my-auto border-r border-none overflow-auto rounded-lg bg-[#121212] p-5" :class="queueStore.state?.currentSong ? 'h-[90%]' : 'h-full' " >  
     <div class="w-full flex justify-between">
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
 
@@ -39,7 +73,7 @@ const props = defineProps({
     <div v-if="returnActive == 'home'">
     <p class="text-xl text-white">Playlists</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <PlaylistBox :playlists="props.data_playlist" />
+      <PlaylistBox @create="createPlaylist(playlistBody, token), goConsole()" :playlists="props.data_playlist" />
     </div>
 
     <p class="text-xl mt-5 text-white">Seguindo</p>
@@ -49,7 +83,7 @@ const props = defineProps({
 
     <p class="text-xl mt-5 text-white">Comunidades</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <CommunityBox :data_community="props.data_community" />
+      <CommunityBox @create="createCommunity(communityBody, token)" :data_community="props.data_community" />
     </div>
   </div>
 

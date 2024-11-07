@@ -30,6 +30,16 @@ const router = createRouter({
           component: () => import('../views/ArtistDetailView.vue'),
         
         },
+        {
+          path: '/artistpainel',
+          name: 'artistpainel',
+          component: () => import('../views/ArtistPainelView.vue')
+        },
+        {
+          path: '/playlist/:id',
+          name: 'playlist',
+          component: () => import('../views/PlaylistDetailView.vue')
+        }
       ],
     },
     {
@@ -94,6 +104,11 @@ const router = createRouter({
           path: '/:pathMatch(.*)*', 
           name: 'NotFound', 
           component: ()=> import('../views/NotFound.vue'),
+        },
+        {
+          path: '/beanartist',
+          name: 'beartist',
+          component: () => import('../views/BeAnArtistView.vue')
         },
       ]
     },

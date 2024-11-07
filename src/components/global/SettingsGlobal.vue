@@ -21,4 +21,5 @@ const props = defineProps({
     <img :src="item.tittle != 'Curtir' ? item.img : !item.liked ? item.img[0] : item.img[1]" class="w-6 h-6">
  </div>
 </div>
+</div>
 </template>

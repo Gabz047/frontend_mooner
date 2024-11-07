@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 
 
 export const useQueueStore = defineStore('queue', () => {
@@ -8,8 +8,11 @@ export const useQueueStore = defineStore('queue', () => {
         queue: [],
         history: [],
         currentSong: {},
-        saveOrder: []
+        saveOrder: [],
+        is_playing: false
     }))
+
+    const is_playing = computed(()=> state.value.is_playing)
     
 
     function setCurrentSong(song) {
@@ -68,9 +71,11 @@ export const useQueueStore = defineStore('queue', () => {
             state.value.saveOrder = []
         }
     }
+
     
     return {
         state,
+        is_playing,
         setCurrentSong,
         addSongToQueue,
         addSongToHistory,

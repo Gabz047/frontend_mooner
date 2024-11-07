@@ -16,18 +16,17 @@ import { artist } from '@/assets/images/icons/settingsIndex';
 
 const QueueStore = new useQueueStore()
 const songPlayer = ref(null)
-const is_playing = ref(false)
 const showVolume = ref(false)
 const volume = ref(50)
 
 const usePlay = () => {
-    if (is_playing.value) {
+    if (QueueStore.is_playing) {
         songPlayer.value.pause()
-        is_playing.value = false
+        QueueStore.value.state.is_playing.value = false
     }
     else {
         songPlayer.value.play()
-        is_playing.value = true
+        QueueStore.value.state.is_playing.value = true
     }
 }
 
@@ -37,13 +36,12 @@ onMounted(() => {
             QueueStore.nextSong()
         }
     }
-    console.log(songPlayer.value.src)
 })
 
 </script>
 
 <template>
-    <div v-if="QueueStore.state.currentSong.player" class="flex w-[98%] ml-[1%] mr-[1%] fixed bottom-0 h-[9%] justify-between items-center bg-[#3B2174] z-20 rounded-xl p-4">
+    <div v-if="QueueStore.state.currentSong ? QueueStore.state.currentSong.player : ''" class="flex w-[98%] ml-[1%] mr-[1%] fixed bottom-0 h-[9%] justify-between items-center bg-[#3B2174] z-20 rounded-xl p-4">
         <div class="volume absolute left-35 z-50 bg-black w-1">
             <input type="range" class="volume" min="0" max="100" v-show="showVolume" v-model="volume">
         </div>
@@ -65,7 +63,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="flex flex-row relative items-center ">
-            <random @click="QueueStore.randomize" class="cursor-pointer"/>
+            <random @click="QueueStore.randomize" :color="(QueueStore?.state?.saveOrder.length > 0) ? '#FFD700': '#ffffff'" class="cursor-pointer"/>
             <div @click="QueueStore.repeatSong" class="cursor-pointer">
                 <repeat :color="(QueueStore?.state?.queue[0]) ? ((QueueStore?.state.currentSong.id == QueueStore.state?.queue[0].id) ? '#FFD700': '#ffffff') : '#ffffff  ' " />
             </div>

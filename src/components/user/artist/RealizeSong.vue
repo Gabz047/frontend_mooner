@@ -43,11 +43,11 @@ function Finished(err) {
     else if(!err && props.is_album){
         AlbumStore.msg = null
         ArtistProgressStore.state.progress_artist[2].is_activate = true
-        AlbumStore.stateStorage.value.name = ''
-        AlbumStore.stateStorage.value.cover = ''
-        AlbumStore.stateStorage.value.songs = []
-        AlbumStore.stateStorage.value.file = ''
-        AlbumStore.stateStorage.value.albumcreated = false
+        AlbumStore.stateStorage.name
+        AlbumStore.stateStorage.cover = ''
+        AlbumStore.stateStorage.songs = []
+        AlbumStore.stateStorage.file = ''
+        AlbumStore.stateStorage.albumcreated = false
         router.push('/')
     }
     else {
