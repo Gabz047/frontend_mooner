@@ -1,5 +1,5 @@
 import {ref, computed} from 'vue'
-import { trash, wave, heart, disc, artist, copy, unlike, house, luuna } from "@/assets/images/icons/settingsIndex"
+import { trash, wave, heart, disc, artist, copy, unlike, house, luuna, queue } from "@/assets/images/icons/settingsIndex"
 import Logo from '@/assets/images/Logo.png'
 import monn from '@/assets/images/monn.jpg'
 import router from '@/router'
@@ -7,7 +7,8 @@ import router from '@/router'
 export const verify_active = ref(false)
 
 export const data =  ref([
-    {tittle: 'Remover', img: trash, history: true },
+    {tittle: 'Remover', img: trash},
+    {tittle: 'Adicionar a Fila', img: queue},
     {tittle: 'Iniciar MoonWave', img: wave},
     {tittle: 'Curtir', img: [heart, unlike], liked: false},
     {tittle: 'Album', img: disc},

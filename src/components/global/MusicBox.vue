@@ -1,16 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import {ref, onMounted} from 'vue'
+
 import play from '../../assets/images/icons/play.svg'
 import pause from '../../assets/images/icons/pause.svg'
 import SettingsGlobal from './SettingsGlobal.vue';
 import AddPlaylist from './AddPlaylist.vue';
 import { data_playlist, adjusteSize, verify_active } from '@/utils/music/music';
 import { artist } from '@/utils/artist/artist-profile';
+import { useQueueStore } from '@/stores';
 import { useHistoryStore, useLoginStore } from '@/stores';
 const HistoryStore = useHistoryStore()
 const LoginStore = useLoginStore()
 
-const getClick = ref(false)
+
+const QueueStore = useQueueStore()
 
 const emits = defineEmits([
     'createPlaylist'
@@ -47,6 +50,10 @@ const props = defineProps({
     }
 })
 
+onMounted(() => {
+    console.log(QueueStore.state.currentSong)
+})
+
 const settings = ref(false)
 const playlist = ref(false)
 const clickToAdd = ref(false)
@@ -71,7 +78,7 @@ async function createsong(){
         </div>
         <div class="flex w-full h-full">
             <div class="h-full w-4/12 duration-200 relative z-10 music-box-img">
-                <img class="absolute top-2 left-[25px] w-6 h-6 z-20 brightness-200 music-play" @click="getClick = !getClick" :src="getClick ? play : pause">
+                <img class="absolute top-2 left-[25px] w-6 h-6 z-20 brightness-200 music-play" @click="QueueStore.setCurrentSong(props.music_data)" :src="(QueueStore.state.currentSong == props.music_data) ? pause : play">
                 <img class="h-full w-full rounded-l-md music-img" :src="music_data.cover.url ? music_data.cover.url : music_data.cover.file ? music_data.cover.file : null">
             </div>
             <div class="w-11/12 flex flex-col justify-center pl-3 overflow-hidden">
@@ -90,6 +97,8 @@ async function createsong(){
         </div>
     </div>
     </div>
+    <SettingsGlobal v-if="!is_search_history" :is_on="settings" @addQueue="QueueStore.addSongToQueue(props.music_data)" />
+    <AddPlaylist v-if="!is_search_history" :is_on="playlist" @createPlaylist="emits('createPlaylist')" :has_playlist="props.has_playlist" :data="data_playlist" /> 
     <SettingsGlobal :history="is_history" :is_on="settings" />
     <AddPlaylist  :is_on="playlist" @createPlaylist="emits('createPlaylist')" :has_playlist="props.has_playlist" :data="data_playlist" /> 
     </div>

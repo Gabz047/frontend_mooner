@@ -11,8 +11,8 @@ defineProps({
 })
 </script>
 <template>
-    <div class="flex justify-between p-8  items-center w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white">
-        <RouterLink to="/"><img src="../../assets/images/Logo.png" v-if="is_blink_layout"></RouterLink>
+    <div v-if="loginStore.state.access" class="flex justify-between p-8  items-center w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white">
+        <RouterLink to="/" class="cursor-pointer"><img src="../../assets/images/Logo.png" v-if="is_blink_layout"></RouterLink>
         <div class="user-config">
             <div class="flex items-center gap-2">
                 <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">

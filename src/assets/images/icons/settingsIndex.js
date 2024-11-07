@@ -6,7 +6,12 @@ import artist from './artist.svg'
 import copy from './copy.svg'
 import unlike from './unlike.svg'
 import house from './house.svg'
+import queue from './queue.svg'
 import luuna from '../../images/luuna.png'
+import prev from './prev.svg'
+import next from './next.svg'
+
+
 export {
     trash,
     wave,
@@ -16,5 +21,8 @@ export {
     copy,
     unlike,
     house,
-    luuna
+    luuna,
+    queue,
+    prev,
+    next
 }

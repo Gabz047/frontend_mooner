@@ -8,6 +8,7 @@ const loginStore = useLoginStore()
 import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
 import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
+import player from '@/components/global/player.vue';
 import MusicBox from '@/components/global/MusicBox.vue';
 import { data_section, data_page, data_music_home, selectSection} from '@/utils/music/music';
 
@@ -38,7 +39,9 @@ onMounted(async ()=>{
       <MusicGlobalContainer class="mt-3" :title="item.title" v-for="item, index in data_music_home" :key="index">
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="music.has_playlist" />
       </MusicGlobalContainer>
-
     </section>
+
+    <player />
+
   </main>
 </template>

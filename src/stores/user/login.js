@@ -45,12 +45,17 @@ export const useLoginStore = defineStore('login', ()=>{
         if(state.value.user.email && state.value.user.password){
             DoLogin(state.value.user)
         }
-    }
+    }   
 
     function Logout(){
-        state.value.user = null
-        state.value.access = null
-        state.value.refresh = null
+        state.value.access = ''
+        state.value.refresh = ''
+        state.value.user.email = ''
+        state.value.user.password = ''
+        state.value.user.premium = ''
+        state.value.user.is_artist = false
+        localStorage.clear()
+    
         router.push('/login')
     }
     return { DoLogin, Logout, AutoLogin, msg, err, user, state, access }
