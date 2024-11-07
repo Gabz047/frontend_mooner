@@ -8,6 +8,10 @@ import unlike from './unlike.svg'
 import house from './house.svg'
 import queue from './queue.svg'
 import luuna from '../../images/luuna.png'
+import prev from './prev.svg'
+import next from './next.svg'
+
+
 export {
     trash,
     wave,
@@ -18,5 +22,7 @@ export {
     unlike,
     house,
     luuna,
-    queue
+    queue,
+    prev,
+    next
 }

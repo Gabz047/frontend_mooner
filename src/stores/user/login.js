@@ -54,6 +54,7 @@ export const useLoginStore = defineStore('login', ()=>{
         state.value.user.password = ''
         state.value.user.premium = ''
         state.value.user.is_artist = false
+        localStorage.clear()
         router.push('/login')
     }
     return { DoLogin, Logout, AutoLogin, msg, err, user, state, access }
