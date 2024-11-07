@@ -16,7 +16,8 @@ import { useDocumentStore } from "./file/document";
 import { useGenreStore } from "./genre/genre";
 import { useImgStore } from "./file/image";
 import { usePaymentStore } from "./payments/payment";
-import { useAlbumStore } from "./album/album";
+import { useQueueStore } from "./mooner/queue";
+import { useAlbumStore } from "./mooner/albuns";
 
 export {
     useSignUpStore,
@@ -32,7 +33,7 @@ export {
     useFollowingStore,
     useCommunityStore,
     useLikedSongStore,
-
+    useQueueStore,
     useArtistProgress,
     useDocumentStore,
     useImgStore,
