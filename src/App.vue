@@ -10,8 +10,7 @@ const loginStore = useLoginStore()
 // router.beforeEach((to, from, next) => {
 //   if (to.path == '/login' ||)
 // })
-
-  onMounted(async()=>{
+onMounted(async()=>{
     await userStore.getUser(loginStore.access)
     console.log(userStore.myuser)
     await playlistStore.getPlaylistsByOwner(userStore.myuser.email, loginStore.access)

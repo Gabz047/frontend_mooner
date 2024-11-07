@@ -1,7 +1,6 @@
 import { useSignUpStore } from "./user/signup";
 import { useLoginStore } from "./user/login";
 import { useLunnaIAStore } from "./IA/luuna";
-import { useSearchStore } from "./search/search";
 import { useHistoryStore } from "./history/history";
 import { useNavigationStore } from "./navigation/navigation";
 import { useSongStore } from "./mooner/song";
@@ -23,7 +22,6 @@ export {
     useSignUpStore,
     useLoginStore,
     useLunnaIAStore,
-    useSearchStore,
     useHistoryStore,
     useNavigationStore,
     useSongStore,
@@ -34,10 +32,10 @@ export {
     useCommunityStore,
     useLikedSongStore,
     useQueueStore,
+    useAlbumStore,
     useArtistProgress,
     useDocumentStore,
     useImgStore,
     useGenreStore,
     usePaymentStore,
-    useAlbumStore
 }
