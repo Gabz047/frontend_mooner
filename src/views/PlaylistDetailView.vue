@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
-import { useSongStore, useLoginStore, usePlaylistStore, useUserStore, useImgStore } from '@/stores/index'
+import { useSongStore, useLoginStore, usePlaylistStore, useUserStore, useImgStore, useQueueStore } from '@/stores/index'
 import { useRoute, useRouter } from 'vue-router';
 import MusicBox from '@/components/global/MusicBox.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
@@ -26,6 +26,7 @@ onMounted(()=>{
 const edit = ref(false)
 
 const play = ref(false)
+const attach = ref(null)
 
 const isEdit = () => {
   edit.value = !edit.value
@@ -35,12 +36,12 @@ const newPlaylist = reactive({
   id: playlistStore.selectedPlaylist.id,
   name: playlistStore.selectedPlaylist.name,
   owners: [userStore.myuser.email],
-  cover: null,
+  cover: attach.value,
   songs: playlistStore.selectedPlaylist.songs
 })
 
 const newSongs = ref([])
-
+const queueStore = useQueueStore()
 const img = ref(null)
 const saveimg = ref(null)
 
@@ -83,27 +84,32 @@ const transformToId = () => {
 
 const updatePlaylists = async (playlist, token, image) => {
   if (image) {
-  const attach = ref(null)
   await imgStore.CreateNewImg(image, token).then((response)=>{
     console.log('response:', response)
     attach.value = response
   });
   await imgStore.GetImagesByAttachment_key(attach.value, token)
-  newPlaylist.cover = imgStore.selectedImage
+  newPlaylist.cover = imgStore.selectedImage.attachment_key
   console.log(newPlaylist)
   transformToId()
   }
   
   setTimeout(()=>{
     console.log(newSongs.value)
-    playlistStore.updatePlaylist(playlist, token)
+    playlistStore.updatePlaylist(playlist, token).then((response)=>{
+      console.log('playlist response', response)
+    })
     userouter.push('/')
-    
+    console.log('newPlaylist response', newPlaylist)
     setTimeout(()=>{
       window.location.reload()
     }, 500)
   }, 1000)
   
+}
+
+const playAndQueue = (songs) => {
+  queueStore.state.queue = songs
 }
 
 const alreadyHas = ref(false)
@@ -173,7 +179,7 @@ const isOn = ref(false)
                 <div class="size-2 bg-white rounded-full"></div>
                 <p class="leading-none">15 Minutos</p>
               </div>
-              <div @click="play = !play" class=" mt-5 text-5xl leading-none cursor-pointer w-full flex justify-center">
+              <div @click="play = !play, playAndQueue(playlistStore.selectedPlaylist.songs)" class=" mt-5 text-5xl leading-none cursor-pointer w-full flex justify-center">
                 <i :class="!play ? 'mdi mdi-play-circle' : 'mdi mdi-pause-circle'"></i>
               </div>
             </div>

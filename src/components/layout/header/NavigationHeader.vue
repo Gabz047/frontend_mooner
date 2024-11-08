@@ -33,7 +33,7 @@ const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
   songs: [],
-
+  cover: '9dc7c8cf-1dcc-4327-8b53-7a4bb3d3370b'
 })
 
 const communityBody = reactive({
@@ -56,8 +56,9 @@ const createCommunity = async (community, token) => {
 <template>
   <section class="my-auto border-r border-none overflow-auto rounded-lg bg-[#121212] p-5" :class="queueStore.state?.currentSong ? 'h-[90%]' : 'h-full' " >  
     <div class="w-full flex justify-between">
+      <RouterLink to="/">
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
-
+    </RouterLink>
       <div class="flex flex-col gap-1">
       <div @click="selectIcon(item), console.log('clicado')" v-for="(item, index) in data_header_icons">
         <img

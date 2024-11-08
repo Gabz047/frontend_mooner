@@ -66,7 +66,7 @@ async function createsong(){
 
 </script>
 <template>
-    <div @click="!buttons ? clickToAdd = !clickToAdd : ''" class="w-72 min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 p-1" :class="clickToAdd ? 'bg-[#6340AE]' : 'bg-none', !buttons ? 'p-1' : ''" >
+    <div @click="!buttons ? clickToAdd = !clickToAdd : ''" class="w-[320px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 p-1" :class="clickToAdd ? 'bg-[#6340AE]' : 'bg-none', !buttons ? 'p-1' : ''" >
         <div :class=" !buttons  ? clickToAdd ? 'absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-30 flex justify-center items-center' : '' : ''">
            <img v-if="!buttons && clickToAdd " class="size-8 z-50" src="@/assets/images/icons/verified.svg">
            <p v-if="!buttons && clickToAdd ">Adicionado</p>
@@ -90,9 +90,6 @@ async function createsong(){
             <div class="w-2/12 flex justify-end items-center px-2 music-play" v-if="!is_search_history || props.buttons">
                 <img  @click="playlist = !playlist, settings = false, verify_active = !verify_active" src="../../assets/images/icons/add.svg" class="w-6 h-6">
                 <img @click="settings = !settings, playlist = false, verify_active = !verify_active" src="../../assets/images/icons/settingsdot.svg" class="w-4 h-4">
-            </div>
-            <div class="w-2/12 flex justify-end items-center music-play" v-if="!is_search_history || props.buttons">
-                <h1 class="cursor-pointer text-xl text-neutral-700" @click="$emit('deletesong')">X</h1>
             </div>
         </div>
     </div>
