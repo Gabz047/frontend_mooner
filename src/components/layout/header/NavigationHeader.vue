@@ -5,13 +5,15 @@ import CommunityBox from './CommunityBox.vue'
 import { data_header_icons, selectIcon, returnActive } from '@/utils/music/music'
 import LunaIA from './LunaIA.vue'
 import { computed, onMounted, reactive } from 'vue';
-import { usePlaylistStore, useLoginStore, useUserStore, useCommunityStore, useQueueStore} from '@/stores'
+import { usePlaylistStore, useLoginStore, useUserStore, useCommunityStore, useQueueStore, useImgStore} from '@/stores'
+import router from '@/router'
 
 const userStore = useUserStore()
 const playlistStore = usePlaylistStore()
 const loginStore = useLoginStore()
 const communityStore = useCommunityStore()
 const queueStore = useQueueStore()
+const imgStore = useImgStore()
 
 const token = loginStore.access
 const user = userStore.myuser
@@ -30,13 +32,10 @@ const props = defineProps({
 const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
-  songs: [] 
+  songs: [],
+
 })
 
-
-const goConsole = () => {
-  console.log(playlistBody)
-}
 const communityBody = reactive({
   name: `Comunidade de ${user.email}`,
   description: `Seja bem vindo a comunidade de ${user.email}`,
@@ -44,8 +43,8 @@ const communityBody = reactive({
 })
 
 const createPlaylist = async (playlist, token) => {
-  console.log(playlist)
   await playlistStore.createPlaylist(playlist, token)
+  window.location.reload()
 }
 
 const createCommunity = async (community, token) => {
@@ -60,20 +59,22 @@ const createCommunity = async (community, token) => {
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
 
       <div class="flex flex-col gap-1">
+      <div @click="selectIcon(item), console.log('clicado')" v-for="(item, index) in data_header_icons">
         <img
-          v-for="(item, index) in data_header_icons"
-          :class="['w-7 h-[29px]', item.active ? ' rounded-lg' : ' brightness-[30%]']"
+          
+          :class="['w-7 h-[29px]', item.active ? '' : ' brightness-[30%]']"
           :src="item.icon"
           :key="index"
-          alt="" @click="selectIcon(item)"
+          alt=""
         />
+      </div>
       </div>
     </div>
 
     <div v-if="returnActive == 'home'">
     <p class="text-xl text-white">Playlists</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <PlaylistBox @create="createPlaylist(playlistBody, token), goConsole()" :playlists="props.data_playlist" />
+      <PlaylistBox @create="createPlaylist(playlistBody, token)" :playlists="props.data_playlist" />
     </div>
 
     <p class="text-xl mt-5 text-white">Seguindo</p>

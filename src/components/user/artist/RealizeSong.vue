@@ -70,7 +70,7 @@ onMounted(async () => {
                         <InputGlobal v-for="input, index in fields" :key="index"
                             container_class="artist-fields-container" :field_name="input.fieldname" :type="input.type"
                             :is_required="input.required" :options="input.options" v-model:value="input.value" :multiple="input.multiple"/>
-                        <FeatInput/>
+                        <FeatInput />
                     </div>
                 </div>
                 <ButtonGlobal title="Enviar música" background="#6340AE" color="white" width="350px"

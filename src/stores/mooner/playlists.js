@@ -115,11 +115,12 @@ export const usePlaylistStore = defineStore('playlist', () => {
    */
   const updatePlaylist = async (playlist, token) => {
     state.loading = true
+    console.log('playlistStore:', playlist)
     try {
-      const index = state.songs.findIndex((s) => s.id === playlist.id)
-      state.playlists[index] = await PlaylistService.updatePlaylist(playlist, token)
+      await PlaylistService.updatePlaylist(playlist, token)
     } catch (error) {
       state.error = error
+      console.log(error)
     } finally {
       state.loading = false
     }
