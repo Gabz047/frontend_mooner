@@ -52,6 +52,10 @@ const props = defineProps({
     showInPlaylistAddComponent: {
         type: Boolean,
         default: false
+    },
+    remove: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -77,12 +81,11 @@ const verifyInPlaylist = (song) => {
 
 </script>
 <template>
-    <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 p-1 ">
-        <div v-if="props.buttons && clickToAdd " class='absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-50 flex justify-center items-center duration-150'>
-           <img class="size-8" src="@/assets/images/icons/verified.svg">
-           <p>Adicionado</p>
-        </div>
-    <div class="w-80 relative" :class="is_search_history ? 'bg-neutral-800 rounded-md' : null" @click="createsong">
+    <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md duration-100 p-1 flex items-center justify-start">
+    <div class="w-full h-full rounded-[5px] bg-[rgba(0,0,0,0.7)] absolute z-30 flex items-center justify-start">
+       <div class="absolute ml-4 text-xl mdi mdi-trash-can-outline text-white"></div>
+    </div>
+    <div class="w-80 relative p-1" :class="is_search_history ? 'bg-neutral-800 rounded-md' : null" @click="createsong">
     <div class="flex items-center h-[48px] w-full relative gap-3 music-box z-20">
         <div class="w-1/12 flex justify-center" v-if="props.has_index">
             <p class=" text-2xl font-semibold text-white text-center">{{ props.has_index ? props.index : '' }}</p>
@@ -105,10 +108,6 @@ const verifyInPlaylist = (song) => {
         </div>
     </div>
     </div>
-   
-    <SettingsGlobal v-if="!is_search_history" :is_on="settings" @addQueue="QueueStore.addSongToQueue(props.music_data)" />
-    <AddPlaylist v-if="!is_search_history" :is_on="playlist" @createPlaylist="emits('createPlaylist')" :has_playlist="props.has_playlist" :music_data="props.music_data" /> 
-
     </div>
     
 </template>
@@ -125,4 +124,9 @@ const verifyInPlaylist = (song) => {
     visibility: visible;
  }
 }
+/* .hover-father:hover {
+    .hover-son {
+
+    }
+} */
 </style>

@@ -14,7 +14,6 @@ class SongService {
         try {
             const { data } = await api.get('/songs', {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: GetSong - return success")
-            console.log(data.results)
             return data.results;
         } catch (error) {
             console.log("Service: GetSong - return error", error);

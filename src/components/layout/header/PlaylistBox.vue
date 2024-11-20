@@ -22,16 +22,16 @@ const emits = defineEmits([
 ])
 
 const to = (id, playlist) => {
-  console.log(id)
+  playlistStore.state.selectedPlaylist = {}
+  localStorage.removeItem("playlistStorage")
   playlistStore.state.selectedPlaylist = playlist
+  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
+  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
+  playlistStore.newPlaylist.id = playlistStore.selectedPlaylist.id
+  playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key,
   router.push('/playlist/' + id)
 }
-onMounted(()=>{
-  setTimeout(()=>{
-    console.log('playlists:', props.playlists)
-  }, 5000)
-  
-})
+
 </script>
 <template>
  

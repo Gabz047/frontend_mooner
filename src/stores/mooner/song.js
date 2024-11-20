@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { SongService } from '@/services'
+import { useStorage } from '@vueuse/core'
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -23,8 +24,7 @@ import { SongService } from '@/services'
  * @returns {SpecieStore} The OrganStore instance.
  */
 export const useSongStore = defineStore('song', () => {
-
-  const state = reactive({
+  const state = useStorage('songStorage', {
     songs: [],
     selectedSong: {},
     songsByTitle: [],
@@ -46,12 +46,12 @@ export const useSongStore = defineStore('song', () => {
   const msg = ref('')
   const err = ref(false)
 
-  const songs = computed(() => state.songs)
-  const songsByTitle = computed(() => state.songsByTitle)
-  const selectedSong = computed(() => state.selectedSong)
-  const isLoading = computed(() => state.loading)
-  const songsCount = computed(() => state.songs.length)
-  const songsByGenre = computed(() => state.songsByGenre)
+  const songs = computed(() => state.value.songs)
+  const songsByTitle = computed(() => state.value.songsByTitle)
+  const selectedSong = computed(() => state.value.selectedSong)
+  const isLoading = computed(() => state.value.loading)
+  const songsCount = computed(() => state.value.songs.length)
+  const songsByGenre = computed(() => state.value.songsByGenre)
 
   /**
    * Fetches organs data.
@@ -59,14 +59,14 @@ export const useSongStore = defineStore('song', () => {
    * @function getSpecies
    */
   const getSongs = async (token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      state.songs = await SongService.getSong(token)
+      state.value.songs = await SongService.getSong(token)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -76,15 +76,15 @@ export const useSongStore = defineStore('song', () => {
   * @function getOrgansBySystem
   */
   const getSongsByName = async (name, token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       const response = await SongService.getSongByTitle(name, token)
-      state.songsByTitle = response
+      state.value.songsByTitle = response
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -95,7 +95,7 @@ export const useSongStore = defineStore('song', () => {
    * @param {Object} newSpecie - The new organ object to create.
    */
   const createSong = async (title, genre, lyrics, token, email) => {
-    state.loading = true
+    state.value.loading = true
     try {
       newsong.title = title
       newsong.genre = genre
@@ -108,18 +108,18 @@ export const useSongStore = defineStore('song', () => {
       }
       else {
         msg.value = 'musica lançada com sucesso'
-        state.songs.push(await SongService.createSong(newsong, token))
+        state.value.songs.push(await SongService.createSong(newsong, token))
         err.value = false
       }
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 
   const createSongForAlbum = async (title, genre, lyrics, token, email) => {
-    state.loading = true
+    state.value.loading = true
     newsong.title = title
     newsong.genre = genre
     newsong.lyrics = lyrics
@@ -138,11 +138,11 @@ export const useSongStore = defineStore('song', () => {
       }
     }
     catch(error){
-      state.error = error
+      state.value.error = error
     }
     finally{
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -153,14 +153,14 @@ export const useSongStore = defineStore('song', () => {
    * @param {Object} specie - The organ object to update.
    */
   const updateOrgan = async (organ) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      const index = state.organs.findIndex((s) => s.id === organ.id)
-      state.organs[index] = await OrganService.getOrgans()
+      const index = state.value.organs.findIndex((s) => s.id === organ.id)
+      state.value.organs[index] = await OrganService.getOrgans()
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
   /**
@@ -170,29 +170,28 @@ export const useSongStore = defineStore('song', () => {
    * @param {number} id - The ID of the organ to delete.
    */
   const deleteOrgan = async (id) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      const index = state.organs.findIndex((s) => s.id === id)
-      state.organs.splice(index, 1)
+      const index = state.value.organs.findIndex((s) => s.id === id)
+      state.value.organs.splice(index, 1)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 
   const GetSongByGenre = async (genre, token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       const response = await SongService.getSongByGenre(genre, token)
-      state.songsByGenre = response
-      console.log(response)
-      console.log(genre)
+      state.value.songsByGenre = response
+   
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 

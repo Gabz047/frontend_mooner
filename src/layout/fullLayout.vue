@@ -8,9 +8,6 @@ import { onMounted } from 'vue';
 const playlistStore = usePlaylistStore()
 const communityStore = useCommunityStore()
 
-onMounted(()=>{
-  console.log(playlistStore.state)
-})
 </script>
 <template>
      <main class="w-dvw h-dvh grid grid-rows-2 grid-cols-[23%_77%]">

@@ -14,7 +14,6 @@ const LoginStore = useLoginStore()
 const search = ref('')
 async function FilterSong(){
     await SongStore.getSongsByName(search.value, LoginStore.access)
-    console.log(SongStore.songsByTitle)
 }
 
 function getI(i){
@@ -23,7 +22,6 @@ function getI(i){
 
 onMounted(async() =>{
     await SongStore.getSongs(LoginStore.access)
-    console.log(SongStore.songs)
 })
 </script>
 <template>

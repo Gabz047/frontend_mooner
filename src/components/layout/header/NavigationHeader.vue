@@ -33,7 +33,7 @@ const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
   songs: [],
-  cover: '9dc7c8cf-1dcc-4327-8b53-7a4bb3d3370b'
+  cover: '03436249-13fe-4bc7-b994-1bdedce1e991'
 })
 
 const communityBody = reactive({
@@ -60,7 +60,7 @@ const createCommunity = async (community, token) => {
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
     </RouterLink>
       <div class="flex flex-col gap-1">
-      <div @click="selectIcon(item), console.log('clicado')" v-for="(item, index) in data_header_icons">
+      <div @click="selectIcon(item)" v-for="(item, index) in data_header_icons">
         <img
           
           :class="['w-7 h-[29px]', item.active ? '' : ' brightness-[30%]']"

@@ -11,7 +11,7 @@ defineProps({
 })
 </script>
 <template>
-    <div class="flex justify-end w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white items-end z-40">
+    <div class="flex justify-end w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white items-end z-50">
         <div class="user-config">
             <div class="flex items-center gap-2 px-2 pt-1 ">
                 <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
