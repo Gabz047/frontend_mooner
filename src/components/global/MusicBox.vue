@@ -70,8 +70,14 @@ async function createsong() {
 }
 
 function setSong() {
-  QueueStore.setCurrentSong(props.music_data)
-  playerStore.usePlay()
+  if (QueueStore.state.currentSong != props.music_data) {
+    console.log('repetiu')
+    QueueStore.setCurrentSong(props.music_data)
+    playerStore.play()
+  }
+  else {
+    playerStore.usePlay()
+  }
 }
 
 const verifyInPlaylist = (song) => {
