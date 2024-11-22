@@ -21,16 +21,23 @@ const emits = defineEmits([
   'create'
 ])
 
-const to = (id) => {
-  console.log(id)
+const to = (id, playlist) => {
+  playlistStore.state.selectedPlaylist = {}
+  localStorage.removeItem("playlistStorage")
+  playlistStore.state.selectedPlaylist = playlist
+  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
+  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
+  playlistStore.newPlaylist.id = playlistStore.selectedPlaylist.id
+  playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key,
   router.push('/playlist/' + id)
 }
+
 </script>
 <template>
  
-  <div v-for="item in props.playlists" class="w-[90%] flex items-center select-none cursor-pointer hover:brightness-[70%]"  @click="to(item.id)">
-    <div class="min-w-[5rem] min-h-[4.5rem] rounded-xl bg-slate-300">
-      <img v-if="item.cover?.url" class="w-full h-full rounded-xl" :src="item.cover.file" >
+  <div v-for="item in props.playlists" class="w-[90%] flex items-center select-none cursor-pointer hover:brightness-[70%]"  @click="to(item.id, item)">
+    <div class="max-w-[5rem] max-h-[4.5rem] w-[5rem] h-[4.5rem] rounded-xl" :class="item.cover.url == null ? 'bg-slate-300' : ''">
+      <img v-if="item.cover?.url" class="w-full h-full rounded-xl" :src="item.cover.url" >
     </div>
     <div class="ml-2 flex flex-col gap-[0.5px] text-base">
       <p class="text-xl font-normal text-white">{{ adjusteSize(item.name, 16, 16) }}</p>

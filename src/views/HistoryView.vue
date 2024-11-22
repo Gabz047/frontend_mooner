@@ -15,7 +15,6 @@ const historyStore = useHistoryStore()
 
 onMounted( async () =>{
   const history = await historyStore.GetHistory(storeUser.user.email, storeUser.access)
-  console.log(history)
 })
 </script>
 <template>

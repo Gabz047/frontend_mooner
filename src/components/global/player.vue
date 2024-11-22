@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="QueueStore.state.currentSong ? QueueStore.state.currentSong.player : ''" class="flex w-[98%] ml-[1%] mr-[1%] fixed bottom-0 h-[9%] justify-between items-center bg-[#3B2174] z-20 rounded-xl p-4">
+    <div v-if="QueueStore.currentSong ? QueueStore.currentSong.player : true" class="flex w-[98%] ml-[1%] mr-[1%] fixed bottom-0 h-[9%] justify-between items-center bg-[#3B2174] z-20 rounded-xl p-4">
         <div class="volume absolute left-35 z-50 bg-black w-1">
             <input type="range" class="volume" min="0" max="100" v-show="showVolume" v-model="volume">
         </div>
@@ -52,7 +52,7 @@ onMounted(() => {
         <div class="flex flex-row relative items-center gap-2">
             <img :class="(QueueStore.state.history.length == 0) ? 'brightness-50' : 'brightness-200 cursor-pointer'" @click="(QueueStore.state.history.length > 0) ? QueueStore.previousSong() : null" class="w-6 h-6 z-30" :src="prev" alt="">
             <div class="relative rounded-lg bg-slate-600 h-12 w-12">
-                <audio ref="songPlayer" class="" :src="QueueStore.state.currentSong.player.url"></audio>
+                <audio ref="songPlayer" class="" :src="QueueStore.currentSong.player.url"></audio>
                 <img class="w-full h-full brightness-50 border-none rounded-xl" v-if="QueueStore.state.currentSong.cover?.url" :src="QueueStore.state.currentSong.cover?.url" alt="">
                 <img class="absolute top-3 left-3.5 w-6 h-6 z-30 brightness-200 cursor-pointer" @click="usePlay" :src="(is_playing) ? pause : play">
             </div>

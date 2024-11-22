@@ -132,13 +132,13 @@ export const useAlbumStore = defineStore('album', () => {
    */
   const createAlbum = async (token, user) => {
     state.loading = true
-    console.log('função chamada')
+   
     try {
       newAlbum.autor = user
-      console.log('no try')
+    
       for(let i = 0; i < stateStorage.value.songs.length; i++){
         newAlbum.songs.push(stateStorage.value.songs[i].id)
-        console.log('caiu no for')
+        
       }
       msg.value = 'album criado com sucesso'
       state.albuns.push(await AlbumService.createAlbum(newAlbum, token))

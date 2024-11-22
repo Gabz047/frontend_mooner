@@ -12,6 +12,7 @@ export const useQueueStore = defineStore('queue', () => {
         is_playing: false
     }))
 
+    const currentSong = computed(()=> state.value.currentSong)
     const is_playing = computed(()=> state.value.is_playing)
     
 
@@ -76,6 +77,7 @@ export const useQueueStore = defineStore('queue', () => {
     return {
         state,
         is_playing,
+        currentSong,
         setCurrentSong,
         addSongToQueue,
         addSongToHistory,

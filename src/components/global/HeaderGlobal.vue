@@ -11,14 +11,19 @@ defineProps({
 })
 </script>
 <template>
-    <div class="flex justify-end w-[97.5%] mb-3 mx-auto relative right-0 min-h-10 text-white items-end ">
-        <div class="user-config ">
+    <div class="flex justify-end xl:justify-between w-[97.5%] mx-auto relative mb-3 xl:mb-0 right-0 min-h-10 xl:min-h-16 xl:items-center text-white items-end z-50 xl:w-[100%]">
+        <RouterLink to="/" class="ml-8 hidden mt-2 lg:mt-0 xl:flex">
+            <div class="h-full">
+                <img class="w-full h-10" src="@/assets/images/Logo.png" >
+            </div>
+        </RouterLink>
+        <div class="user-config">
             <div class="flex items-center gap-2 px-2 pt-1 ">
                 <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
-                <p :class="loginStore.user.premium ? 'btn-dourado' : 'text-white'" >{{loginStore.user.email}}</p>
+                <p :class="loginStore.user.premium ? 'btn-dourado' : 'text-white'" class="sm:hidden" >{{loginStore.user.email}}</p>
             </div>
             <div  id="options">
-                <UserOptions :is_artist="loginStore.user.is_artist" :logout="loginStore.Logout"/>
+                <UserOptions class="userOptions" :is_artist="loginStore.user.is_artist" :logout="loginStore.Logout"/>
             </div>
         </div>
     </div>
@@ -28,39 +33,55 @@ defineProps({
         position: absolute;
         right: 0;
         margin-right: 20px;
-        padding: 10px;
+        padding: 0px;
         transition: 0.4s;
         border-radius: 10px 10px 0px 0px ;
     }
     #options{
+        transition: 0.4s;
        
-        transition: 0.6s;
-        opacity: 0;
         width: 100%;
         position: absolute;
-        height: 0px;
-       
-        
+        height: 30px;
+        visibility: hidden;
+        padding: 4px;
     }
+    .userOptions {
+    opacity: 0;
+    font-size: 18px;
+    transition: 0.2s;
+    }
+
+    /* .userOptions {
+        opacity: 0;
+        transition: 1s;
+    } */
+
     .user-config:hover{
         background-color: blueviolet;
     
     }
     .user-config:hover #options{
 
-        opacity: 1;
-        height: auto;
+        height: 150px;
         margin-bottom: 20px;
-       
+        visibility: visible;
         background-color: blueviolet;
         gap: 5px;
        
         border-radius: 0px 0px 10px 10px;
         right: 0.005px;
         font-size: 17px;
-        padding: 10px;
-        
+
+        & .userOptions {
+            opacity: 1;
+        }
     }
+
+    /* .user-config:hover .userOptions {
+        opacity: 1;
+    } */
+
     .btn-dourado {
         width: auto;
         height: auto;

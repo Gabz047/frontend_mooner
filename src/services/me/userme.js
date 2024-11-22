@@ -5,7 +5,6 @@ class UserMeService{
     async getUsers(token) {
         try {
             const {data} = await api.get(`/usuarios`, {headers: {'authorization': `Bearer ${token}`}});
-            console.log(data.results)
         return data.results
         } catch (error) {
             console.log('Error in getUsers', error);
