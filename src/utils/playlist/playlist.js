@@ -1,12 +1,13 @@
 import {ref} from 'vue'
 import { usePlaylistStore, useUserStore, useImgStore, useQueueStore, useLoginStore } from "@/stores"
-
+import { useRoute } from 'vue-router'
 let playlistStore = null
 let userStore = null
 let imgStore = null
 let queueStore = null
 let loginStore = null
 let token = null
+const router = useRoute()
 
 setTimeout(()=>{
   playlistStore = usePlaylistStore()
@@ -29,9 +30,17 @@ export const transformToId = () => {
       playlistStore.newPlaylist.songs[i] = playlistStore.newPlaylist.songs[i].id
     }
   }
+
+  const updateBody = async (playlist, token, id) => {
+    await playlistStore.updatePlaylist(playlist, token)
+    
+    window.location.replace('http://127.0.0.1:5173/')
+    setTimeout(()=>{
+      window.location.reload()
+    },500)
+  }
   
-export const updatePlaylists = async (playlist, token, image, songs) => {
-  console.log('tolken', token)
+export const updatePlaylists = async (playlist, token, image, songs, id) => {
     playlistStore.state.selectedPlaylist.songs = playlistStore.state.selectedPlaylist.songs.concat(songs)
     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
     if (image != null) {
@@ -54,9 +63,11 @@ export const updatePlaylists = async (playlist, token, image, songs) => {
   
       playlistStore.state.selectedPlaylist.songs.concat(playlistStore.newPlaylist.songs)
       transformToId()
-      playlistStore.updatePlaylist(playlist, token)
-      
+      updateBody(playlist, token)
+
     }, 500)
+
+  
   }
 
   export const saveData = ref(null)
@@ -66,7 +77,6 @@ export const updatePlaylists = async (playlist, token, image, songs) => {
    }
   
 export const addToPlaylist = (data_add, songs, token) => {
-  console.log('data_add' + data_add.song, 'songs', songs, 'token', token)
     const index = songs.findIndex((s) => s.id == data_add.song.id)
     const indexInPlaylist = playlistStore.selectedPlaylist.songs.findIndex((s) => s.id == data_add.song.id)
     if (data_add.action == 'add') {

@@ -1,52 +1,33 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-import {
-  useSongStore,
-  useLoginStore,
-  usePlaylistStore,
-  useUserStore,
-  useImgStore,
-  useQueueStore
-} from '@/stores/index'
-import { useRoute, useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { useSongStore, useLoginStore, usePlaylistStore,} from '@/stores/index'
 import MusicBox from '@/components/global/MusicBox.vue'
-import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue'
-import monn from '../assets/images/monn.jpg'
-import { adjusteSize } from '@/utils/music/music'
-import ButtonGlobal from '@/components/global/ButtonGlobal.vue'
-import AddPlaylist from '@/components/global/AddPlaylist.vue'
-import MusicBoxRemove from '@/components/global/MusicBoxRemove.vue'
-import ContentContainer from '@/components/PlaylistDisplay/ContentContainer.vue'
 
-import { addToPlaylist, captureEmit, saveData } from '@/utils/playlist/playlist'
+import ButtonGlobal from '@/components/global/ButtonGlobal.vue'
+import ContentContainer from '@/components/PlaylistDisplay/ContentContainer.vue'
+import InfoContainer from '@/components/PlaylistDisplay/InfoContainer.vue'
+import { useRoute, useRouter } from 'vue-router'
+import { addToPlaylist, captureEmit, saveData, updatePlaylists, playAndQueue } from '@/utils/playlist/playlist'
 const songStore = useSongStore()
 const loginStore = useLoginStore()
 const playlistStore = usePlaylistStore()
-const userStore = useUserStore()
-const imgStore = useImgStore()
-
-const access = ref(loginStore.access)
-const router = useRoute()
-const userouter = useRouter()
-
-const id = router.params.id
+const route = useRoute()
+const router = useRouter()
+const id = route.params.id
 const token = loginStore.access
 const songs = ref([])
+
+
 
 onMounted(() => {
   console.log('rodou')
   songs.value = []
+  
 })
 const edit = ref(false)
 const play = ref(false)
 const settings = ref(false)
 
-const isEdit = () => {
-  edit.value = !edit.value
-}
-
-const newSongs = ref([])
-const queueStore = useQueueStore()
 const img = ref(null)
 const saveimg = ref(null)
 
@@ -57,48 +38,7 @@ async function handleFileUpload(e) {
     img.value = URL.createObjectURL(file)
     saveimg.value = file
   }
-}
 
-const transformToId = () => {
-  for (let i = 0; i < playlistStore.newPlaylist.songs.length; i++) {
-    playlistStore.newPlaylist.songs[i] = playlistStore.newPlaylist.songs[i].id
-  }
-}
-
-const updatePlaylists = async (playlist, token, image) => {
-  playlistStore.state.selectedPlaylist.songs = playlistStore.state.selectedPlaylist.songs.concat(songs.value)
-  playlistStore.newPlaylist.owners.push(userStore.myuser.email)
-  if (image) {
-    await imgStore.CreateNewImg(image, token).then((response) => {
-      playlistStore.attach = response
-    })
-    await imgStore.GetImagesByAttachment_key(playlistStore.attach, token)
-    playlistStore.newPlaylist.cover = imgStore.selectedImage.attachment_key
-  } else {
-    playlistStore.newPlaylist.cover = playlistStore.selectedPlaylist.cover.attachment_key
-  }
-  playlistStore.newPlaylist.songs = songs.value
-
-  setTimeout(() => {
-    if (playlistStore.selectedPlaylist.songs.length > 0) {
-      playlistStore.newPlaylist.songs = songs.value.concat(playlistStore.selectedPlaylist.songs)
-    } else {
-      playlistStore.newPlaylist.songs = songs.value
-    }
-
-    playlistStore.state.selectedPlaylist.songs.concat(playlistStore.newPlaylist.songs)
-    transformToId()
-    playlistStore.updatePlaylist(playlist, token)
-    // userouter.push('/')
-
-    setTimeout(() => {
-      // window.location.reload()
-    }, 100)
-  }, 500)
-}
-
-const playAndQueue = (songs) => {
-  queueStore.state.queue = songs
 }
 
 const alreadyHas = ref(false)
@@ -108,6 +48,18 @@ const isOn = ref(false)
 const close = () => {
   isOn.value = !isOn.value
 }
+
+// const reload = () => {
+//   // setTimeout(()=>{
+//   //   window.location.reload()  
+//   // },2500)
+
+//   // setTimeout(()=>{
+      
+//   //     router.push('/')
+//   //     console.log('apsiu')
+//   //   },3000)
+// }
 
 const setAction = ref('')
 
@@ -127,7 +79,7 @@ const data_add_secondary = (music, setAction) => {
       ></span>
       <p class="h-[10%] text-xl text-white mt-3">Adicione Suas Músicas</p>
 
-      <div class="max-h-[85%] h-[85%] w-11/12 bg-[#1a1a1a] overflow-auto">
+      <div class="max-h-[85%] h-[85%] w-11/12 bg-[#1a1a1a] overflow-auto ">
         <div class="w-full p-4 flex flex-col gap-3">
           <MusicBox v-if="setAction == 'add'"
             showInPlaylistAddComponent="true"
@@ -145,8 +97,8 @@ const data_add_secondary = (music, setAction) => {
       <ButtonGlobal
         class="mt-3 mb-3"
         @click="
-          updatePlaylists(playlistStore.showNewPlaylist, token),
-            alreadyHas ? (alreadyHas = false) : alreadyHas, settings = !settings, isOn = !isOn
+          updatePlaylists(playlistStore.showNewPlaylist, token, null, songs, id),
+            alreadyHas ? (alreadyHas = false) : alreadyHas, settings = !settings, isOn = !isOn, songs = []
         "
         title="Salvar Músicas"
         background="#6340AE"
@@ -156,93 +108,9 @@ const data_add_secondary = (music, setAction) => {
     </div>
     <div class="w-full h-full bg-black opacity-50"></div>
   </div>
-  <main class="w-full min-h-screen-minus-80 flex justify-end gap-4">
-    <section class="my-auto mr-2 h-full flex rounded-lg w-[98%] bg-[#121212]">
-      <div class="w-4/12 h-full flex flex-col relative rounded-lg">
-        <div class="w-full h-full relative flex justify-center">
-          <div class="absolute top-5 z-30 flex gap-3 items-center w-full justify-between">
-            <div class="flex ml-8 gap-3">
-              <h2 class="text-white text-xl">Playlist</h2>
-              <i class="mdi mdi-eye text-white text-lg"></i>
-            </div>
-            <div
-              @click="isEdit"
-              :class="{ edit: edit }"
-              class="flex mr-8 items-center justify-center gap-2 cursor-pointer relative w-[20%]"
-            >
-              <i class="mdi mdi-file-edit text-white text-xl icon"></i>
-              <p :class="{ text_edit: edit }" class="text-white text-base duration-100 edit-text">
-                Editar
-              </p>
-            </div>
-          </div>
-
-          <div class="w-[100%] h-[70%] absolute z-30 mt-24 flex flex-col gap-3 items-center">
-            <label
-              for="photo"
-              v-if="edit"
-              class="w-[70%] h-[55%] hover:bg-[rgba(0,0,0,0.8)] bg-[rgba(0,0,0,0.6)] duration-150 absolute z-40 flex justify-center items-center cursor-pointer"
-            >
-              <i class="mdi mdi-image-edit text-white text-8xl"></i>
-            </label>
-            <img
-              class="w-[70%] h-[55%] relative rounded-md"
-              v-if="playlistStore.selectedPlaylist.cover || img"
-              :src="
-                img == null
-                  ? playlistStore.selectedPlaylist.cover
-                    ? playlistStore.selectedPlaylist.cover.url
-                    : img
-                  : img
-              "
-            />
-            <div v-else class="w-[70%] h-[55%] relative bg-slate-300 rounded-md"></div>
-
-            <h2 v-if="!edit" class="text-[32px] font-inter text-white text-center font-semibold">
-              {{ adjusteSize(playlistStore.selectedPlaylist.name, 28, 28) }}
-            </h2>
-            <input
-              class="w-[70%] text-white pl-3 bg-[rgba(255,255,255,0.22)] border-b-2 rounded-t-sm outline-none"
-              v-else
-              type="text"
-              v-model="playlistStore.newPlaylist.name"
-            />
-            <div class="w-full text-white flex flex-col items-center justify-center">
-              <div class="w-[70%] flex justify-around text-xl items-end">
-                <p class="leading-none">
-                  {{ playlistStore.selectedPlaylist.songs.length }}
-                  {{ playlistStore.selectedPlaylist.songs.length == 1 ? 'Música' : 'Músicas' }}
-                </p>
-                <div class="size-2 bg-white rounded-full"></div>
-                <p class="leading-none">15 Minutos</p>
-              </div>
-              <div
-                @click="(play = !play), playAndQueue(playlistStore.selectedPlaylist.songs)"
-                class="mt-5 text-5xl leading-none cursor-pointer w-full flex justify-center"
-              >
-                <i :class="!play ? 'mdi mdi-play-circle' : 'mdi mdi-pause-circle'"></i>
-              </div>
-            </div>
-            <ButtonGlobal
-              v-if="edit"
-              @click="updatePlaylists(playlistStore.showNewPlaylist, token, saveimg)"
-              title="Salvar Alterações"
-              background="#6340AE"
-              border_radius="10px"
-              color="white"
-            />
-          </div>
-
-          <img
-            class="w-full h-full relative rounded-md"
-            v-if="playlistStore.selectedPlaylist.cover"
-            :src="
-              playlistStore.selectedPlaylist.cover ? playlistStore.selectedPlaylist.cover.url : monn
-            "
-          />
-          <div class="bg-black w-full h-full absolute top-0 opacity-[85%] rounded-l-md"></div>
-        </div>
-      </div> <!---->
+  <main class="w-full xl:w-dvw min-h-screen-minus-80 lg:h-full flex justify-end gap-4">
+    <section class="my-auto mr-2 xl:m-0 xl:w-full h-full flex rounded-l-lg w-[98%] bg-[#121212] lg:flex-col lg:justify-center">
+    <InfoContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
     <ContentContainer :setAction="setAction" @setAddOn="isOn = !isOn, setAction = 'add'" @setRemoveOn="setAction != 'remove' ? setAction = 'remove' : setAction = ''" :settings="settings" @setSettings="settings = !settings"  @sendEmitData="captureEmit" @removeFromPlaylist="addToPlaylist(saveData, songs, token)" @addToPlaylist="addToPlaylist(saveData, songs, token)" />
     </section>
   </main>

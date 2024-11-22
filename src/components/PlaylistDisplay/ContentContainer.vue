@@ -48,7 +48,7 @@ const isOn = ref(false)
 
 </script>
 <template>
-     <div class="w-8/12 h-full flex flex-col items-center">
+     <div class="w-8/12 h-full flex flex-col items-center lg:w-full lg:mt-0 pb-20">
         <div class="w-full flex justify-end p-3 relative">
           <span
             @click="emits('setSettings')"

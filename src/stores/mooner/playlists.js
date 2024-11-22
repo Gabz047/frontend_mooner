@@ -37,7 +37,6 @@ export const usePlaylistStore = defineStore('playlist', () => {
   })
 
   const attach = ref(null)
-
   const playlists = computed(() => state.value.playlists)
   const playlistsBySong = computed(() => state.value.playlistsBySong)
   const selectedPlaylist = computed(()=> state.value.selectedPlaylist)

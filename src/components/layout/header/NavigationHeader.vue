@@ -54,8 +54,9 @@ const createCommunity = async (community, token) => {
  
 </script>
 <template>
-  <section class="my-auto border-r border-none overflow-auto rounded-lg bg-[#121212] p-5" :class="queueStore.state?.currentSong ? 'h-[90%]' : 'h-full' " >  
-    <div class="w-full flex justify-between">
+  <section class="my-auto border-r border-none overflow-auto rounded-lg bg-[#121212] p-5 xl:w-[50%] z-[999] xl:h-dvh xl:absolute" :class="queueStore.state?.currentSong ? 'h-[90%]' : 'h-full'" >  
+   
+    <div class="w-full flex justify-between ">
       <RouterLink to="/">
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
     </RouterLink>
@@ -92,6 +93,7 @@ const createCommunity = async (community, token) => {
   <div class="flex h-[80%] mt-12" v-else>
   <LunaIA class="w-full h-full " />
   </div>
+
   </section>
 </template>
 

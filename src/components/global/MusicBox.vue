@@ -77,7 +77,7 @@ const verifyInPlaylist = (song) => {
 
 </script>
 <template>
-    <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 p-1 ">
+    <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 lg:w-[300px] p-1 ">
         <div v-if="props.buttons && clickToAdd " class='absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-50 flex justify-center items-center duration-150'>
            <img class="size-8" src="@/assets/images/icons/verified.svg">
            <p>Adicionado</p>

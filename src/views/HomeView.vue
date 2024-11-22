@@ -37,7 +37,7 @@ onMounted(async ()=>{
 <template>
   <main class=" w-full min-h-full flex justify-end gap-4">
     
-    <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] bg-[#121212]">
+    <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] xl:w-[100%] 2xl:m-0 bg-[rgb(18,18,18)] overflow-auto">
       <ContainerNavigateButtons class="mt-5">
         <NavigateHomeButtons :has_active_bg="true" v-for="item,index in data_page" :key="index" :title="item.title" :active="item.active" @goSection="selectSection(index, data_page, item.title)" />
       </ContainerNavigateButtons>
