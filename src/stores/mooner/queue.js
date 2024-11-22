@@ -20,6 +20,7 @@ export const useQueueStore = defineStore('queue', () => {
             addSongToHistory()
         }
         state.value.currentSong = song;
+        console.log(state.value.currentSong)
     }
 
     function addSongToQueue(newSong) {
@@ -33,7 +34,6 @@ export const useQueueStore = defineStore('queue', () => {
 
     function addSongToHistory() {
         state.value.history.push(state.value.currentSong)
-        // Limitando o histórico a 10 músicas
         if (state.value.history.length > 10) {
             state.value.history.shift();
         }
@@ -42,6 +42,7 @@ export const useQueueStore = defineStore('queue', () => {
 
     function nextSong() {
         setCurrentSong(state.value.queue.shift());
+        
     }
 
     function previousSong() {
@@ -71,7 +72,6 @@ export const useQueueStore = defineStore('queue', () => {
             state.value.saveOrder = []
         }
     }
-
     
     return {
         state,
