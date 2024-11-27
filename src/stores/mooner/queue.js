@@ -22,6 +22,8 @@ export const useQueueStore = defineStore('queue', () => {
             addSongToHistory()
         }
         state.value.currentSong = song;
+        playerStore.state.songPlayer.load()
+        console.log(state.value.currentSong)
     }
 
     function addSongToQueue(newSong) {
@@ -43,7 +45,7 @@ export const useQueueStore = defineStore('queue', () => {
 
     function nextSong() {
         setCurrentSong(state.value.queue.shift());
-        playerStore.play();
+        playerStore.play()
     }
 
     function previousSong() {
