@@ -7,14 +7,15 @@ import SettingsGlobal from './SettingsGlobal.vue';
 import AddPlaylist from './AddPlaylist.vue';
 import { adjusteSize, verify_active } from '@/utils/music/music';
 import { artist } from '@/utils/artist/artist-profile';
-import { usePlaylistStore, useQueueStore } from '@/stores';
+import { useArtistStore, usePlaylistStore, useQueueStore } from '@/stores';
 import { useHistoryStore, useLoginStore } from '@/stores';
+import { useRouter } from 'vue-router';
 const HistoryStore = useHistoryStore()
 const LoginStore = useLoginStore()
-
-
 const QueueStore = useQueueStore()
 const playlistStore = usePlaylistStore()
+const artistStore = useArtistStore()
+const router = useRouter()
 
 const emits = defineEmits([
     'createPlaylist'
@@ -75,6 +76,16 @@ const verifyInPlaylist = (song) => {
   }
 }
 
+const to = (id, artist) => {
+  artistStore.state.selectedArtist = {}
+  localStorage.removeItem("artistStorage")
+  artistStore.state.selectedArtist = artist
+  
+    router.push('/artist/' + id)
+ 
+  
+}
+
 </script>
 <template>
     <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 lg:w-[300px] p-1 ">
@@ -95,7 +106,8 @@ const verifyInPlaylist = (song) => {
             <div class="w-11/12 flex flex-col h-[48px] justify-center pl-3 overflow-hidden">
                 <p :class="is_search_history ? 'font-semibold text-base text-white' : 'font-semibold text-lg text-white'">{{ adjusteSize(props.music_data.title, 14, 14) }}</p>
                 <div class="flex gap-2">
-                    <p :class="is_search_history ? 'text-base' : 'text-base text-white  flex'" v-for="artists in music_data.artists" :key="artist.id">{{artists.artistic_name}}</p>
+                <p @click="to(artists.artistic_name, artists)" v-for="artists in music_data.artists" :key="artist.id" :class="is_search_history ? 'text-base' : 'text-base text-white  flex'" >{{artists.artistic_name}}</p>
+                
                 </div>    
             </div>
             <div class="w-2/12 flex justify-end items-center px-2 music-play" v-if="!is_search_history || props.buttons">

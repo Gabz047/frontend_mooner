@@ -9,7 +9,8 @@ const signupervice = new SignUpService()
 export const useSignUpStore = defineStore('signup', () =>{
     const newuser = {
         email: '',
-        password: ''
+        password: '',
+        cover: '1e7660a8-99d1-4e39-922e-b7abfe129d84',
     }
     
     const msg = ref(null)

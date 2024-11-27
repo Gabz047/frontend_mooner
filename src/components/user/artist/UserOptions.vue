@@ -1,7 +1,12 @@
 <script setup>
-import { useLoginStore } from '@/stores';
+import { useLoginStore, useUserStore, useArtistStore } from '@/stores';
+import { RouterLink, useRouter } from 'vue-router';
 
     const LoginStore = useLoginStore()
+    const userStore = useUserStore()
+    const router = useRouter()
+    const artistStore = useArtistStore()
+
     defineProps({
         is_premium: {
             type: Boolean,
@@ -17,11 +22,12 @@ import { useLoginStore } from '@/stores';
             required: true
         }
     })
+
 </script>
 <template>
     <div>
         <div class="flex flex-col">
-            <RouterLink class="flex flex-col h-[35px] w-full duration-200 active" to="/user">
+            <RouterLink to="/user" class="flex flex-col h-[35px] w-full duration-200 active">
                 <div class=" font-extralight flex gap-2 items-center">
                 <i class="mdi mdi-account-outline"></i>Perfil
                 </div>

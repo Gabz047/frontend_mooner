@@ -1,28 +1,28 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useSongStore, useLoginStore, usePlaylistStore,} from '@/stores/index'
+import { useSongStore, useLoginStore, usePlaylistStore, useAlbumStore, useArtistStore,} from '@/stores/index'
 import MusicBox from '@/components/global/MusicBox.vue'
 
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue'
-import ContentContainer from '@/components/PlaylistDisplay/ContentContainer.vue'
-import InfoContainer from '@/components/PlaylistDisplay/InfoContainer.vue'
+import ContentArtistContainer from '@/components/PlaylistDisplay/ContentArtistContainer.vue'
+import InfoArtistContainer from '@/components/PlaylistDisplay/InfoArtistContainer.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { addToPlaylist, captureEmit, saveData, updatePlaylists, playAndQueue } from '@/utils/playlist/playlist'
 const songStore = useSongStore()
 const loginStore = useLoginStore()
 const playlistStore = usePlaylistStore()
+const albumStore = useAlbumStore()
+const artistStore = useArtistStore()
 const route = useRoute()
 const router = useRouter()
-const id = route.params.id
+const id = route.params.email
 const token = loginStore.access
 const songs = ref([])
 
-
-
-onMounted(() => {
+onMounted(async () => {
   console.log('rodou')
   songs.value = []
-  
+ 
 })
 const edit = ref(false)
 const play = ref(false)
@@ -59,7 +59,7 @@ const data_add_secondary = (music, setAction) => {
 }
 </script>
 <template>
-  <div v-if="isOn" class="fixed left-0 z-[50] w-dvw h-dvh flex justify-center items-center">
+  <div v-if="isOn" class="fixed left-0 z-[50] w-dvw min-h-dvh flex justify-center items-center">
     <div class="w-96 h-[500px] bg-[#121212] rounded-lg absolute z-[60] flex flex-col items-center">
       <span
         @click="close()"
@@ -96,10 +96,10 @@ const data_add_secondary = (music, setAction) => {
     </div>
     <div class="w-full h-full bg-black opacity-50"></div>
   </div>
-  <main class="w-full xl:w-dvw min-h-screen-minus-80 lg:h-full flex justify-end gap-4">
+  <main class="w-full xl:w-dvw min-h-screen-minus-80 lg:h-auto flex justify-end gap-4">
     <section class="my-auto mr-2 xl:m-0 xl:w-full h-full flex rounded-l-lg w-[98%] bg-[#121212] lg:flex-col lg:justify-center">
-    <InfoContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
-    <ContentContainer :setAction="setAction" @setAddOn="isOn = !isOn, setAction = 'add'" @setRemoveOn="setAction != 'remove' ? setAction = 'remove' : setAction = ''" :settings="settings" @setSettings="settings = !settings"  @sendEmitData="captureEmit" @removeFromPlaylist="addToPlaylist(saveData, songs, token)" @addToPlaylist="addToPlaylist(saveData, songs, token)" />
+    <InfoArtistContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
+    <ContentArtistContainer :setAction="setAction" @setAddOn="isOn = !isOn, setAction = 'add'" @setRemoveOn="setAction != 'remove' ? setAction = 'remove' : setAction = ''" :settings="settings" @setSettings="settings = !settings"  @sendEmitData="captureEmit" @removeFromPlaylist="addToPlaylist(saveData, songs, token)" @addToPlaylist="addToPlaylist(saveData, songs, token)" />
     </section>
   </main>
   <input class="hidden" type="file" id="photo" @change="handleFileUpload" />
@@ -131,5 +131,19 @@ const data_add_secondary = (music, setAction) => {
     left: 35px;
     font-size: 30px;
   }
+}
+
+::-webkit-scrollbar {
+  width: 3px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 20px; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
 }
 </style>

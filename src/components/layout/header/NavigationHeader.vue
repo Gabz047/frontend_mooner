@@ -33,7 +33,7 @@ const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
   songs: [],
-  cover: '03436249-13fe-4bc7-b994-1bdedce1e991'
+  cover: 'e44619db-4f03-4971-851f-a0e634af22a1'
 })
 
 const communityBody = reactive({

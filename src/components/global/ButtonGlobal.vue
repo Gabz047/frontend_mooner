@@ -54,6 +54,6 @@
         },
         icon: {
             type: String
-        }
+        },
     })
 </script>

@@ -13,10 +13,10 @@ class ArtistService {
     async getArtists(token) {
         try {
             const { data } = await api.get('/artists', {headers: {'authorization': `Bearer ${token}`}});
-            console.log( "Service: GetCommunity - return success")
+            console.log( "Service: GetArtists - return success")
             return data.results;
         } catch (error) {
-            console.log("Service: GetCommunity - return error", error);
+            console.log("Service: GetArtists - return error", error);
             throw error;
         }
     }
@@ -26,7 +26,7 @@ class ArtistService {
             const {data} = await api.get(`/artists/?artistic_name=${name}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
-            console.log('Error in getCommunityByAutor', error);
+            console.log('Error in GetArtistsByAutor', error);
             throw error;
         }
     }

@@ -3,6 +3,7 @@ import { computed, reactive, ref } from 'vue'
 import { ArtistService } from '@/services'
 import { aboutvalidation } from '@/utils/validations/artist/aboutvalidation'
 import { artistnamevalidation } from '@/utils/validations/artist/artisticnamevalidation'
+import { useStorage } from '@vueuse/core'
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -25,8 +26,8 @@ import { artistnamevalidation } from '@/utils/validations/artist/artisticnameval
  * @returns {SpecieStore} The OrganStore instance.
  */
 export const useArtistStore = defineStore('artist', () => {
-  const state = reactive({
-    artists: [],
+
+  const state = useStorage('artistStorage', {
     selectedArtist: {},
     artistsByName: [],
     loading: false,
@@ -34,13 +35,14 @@ export const useArtistStore = defineStore('artist', () => {
     connection: false
   })
 
+
   const msg = ref(null)
   const err = ref(false)
 
-  const artists = computed(() => state.artists)
-  const artistsByName = computed(() => state.artistsByName)
-  const selectedArtist = computed(() => state.selectedArtist)
-  const isLoading = computed(() => state.loading)
+  const artists = computed(() => state.value.artists)
+  const artistsByName = computed(() => state.value.artistsByName)
+  const selectedArtist = computed(() => state.value.selectedArtist)
+  const isLoading = computed(() => state.value.loading)
 
 
   /**
@@ -49,14 +51,14 @@ export const useArtistStore = defineStore('artist', () => {
    * @function getSpecies
    */
   const getArtists = async (token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      state.artists = await ArtistService.getArtists(token)
+      state.value.artists = await ArtistService.getArtists(token)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -66,15 +68,15 @@ export const useArtistStore = defineStore('artist', () => {
   * @function getOrgansBySystem
   */
   const getArtistsByName = async (name, token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       const response = await ArtistService.getArtistsByName(name, token)
-      state.artistsByName = response
+      state.value.artistsByName = response
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -85,7 +87,7 @@ export const useArtistStore = defineStore('artist', () => {
    * @param {Object} newSpecie - The new organ object to create.
    */
   const createArtist = async (newartist, token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       if (artistnamevalidation.value !== true && aboutvalidation.value !== true) {
         err.value = true
@@ -102,12 +104,12 @@ export const useArtistStore = defineStore('artist', () => {
       else {
         msg.value = 'verifique seu email'
         err.value = false
-        state.artists.push(await ArtistService.createArtist(newartist, token))
+        state.value.artists.push(await ArtistService.createArtist(newartist, token))
       }
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 

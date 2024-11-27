@@ -31,7 +31,7 @@ export const useUserStore = defineStore('user', () => {
     myuser: {},
     loading: false,
     error: null,
-    connection: false
+    connection: false,
   })
 
   const users = computed(() => state.value.users)

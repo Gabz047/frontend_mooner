@@ -1,7 +1,20 @@
 <script setup>
-import { useLoginStore } from '@/stores/user/login';
+import { useLoginStore, useUserStore, useArtistStore } from '@/stores/';
 import UserOptions from '../user/artist/UserOptions.vue';
+import { onMounted } from 'vue';
 const loginStore = useLoginStore()
+const userStore = useUserStore()
+const artistStore = useArtistStore()
+const token = loginStore.access
+
+onMounted(async()=>{
+    
+    await userStore.getUsers(token)
+    await artistStore.getArtists(token)
+    const index = artistStore.artists.findIndex((s) => s.user.email == userStore.myuser.email)
+    userStore.state.artist = artistStore.artists[index] 
+    
+})
 
 defineProps({
     is_blink_layout: {
@@ -19,7 +32,7 @@ defineProps({
         </RouterLink>
         <div class="user-config">
             <div class="flex items-center gap-2 px-2 pt-1 ">
-                <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
+                <img class="w-7 rounded-full" :src="userStore.myuser.perfil ? userStore.myuser.perfil.url : ''">
                 <p :class="loginStore.user.premium ? 'btn-dourado' : 'text-white'" class="sm:hidden" >{{loginStore.user.email}}</p>
             </div>
             <div  id="options">

@@ -7,8 +7,12 @@ import { returnActive } from '@/utils/music/music';
 import { onMounted, shallowRef } from 'vue';
 const playlistStore = usePlaylistStore()
 const communityStore = useCommunityStore()
-const getWidthScreen = shallowRef(window.innerWidth)
+const getWidthScreen = shallowRef(null)
 
+onMounted(()=>{
+  getWidthScreen.value = window.innerWidth
+  console.log(getWidthScreen.value)
+})
 </script>
 <template>
      <main :class="getWidthScreen > 1024 ? 'w-dvw h-dvh grid grid-rows-2 grid-cols-[23%_77%] xl:grid-cols-[8%_92%]' : 'w-dvw h-dvh'" >

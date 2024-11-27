@@ -90,6 +90,7 @@ export const useAlbumStore = defineStore('album', () => {
     try {
       const response = await AlbumService.getAlbunsByAutor(autor,token)  
       state.albunsByAutor = response
+      console.log(response)
     } catch (error) {
       state.error = error
     } finally {
