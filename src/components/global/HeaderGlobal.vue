@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { useLoginStore } from '@/stores/user/login';
 import UserOptions from '../user/artist/UserOptions.vue';
 const loginStore = useLoginStore()
@@ -7,18 +8,27 @@ defineProps({
     is_blink_layout: {
         type: Boolean,
         required: true
+    },
+    isResponsive: {
+        type: Boolean,
+        default: false
     }
 })
+
+const emits = defineEmits([
+    'menu'
+])
 </script>
 <template>
-    <div class="flex justify-end xl:justify-between w-[97.5%] mx-auto relative mb-3 xl:mb-0 right-0 min-h-10 xl:min-h-16 xl:items-center text-white items-end z-50 xl:w-[100%]">
-        <RouterLink to="/" class="ml-8 hidden mt-2 lg:mt-0 xl:flex">
+    <div class="flex justify-end lg:justify-normal xl:justify-between w-[97.5%] mx-auto relative mb-3 xl:mb-0 right-0 min-h-10 xl:min-h-16 xl:items-center text-white items-end z-50 xl:w-[100%]">
+        <span class="mdi mdi-menu text-3xl ml-3" @click="emits('menu')"></span>
+        <RouterLink to="/" class="ml-8 lg:ml-2 hidden mt-2 lg:mt-0 xl:flex">
             <div class="h-full">
                 <img class="w-full h-10" src="@/assets/images/Logo.png" >
             </div>
         </RouterLink>
         <div class="user-config">
-            <div class="flex items-center gap-2 px-2 pt-1 ">
+            <div class="flex items-center gap-2 px-2 pt-1">
                 <img class="w-7 rounded-full" src="https://th.bing.com/th/id/R.47d1cc4b137f211cb1c3dfa2135bacba?rik=WfNjlHz94xdl5g&pid=ImgRaw&r=0">
                 <p :class="loginStore.user.premium ? 'btn-dourado' : 'text-white'" class="sm:hidden" >{{loginStore.user.email}}</p>
             </div>

@@ -26,6 +26,14 @@ const props = defineProps({
   },
   data_following: {
     type: Array
+  },
+  isActive: {
+    type: Boolean,
+    default: false
+  },
+  isResponsive: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -33,7 +41,7 @@ const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
   songs: [],
-  cover: '03436249-13fe-4bc7-b994-1bdedce1e991'
+  cover: 'e44619db-4f03-4971-851f-a0e634af22a1'
 })
 
 const communityBody = reactive({
@@ -51,15 +59,22 @@ const createCommunity = async (community, token) => {
   communityStore.createCommunity(community, token)
 }
 
+const emits = defineEmits([
+  'close'
+])
+
  
 </script>
 <template>
-  <section class="my-auto border-r border-none overflow-auto rounded-lg bg-[#121212] p-5 xl:w-[50%] z-[999] xl:h-dvh xl:absolute" :class="queueStore.state?.currentSong ? 'h-[90%]' : 'h-full'" >  
+  <section class="my-auto border-r border-none overflow-auto rounded-lg bg-[#121212] p-5 z-[999]" :class="queueStore.state?.currentSong ? 'h-[90%]' : 'h-full', { responsiveDesign: props.isActive && props.isResponsive }, { notResponsive: !props.isActive && props.isResponsive }" >  
    
     <div class="w-full flex justify-between ">
-      <RouterLink to="/">
+      <RouterLink v-if="!props.isResponsive" to="/">
       <img class="h-12" src="@/assets/images/Logo.png" alt="" />
     </RouterLink>
+    <div v-else>
+      <span class="mdi mdi-arrow-collapse-left text-2xl text-white cursor-pointer hover:text-[#6340AE] duration-300" @click="emits('close')"></span>
+    </div>
       <div class="flex flex-col gap-1">
       <div @click="selectIcon(item)" v-for="(item, index) in data_header_icons">
         <img
@@ -110,5 +125,48 @@ const createCommunity = async (community, token) => {
 ::-webkit-scrollbar-thumb {
   background-color: transparent; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
+}
+
+.notResponsive {
+  height: 100dvh;
+  position: fixed;
+  left: -400px;
+  width: 40%;
+  transition: 0.6s;
+  animation-name: setHeaderBack;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+}
+
+.responsiveDesign {
+  left: 0px;
+  width: 40%;
+  transition: 1s;
+  animation-name: setHeader;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+}
+
+@keyframes setHeader {
+  from {
+  height: 100dvh;
+  position: fixed;
+  left: -400px;
+  }
+  to {
+    left: 0px;
+  }
+}
+
+@keyframes setHeaderBack {
+  from {
+
+  left: 0px;
+  }
+  to {
+    height: 100dvh;
+  position: fixed;
+  left: -400px;
+  }
 }
 </style>
