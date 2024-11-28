@@ -39,6 +39,11 @@ const router = createRouter({
           path: '/playlist/:id',
           name: 'playlist',
           component: () => import('../views/PlaylistDetailView.vue')
+        },
+        {
+          path: 'createcommunity/',
+          name: 'createcommunity',
+          component: () => import('../views/CommunityCreateView.vue')
         }
       ],
     },

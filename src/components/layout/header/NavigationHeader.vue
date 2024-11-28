@@ -4,10 +4,9 @@ import FollowingBox from './FollowingBox.vue'
 import CommunityBox from './CommunityBox.vue'
 import { data_header_icons, selectIcon, returnActive } from '@/utils/music/music'
 import LunaIA from './LunaIA.vue'
-import { computed, onMounted, reactive } from 'vue';
+import { reactive } from 'vue';
 import { usePlaylistStore, useLoginStore, useUserStore, useCommunityStore, useQueueStore, useImgStore} from '@/stores'
 import router from '@/router'
-
 const userStore = useUserStore()
 const playlistStore = usePlaylistStore()
 const loginStore = useLoginStore()
@@ -17,6 +16,7 @@ const imgStore = useImgStore()
 
 const token = loginStore.access
 const user = userStore.myuser
+
 const props = defineProps({
   data_playlist: {
     type: Array
@@ -33,7 +33,7 @@ const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
   songs: [],
-  cover: '03436249-13fe-4bc7-b994-1bdedce1e991'
+  cover: '08dd1f3e-fed0-49d5-b399-27b0be4fae25'
 })
 
 const communityBody = reactive({
@@ -47,8 +47,8 @@ const createPlaylist = async (playlist, token) => {
   window.location.reload()
 }
 
-const createCommunity = async (community, token) => {
-  communityStore.createCommunity(community, token)
+const createCommunity = () => {
+  router.push('/createcomunity')
 }
 
  
@@ -86,7 +86,7 @@ const createCommunity = async (community, token) => {
 
     <p class="text-xl mt-5 text-white">Comunidades</p>
     <div class="w-full gap-3 flex flex-col mt-5 max-h-[320px] overflow-auto">
-      <CommunityBox @create="createCommunity(communityBody, token)" :data_community="props.data_community" />
+      <CommunityBox @click="createCommunity" :data_community="props.data_community" />
     </div>
   </div>
 
