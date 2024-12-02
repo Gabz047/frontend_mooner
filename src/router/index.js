@@ -117,6 +117,11 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/tests',
+      name: 'tests',
+      component: () => import('../views/Tests.vue')
+    }
   ]
 })
 export default router

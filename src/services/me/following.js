@@ -23,7 +23,7 @@ class FollowingService {
 
     async getFollowingsByUser(user, token) {
         try {
-            const {data} = await api.get(`/communitys/?user_id=${user}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/following/?user_email=${user}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getCommunityByAutor', error);
