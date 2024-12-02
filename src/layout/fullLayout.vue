@@ -27,7 +27,7 @@ const getActualWidth = computed(()=>{
     
 
    <section class="col-start-2 xl:col-start-1 col-end-3 row-start-1 row-end-3 min-w-full min-h-full flex flex-col items-center lg:flex">
-    <HeaderGlobal @menu="isActive = !isActive" :isResponsive="true" :is_blink_layout="false" />
+    <HeaderGlobal @menu="isActive = !isActive" :isResponsive="!getActualWidth" :is_blink_layout="false" />
     <RouterView class=" min-h-full min-w-full" />
   </section>
   </main>

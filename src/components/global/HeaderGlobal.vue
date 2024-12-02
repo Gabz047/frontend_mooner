@@ -21,7 +21,7 @@ const emits = defineEmits([
 </script>
 <template>
     <div class="flex justify-end lg:justify-normal xl:justify-between w-[97.5%] mx-auto relative mb-3 xl:mb-0 right-0 min-h-10 xl:min-h-16 xl:items-center text-white items-end z-50 xl:w-[100%]">
-        <span class="mdi mdi-menu text-3xl ml-3" @click="emits('menu')"></span>
+        <span class="mdi mdi-menu text-3xl ml-3" @click="emits('menu')" v-if="isResponsive" ></span>
         <RouterLink to="/" class="ml-8 lg:ml-2 hidden mt-2 lg:mt-0 xl:flex">
             <div class="h-full">
                 <img class="w-full h-10" src="@/assets/images/Logo.png" >

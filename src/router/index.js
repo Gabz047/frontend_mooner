@@ -39,7 +39,7 @@ const router = createRouter({
           path: '/playlist/:id',
           name: 'playlist',
           component: () => import('../views/PlaylistDetailView.vue')
-        }
+        },
       ],
     },
     {
@@ -112,6 +112,11 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/tests',
+      name: 'tests',
+      component: () => import('../views/Tests.vue')
+    }
   ]
 })
 export default router
