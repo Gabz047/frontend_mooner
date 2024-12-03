@@ -7,7 +7,7 @@ export default class SignUpService{
             return response
         }
         catch(err){
-            return false
+            throw err
         }
     }
 }

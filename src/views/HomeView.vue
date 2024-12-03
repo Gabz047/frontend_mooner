@@ -21,12 +21,24 @@ const verifyHasPlaylist = computed(()=>{
 })
 
 onMounted(async ()=>{
+  data_music_home.value.forEach(item => {
+    item.music = []
+  });
+  
+  if (songStore.songs.length == 0) {  
   await songStore.getSongs(loginStore.access)
   for (let i = 0; i < data_music_home.value.length; i++) {
     for (let a = 0; a < songStore.songs.length; a++) {
       data_music_home.value[i].music.push(songStore.songs[a]) 
     }
   }
+} else {
+  for (let i = 0; i < data_music_home.value.length; i++) {
+    for (let a = 0; a < songStore.songs.length; a++) {
+      data_music_home.value[i].music.push(songStore.songs[a]) 
+    }
+  }
+}
   
 
 

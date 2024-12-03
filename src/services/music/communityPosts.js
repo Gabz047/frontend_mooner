@@ -33,7 +33,7 @@ class CommunityPostsService {
 
     async getCommunitysPostsByCommunity(community, token) {
         try {
-            const {data} = await api.get(`/communitys/?search=${community}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/community-posts/?community_id=${community}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getCommunitysByAutor', error);

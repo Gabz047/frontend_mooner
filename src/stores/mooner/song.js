@@ -29,6 +29,7 @@ export const useSongStore = defineStore('song', () => {
     selectedSong: {},
     songsByTitle: [],
     songsByGenre: [],
+    songsByArtist: [],
     loading: false,
     error: null,
     connection: false,
@@ -74,6 +75,7 @@ export const useSongStore = defineStore('song', () => {
   const isLoading = computed(() => state.value.loading)
   const songsCount = computed(() => state.value.songs.length)
   const songsByGenre = computed(() => state.value.songsByGenre)
+  const songsByArtist = computed(()=> state.value.songsByArtist)
 
   /**
    * Fetches organs data.
@@ -102,6 +104,19 @@ export const useSongStore = defineStore('song', () => {
     try {
       const response = await SongService.getSongByTitle(name, token)
       state.value.songsByTitle = response
+    } catch (error) {
+      state.value.error = error
+    } finally {
+      state.value.loading = false
+      state.value.connection = true
+    }
+  }
+
+  const getSongsByArtist = async (name, token) => {
+    state.value.loading = true
+    try {
+      const response = await SongService.getSongByTitle(name, token)
+      state.value.songsByArtist = response
     } catch (error) {
       state.value.error = error
     } finally {
@@ -227,12 +242,14 @@ export const useSongStore = defineStore('song', () => {
     songsByTitle,
     selectedSong,
     songsByGenre,
+    songsByArtist,
     err,
     msg,
     simpleState,
     activated,
     getSongs,
     getSongsByName,
+    getSongsByArtist,
     createSong,
     updateOrgan,
     deleteOrgan,

@@ -41,6 +41,12 @@ const router = createRouter({
           component: () => import('../views/PlaylistDetailView.vue')
         },
         {
+          path: '/artistDetail/:id',
+          name: 'artist',
+          component: () => import('../views/ArtistView.vue'),
+          props: true
+          },
+                            {
           path: 'createcommunity/',
           name: 'createcommunity',
           component: () => import('../views/CommunityCreateView.vue')
@@ -70,7 +76,7 @@ const router = createRouter({
         },
         {
           path: '/plans',
-          name: 'artist',
+          name: 'plans',
           component: () => import('../views/PlansView.vue'),
           meta:{
             auth: true

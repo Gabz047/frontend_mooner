@@ -3,11 +3,12 @@ import { ref, onMounted } from 'vue'
 
 import play from '../../assets/images/icons/play.svg'
 import pause from '../../assets/images/icons/pause.svg'
+import { useRouter } from 'vue-router';
 import SettingsGlobal from './SettingsGlobal.vue'
 import AddPlaylist from './AddPlaylist.vue'
 import { adjusteSize, verify_active } from '@/utils/music/music'
 import { artist } from '@/utils/artist/artist-profile'
-import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore, useSongStore } from '@/stores'
+import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore, useSongStore, useArtistStore } from '@/stores'
 import AudioPlayer from './AudioPlayer.vue'
 
 const songStore = useSongStore()
@@ -16,6 +17,8 @@ const LoginStore = useLoginStore()
 const playerStore = usePlayerStore();
 const QueueStore = useQueueStore()
 const playlistStore = usePlaylistStore()
+const artistStore = useArtistStore()
+const router = useRouter()
 
 const emits = defineEmits(['createPlaylist'])
 
@@ -84,6 +87,16 @@ const verifyInPlaylist = (song) => {
   }
 }
 
+const to = (id, artist) => {
+  artistStore.state.selectedArtist = {}
+  localStorage.removeItem("artistStorage")
+  artistStore.state.selectedArtist = artist
+  
+    router.push('/artist/' + id)
+ 
+  
+}
+
 </script>
 <template>
     <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 lg:w-[300px] p-1 ">
@@ -131,6 +144,7 @@ const verifyInPlaylist = (song) => {
             >
               {{ adjusteSize(props.music_data.title, 14, 14) }}
             </p>
+            <p @click="to(artists.artistic_name, artists)" v-for="artists in music_data.artists" :key="artist.id" :class="is_search_history ? 'text-base' : 'text-base text-white  flex'" >{{artists.artistic_name}}</p>
             <div class="flex gap-2">
               <p
                 :class="is_search_history ? 'text-' : 'text-base[10px] text-white  flex'"
