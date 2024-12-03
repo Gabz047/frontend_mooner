@@ -41,10 +41,15 @@ const router = createRouter({
           component: () => import('../views/PlaylistDetailView.vue')
         },
         {
-          path: '/artist/:id',
+          path: '/artistDetail/:id',
           name: 'artist',
           component: () => import('../views/ArtistView.vue'),
           props: true
+          },
+                            {
+          path: 'createcommunity/',
+          name: 'createcommunity',
+          component: () => import('../views/CommunityCreateView.vue')
         }
       ],
     },
@@ -118,6 +123,11 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/tests',
+      name: 'tests',
+      component: () => import('../views/Tests.vue')
+    }
   ]
 })
 export default router

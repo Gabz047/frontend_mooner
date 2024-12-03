@@ -23,7 +23,6 @@
     <div class="content-container">
         <div class="content">
             <div class="text-content">
-                <img src="../../assets/images/Logo.png">
                 <h1>{{is_login_page ? 'Bem Vindo ao Mooner' : 'Crie a sua conta'}}</h1>
                 <p>{{is_login_page ? "Entregando qualidade dentro e fora de orbita" : "Aproveite a sensação de navegar pelo melhor app de musica"}}</p>
             </div>

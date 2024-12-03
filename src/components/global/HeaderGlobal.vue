@@ -1,5 +1,6 @@
 <script setup>
 import { useLoginStore, useUserStore, useArtistStore } from '@/stores/';
+import { ref } from 'vue';
 import UserOptions from '../user/artist/UserOptions.vue';
 import { onMounted } from 'vue';
 const loginStore = useLoginStore()
@@ -20,16 +21,19 @@ defineProps({
     is_blink_layout: {
         type: Boolean,
         required: true
+    },
+    isResponsive: {
+        type: Boolean,
+        default: false
     }
 })
+
+const emits = defineEmits([
+    'menu'
+])
 </script>
 <template>
-    <div class="flex justify-end xl:justify-between w-[97.5%] mx-auto relative mb-3 xl:mb-0 right-0 min-h-10 xl:min-h-16 xl:items-center text-white items-end z-50 xl:w-[100%]">
-        <RouterLink to="/" class="ml-8 hidden mt-2 lg:mt-0 xl:flex">
-            <div class="h-full">
-                <img class="w-full h-10" src="@/assets/images/Logo.png" >
-            </div>
-        </RouterLink>
+    <div class="flex justify-end lg:justify-normal xl:justify-between w-[97.5%] mx-auto relative mb-3 xl:mb-0 right-0 min-h-10 xl:min-h-16 xl:items-center text-white items-end z-50 xl:w-[100%]">
         <div class="user-config">
             <div class="flex items-center gap-2 px-2 pt-1 ">
                 <img class="w-7 rounded-full" :src="userStore.myuser.perfil ? userStore.myuser.perfil.url : ''">

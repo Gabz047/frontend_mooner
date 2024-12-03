@@ -5,6 +5,7 @@ export default {
     screens: {
       '2.5xl': { 'max': '1700px'},  
       '2xl': { 'max': '1536px'},
+      '1.5xl': { 'max': '1400px'},
       'xl': { 'max': '1280px'},
       'lg': { 'max': '1024px'},
       'md2': {'max': '900px'},
