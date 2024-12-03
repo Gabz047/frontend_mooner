@@ -1,12 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router';
-import NavigationHeader from '@/components/layout/header/NavigationHeader.vue';
+import SideHeader from '@/components/newDesign/SideHeader.vue';
 import HeaderGlobal from '@/components/global/HeaderGlobal.vue';
-import { usePlaylistStore, useCommunityStore } from '@/stores';
-import { returnActive } from '@/utils/music/music';
-import { onMounted, ref, shallowRef, computed } from 'vue';
-const playlistStore = usePlaylistStore()
-const communityStore = useCommunityStore()
+import { ref, shallowRef, computed } from 'vue';
+import { dataHeader } from '@/utils/header/header';
 const getWidthScreen = shallowRef(window.innerWidth)
 
 
@@ -20,13 +17,13 @@ const getActualWidth = computed(()=>{
 })
 </script>
 <template>
-     <main :class="getWidthScreen > 1024 ? 'w-dvw h-dvh grid grid-rows-2 grid-cols-[23%_77%] xl:grid-cols-[8%_92%]' : 'w-dvw h-dvh'" >
-    <div class=" relative col-start-1 col-end-1 w-full" >
-   <NavigationHeader @close="isActive = !isActive" :isResponsive="getWidthScreen <= 1024 ? true : false" :isActive="isActive" class="fixed z-40 duration-150" :data_community="communityStore.communitysByAutor" :data_playlist="playlistStore.playlistsByOwner" :class="returnActive == 'home' ? 'w-[23%]' : 'w-[28%]'" />
+     <main class="w-dvw h-dvh flex justify-between" >
+    <div class="w-[10%] 1.5xl:w-[5%]" >
+    <SideHeader :data="dataHeader" />
     </div>
     
 
-   <section class="col-start-2 xl:col-start-1 col-end-3 row-start-1 row-end-3 min-w-full min-h-full flex flex-col items-center lg:flex">
+   <section class="w-[79%] 1.5xl:w-[95%] xl:w-[91%] lg:w-[89%] md:w-[85%] sm:w-[82%] xsm:w-[75%]">
     <HeaderGlobal @menu="isActive = !isActive" :isResponsive="!getActualWidth" :is_blink_layout="false" />
     <RouterView class=" min-h-full min-w-full" />
   </section>
