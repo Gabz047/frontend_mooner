@@ -7,9 +7,10 @@ import SettingsGlobal from './SettingsGlobal.vue'
 import AddPlaylist from './AddPlaylist.vue'
 import { adjusteSize, verify_active } from '@/utils/music/music'
 import { artist } from '@/utils/artist/artist-profile'
-import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore } from '@/stores'
+import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore, useSongStore } from '@/stores'
 import AudioPlayer from './AudioPlayer.vue'
 
+const songStore = useSongStore()
 const HistoryStore = useHistoryStore()
 const LoginStore = useLoginStore()
 const playerStore = usePlayerStore();
@@ -53,10 +54,6 @@ const props = defineProps({
     }
 })
 
-
-
-const settings = ref(false)
-const playlist = ref(false)
 const clickToAdd = ref(false)
 
 async function createsong() {
@@ -149,12 +146,12 @@ const verifyInPlaylist = (song) => {
             v-if="!is_search_history || props.buttons"
           >
             <img
-              @click="(playlist = !playlist), (settings = false), (verify_active = !verify_active)"
+              @click="songStore.activated({id: props.music_data.id, name: 'playlist'}), (settings = false), (verify_active = !verify_active)"
               src="../../assets/images/icons/add.svg"
               class="w-6 h-6"
             />
             <img
-              @click="(settings = !settings), (playlist = false), (verify_active = !verify_active)"
+              @click="songStore.activated({id: props.music_data.id, name: 'settings'}), (playlist = false), (verify_active = !verify_active)"
               src="../../assets/images/icons/settingsdot.svg"
               class="w-4 h-4"
             />
@@ -170,12 +167,12 @@ const verifyInPlaylist = (song) => {
     </div>
     <SettingsGlobal
       v-if="!is_search_history"
-      :is_on="settings"
+      :is_on="songStore.simpleState.item_settings == props.music_data.id"
       @addQueue="QueueStore.addSongToQueue(props.music_data)"
     />
     <AddPlaylist
       v-if="!is_search_history"
-      :is_on="playlist"
+      :is_on="songStore.simpleState.item_playlist == props.music_data.id"
       @createPlaylist="emits('createPlaylist')"
       :has_playlist="props.has_playlist"
       :music_data="props.music_data"

@@ -27,6 +27,7 @@ export const useQueueStore = defineStore('queue', () => {
     }
 
     function addSongToQueue(newSong) {
+        console.log(newSong)
         if (state.value.currentSong.player) {
             state.value.queue.push(newSong);
         }   

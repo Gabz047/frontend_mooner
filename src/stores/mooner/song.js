@@ -31,8 +31,30 @@ export const useSongStore = defineStore('song', () => {
     songsByGenre: [],
     loading: false,
     error: null,
-    connection: false
+    connection: false,
   })
+
+  const simpleState = reactive({
+    active: false,
+    item_playlist: null,
+    item_settings: null,
+  })
+
+  const activated = (item) => {
+    if (simpleState.item_playlist != null && item.id == simpleState.item_playlist || simpleState.item_settings != null && item.id == simpleState.item_settings ) {
+      simpleState.item_playlist = null
+      simpleState.item_settings = null
+    } else {
+      if (item.name == 'settings') {
+        simpleState.item_settings = item.id
+        simpleState.item_playlist = null
+      } else {
+        simpleState.item_playlist = item.id
+        simpleState.item_settings = null
+      }
+    }
+    
+  }
 
   const newsong = reactive({
     title: null,
@@ -207,6 +229,8 @@ export const useSongStore = defineStore('song', () => {
     songsByGenre,
     err,
     msg,
+    simpleState,
+    activated,
     getSongs,
     getSongsByName,
     createSong,
