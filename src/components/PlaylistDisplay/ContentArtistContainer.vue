@@ -47,6 +47,8 @@ onMounted(async() => {
  
   await communityStore.getCommunitysByAutor(artistStore.selectedArtist.user, token)
   await communityStore.getCommunitysPostsByCommunity(communityStore.communitysByAutor[0].id, token)
+
+  console.log(props.artist)
 })
 
 </script>
@@ -62,7 +64,7 @@ onMounted(async() => {
         <MusicGlobalContainer class="w-full">
           <MusicBox
             class="max-h-[60px]"
-            v-if="songStore.songsByArtist.length > 0"
+            v-if="songStore.songsByArtist?.length > 0"
             v-for="(music, index) in songStore.songsByArtist"
             :key="index"
             :music_data="music"
@@ -70,7 +72,7 @@ onMounted(async() => {
           />
         </MusicGlobalContainer>
 
-        <ArtistCommunity :data_posts="communityStore.communitysPostsByCommunity" :data="communityStore.communitysByAutor[0]" />
+        <!-- <ArtistCommunity :data_posts="communityStore.communitysPostsByCommunity" :data="communityStore.communitysByAutor[0]" /> -->
     </div>
     <div class="h-[90%] lg:h-full w-[260px] top-5 right-3 flex flex-col mr-1 fixed lg:relative lg:w-[95%] lg:right-0">
         <AlbunsArtistContainer :data="albumStore.albunsByAutor" class="mr-5" />

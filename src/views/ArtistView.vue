@@ -96,8 +96,8 @@ const data_add_secondary = (music, setAction) => {
     </div>
     <div class="w-full h-full bg-black opacity-50"></div>
   </div>
-  <main class="w-full xl:w-dvw min-h-screen-minus-80 lg:h-auto flex justify-end gap-4">
-    <section class="my-auto mr-2 xl:m-0 xl:w-full h-full flex rounded-l-lg w-[98%] bg-[#121212] lg:flex-col lg:justify-center">
+  <main class="w-full xl:w-dvw h-dvh lg:h-auto flex justify-end gap-4">
+    <section class="my-auto mr-2 xl:m-0 xl:w-full h-full flex rounded-l-lg w-[98%] bg-[#121212] lg:flex-col lg:justify-center relative">
     <InfoArtistContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
     <ContentArtistContainer :setAction="setAction" @setAddOn="isOn = !isOn, setAction = 'add'" @setRemoveOn="setAction != 'remove' ? setAction = 'remove' : setAction = ''" :settings="settings" @setSettings="settings = !settings"  @sendEmitData="captureEmit" @removeFromPlaylist="addToPlaylist(saveData, songs, token)" @addToPlaylist="addToPlaylist(saveData, songs, token)" />
     </section>

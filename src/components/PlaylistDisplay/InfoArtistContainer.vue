@@ -85,7 +85,7 @@ const showMore = () => {
 
 <template>
  <div class="w-4/12 lg:w-full overflow-y-auto lg:overflow-auto overflow-x-hidden h-full lg:h-[800px] flex flex-col relative rounded-l-lg ">
-        <div class="w-full h-full relative flex justify-center ">
+        <div class=" w-full h-full max-h-full flex justify-center overflow-auto relative">
           <div class="absolute top-8 left-8 z-30 flex gap-3 items-center w-full justify-between">
             <div v-if="userInfo != null ? userInfo.email == userStore.myuser.email : ''"
               @click="emits('isEdit')"
@@ -126,7 +126,7 @@ const showMore = () => {
               v-model="artistStore.selectedArtist.artistic_name"
             />
 
-            <div class="w-9/12 flex items-center justify-center">
+            <div class="w-9/12 min-h-44 overflow-auto flex justify-center">
             <p class="text-white text-justify">{{ desc }}</p>
           </div>   
             <!-- w-[70%] h-[55%] relative rounded-lg lg:w-[70%] lg:h-[80%] sm:w-[70%] sm:h-[100%] xsm:h-[70%] xsm:w-[90%] -->
@@ -153,7 +153,7 @@ const showMore = () => {
 
          
           
-          <div class="h-full w-full relative rounded-l-lg lg:rounded-none image opacity-[90%]" :style="`background-image: url(${userInfo != null ? userInfo.perfil.url : ''});`"></div>
+          <div class="h-full w-full rounded-l-lg lg:rounded-none image opacity-[90%]" :style="`background-image: url(${userInfo != null ? userInfo.perfil.url : ''});`"></div>
           <div class=" w-full h-full lg:h-[110%] lg:opacity-100 lg:bg-none absolute top-0 opacity-[90%] rounded-l-lg lg:rounded-none overlay"></div>
         </div>
       </div> <!---->

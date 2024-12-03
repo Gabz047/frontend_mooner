@@ -4,13 +4,8 @@ import SideHeader from '@/components/newDesign/SideHeader.vue';
 import HeaderGlobal from '@/components/global/HeaderGlobal.vue';
 import { ref, shallowRef, computed } from 'vue';
 import { dataHeader } from '@/utils/header/header';
-import { returnActive } from '@/utils/music/music';
-import { usePlaylistStore, useUserStore, useLoginStore, useCommunityStore } from '@/stores';
 const getWidthScreen = shallowRef(window.innerWidth)
 
-const playlistStore = usePlaylistStore()
-const communityStore = useCommunityStore()
-const getWidthScreen = shallowRef(null)
 const isActive = ref(false)
 
 const getActualWidth = computed(()=>{

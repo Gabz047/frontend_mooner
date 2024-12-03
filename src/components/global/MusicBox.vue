@@ -92,7 +92,7 @@ const to = (id, artist) => {
   localStorage.removeItem("artistStorage")
   artistStore.state.selectedArtist = artist
   
-    router.push('/artist/' + id)
+    router.push('/artistDetail/' + id)
  
   
 }
@@ -144,9 +144,8 @@ const to = (id, artist) => {
             >
               {{ adjusteSize(props.music_data.title, 14, 14) }}
             </p>
-            <p @click="to(artists.artistic_name, artists)" v-for="artists in music_data.artists" :key="artist.id" :class="is_search_history ? 'text-base' : 'text-base text-white  flex'" >{{artists.artistic_name}}</p>
             <div class="flex gap-2">
-              <p
+              <p @click="to(artists.artistic_name, artists)"
                 :class="is_search_history ? 'text-' : 'text-base[10px] text-white  flex'"
                 v-for="artists in music_data.artists"
                 :key="artists.id"
