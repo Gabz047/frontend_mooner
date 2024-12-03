@@ -7,7 +7,6 @@ import { useRouter } from 'vue-router';
 import SettingsGlobal from './SettingsGlobal.vue'
 import AddPlaylist from './AddPlaylist.vue'
 import { adjusteSize, verify_active } from '@/utils/music/music'
-import { artist } from '@/utils/artist/artist-profile'
 import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore, useSongStore, useArtistStore } from '@/stores'
 import AudioPlayer from './AudioPlayer.vue'
 
@@ -146,7 +145,7 @@ const to = (id, artist) => {
             </p>
             <div class="flex gap-2">
               <p @click="to(artists.artistic_name, artists)"
-                :class="is_search_history ? 'text-' : 'text-base[10px] text-white  flex'"
+                :class="is_search_history ? 'text-white' : 'text-base[10px] text-white  flex'"
                 v-for="artists in music_data.artists"
                 :key="artists.id"
               >
