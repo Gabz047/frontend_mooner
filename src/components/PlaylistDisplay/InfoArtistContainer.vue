@@ -153,8 +153,8 @@ const showMore = () => {
 
          
           
-          <div class="h-full w-full rounded-l-lg lg:rounded-none image opacity-[90%]" :style="`background-image: url(${userInfo != null ? userInfo.perfil.url : ''});`"></div>
-          <div class=" w-full h-full lg:h-[110%] lg:opacity-100 lg:bg-none absolute top-0 opacity-[90%] rounded-l-lg lg:rounded-none overlay"></div>
+          <div class="h-dvh w-full rounded-l-lg lg:rounded-none image opacity-[90%]" :style="`background-image: url(${userInfo != null ? userInfo.perfil.url : ''});`"></div>
+          <div class=" w-full h-dvh lg:h-[110%] lg:opacity-100 lg:bg-none absolute top-0 opacity-[90%] rounded-l-lg lg:rounded-none overlay"></div>
         </div>
       </div> <!---->
 </template>

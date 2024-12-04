@@ -72,7 +72,7 @@ onMounted(async() => {
           />
         </MusicGlobalContainer>
 
-        <!-- <ArtistCommunity :data_posts="communityStore.communitysPostsByCommunity" :data="communityStore.communitysByAutor[0]" /> -->
+        <ArtistCommunity :data_posts="communityStore.communitysPostsByCommunity" :data="communityStore.communitysByAutor[0]" />
     </div>
     <div class="h-[90%] lg:h-full w-[260px] top-5 right-3 flex flex-col mr-1 fixed lg:relative lg:w-[95%] lg:right-0">
         <AlbunsArtistContainer :data="albumStore.albunsByAutor" class="mr-5" />
