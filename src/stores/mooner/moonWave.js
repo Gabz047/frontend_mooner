@@ -45,9 +45,9 @@ export const useMoonStore = defineStore('moonWave', () => {
         if (state.value.socket){
             state.value.socket.onopen = () => {
                 state.value.host = loginStore.user.email == state.value.channel
-                if (!state.value.host){
-                    sendActions('link')
-                }
+                if (state.value.reconnect){
+                    if (!state.value.host) sendActions('link');
+                  }
             };
 
             state.value.socket.onmessage = (event) => {
@@ -67,7 +67,7 @@ export const useMoonStore = defineStore('moonWave', () => {
                 break;
             case 'sync':
                 if (!state.value.host){
-                    queueStore.state.currentSong = data.song;
+                    queueStore.setCurrentSong(data.song);
                     (data.state) ? playerStore.play() : playerStore.pause()
                     playerStore.state.songPlayer.currentTime = data.timestamp;
                     queueStore.state.queue = data.queue;

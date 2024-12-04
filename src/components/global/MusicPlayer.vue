@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import play from '../../assets/images/icons/play.svg'
 import pause from '../../assets/images/icons/pause.svg'
 import prev from '../../assets/images/icons/prev.svg'
@@ -7,14 +7,12 @@ import next from '../../assets/images/icons/next.svg'
 import repeat from '@/assets/images/icons/repeat.vue'
 import random from '@/assets/images/icons/random.vue'
 import moonWave from '@/assets/images/icons/moonWave.vue'
-import settings from '@/assets/images/icons/settingsdot.svg'
 import sound_down from '@/assets/images/icons/sound-down.svg'
 import sound_up from '@/assets/images/icons/sound-up.svg'
 import sound_mute from '@/assets/images/icons/sound-mute.svg'
 import backward from '@/assets/images/icons/backward.svg'
 import forward from '@/assets/images/icons/forward.svg'
 import { useQueueStore, usePlayerStore, useMoonStore, useLoginStore } from '@/stores'
-import { data } from '@/utils/music/music'
 import AudioPlayer from './AudioPlayer.vue'
 import QueueDisplay from './queue/QueueDisplay.vue'
 
@@ -58,8 +56,6 @@ onMounted(()=>{
     showTime.value = playerStore.state.songPlayer.currentTime
   }, 0)
   
-
-  
 })
 
 onUnmounted(()=>{
@@ -72,14 +68,19 @@ const updateTime = () => {
   }
 }
 
-const createMoonWave = () => {
-  moonStore.connectMoonWave(LoginStore.user.email)
+const useMoonWave = () => {
+  if(moonStore.state.reconnect) {
+    moonStore.disconnectMoonWave();
+  }
+  else {
+    moonStore.connectMoonWave(LoginStore.user.email)
+  }
 }
 
 
 function usePlay() {
   if(moonStore.state.reconnect) {
-      moonStore.sendActions('use')
+    moonStore.sendActions('use')
   }
   else{
     playerStore.usePlay(); 
@@ -190,7 +191,7 @@ function usePrevious() {
     </div>
 
     <div class="flex flex-row absolute right-8 gap-3 items-center">
-      <moonWave :color="moonStore.state.reconnect ? '#FFD700' : '#ffffff'" @click="createMoonWave()" class="cursor-pointer" />
+      <moonWave :color="moonStore.state.reconnect ? '#FFD700' : '#ffffff'" @click="useMoonWave()" class="cursor-pointer" />
       <random
         @click="QueueStore.randomize"
         :color="QueueStore?.state?.saveOrder.length > 0 ? '#FFD700' : '#ffffff'"

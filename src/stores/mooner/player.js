@@ -36,7 +36,8 @@ export const usePlayerStore = defineStore('player', () => {
             pause()
         }
         else {
-            play()
+            state.songPlayer.play()
+            state.is_playing = true
         }
     }
 
