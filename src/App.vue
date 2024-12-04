@@ -26,7 +26,6 @@ onMounted(async()=>{
   })
 </script>
 <template>
-  <AudioPlayer />
   <RouterView />
 </template>
 

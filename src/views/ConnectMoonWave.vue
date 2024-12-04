@@ -14,7 +14,6 @@ const moon = route.params.email;
 const acceptSession = async () => {
     await moonStore.connectMoonWave(moon);
     router.push('/')
-    playerStore.play();
 }
 
 const cancel = () => {

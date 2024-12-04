@@ -64,7 +64,20 @@ onUnmounted(()=>{
 
 const updateTime = () => {
   if (playerStore.state.songPlayer) {
-     playerStore.state.songPlayer.currentTime = time.value
+    playerStore.state.songPlayer.currentTime = time.value
+    if(moonStore.state.reconnect) {
+      moonStore.sendActions('time')
+    }
+  }
+}
+
+const updateTime10s = (operation) => {
+  if (playerStore.state.songPlayer) {
+    if (operation == '-') playerStore.state.songPlayer.currentTime = time.value - 10;
+    else playerStore.state.songPlayer.currentTime = time.value + 10;
+    if(moonStore.state.reconnect) {
+      moonStore.sendActions('time')
+    }
   }
 }
 
@@ -142,12 +155,12 @@ function usePrevious() {
       <img
         class="cursor-pointer w-6 h-6 z-30 brightness-200"
         :src="backward"
-        @click="playerStore.state.songPlayer.currentTime -= 10"
+        @click="updateTime10s('-')"
         alt=""
       />
       <img
         :class="
-          QueueStore.state.history.length == 0 ? 'brightness-50' : 'brightness-200 cursor-pointer'
+          QueueStore?.state?.history.length == 0 ? 'brightness-50' : 'brightness-200 cursor-pointer'
         "
         @click="usePrevious()"
         class="w-6 h-6 z-30"
@@ -170,7 +183,7 @@ function usePrevious() {
       <img
         class="cursor-pointer w-6 h-6 z-30 brightness-200"
         :src="forward"
-        @click="playerStore.state.songPlayer.currentTime += 10"
+        @click="updateTime10s('+')"
         alt=""
       />
       
@@ -201,7 +214,7 @@ function usePrevious() {
         <repeat
           :color="
             QueueStore?.state?.queue[0]
-              ? QueueStore?.state.currentSong.id == QueueStore.state?.queue[0].id
+              ? QueueStore?.state?.currentSong?.id == QueueStore.state?.queue[0].id
                 ? '#FFD700'
                 : '#ffffff'
               : '#ffffff  '
