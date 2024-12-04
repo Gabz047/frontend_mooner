@@ -35,14 +35,10 @@ export const usePlayerStore = defineStore('player', () => {
     }
     const usePlay = () => {
         if (state.is_playing) {
-            state.songPlayer.pause()
-            // state.songPlayerVisual.pause()
-            state.is_playing = false
+            pause()
         }
         else {
-            state.songPlayer.play()
-            // state.songPlayerVisual.play()
-            state.is_playing = true
+            play()
         }
     }
 

@@ -21,7 +21,6 @@ import QueueDisplay from './queue/QueueDisplay.vue'
 const QueueStore = new useQueueStore();
 const playerStore = new usePlayerStore();
 const moonStore = new useMoonStore();
-const LoginStore = new useLoginStore();
 const showVolume = ref(false);
 const volume = ref(50);
 const time = ref(0)
@@ -72,9 +71,40 @@ const updateTime = () => {
 }
 
 const executeMoonWave = () => {
-  moonStore.connectMoonWave(LoginStore.user.email)
-  moonStore.disconnectMoonWave()
+  //moonStore.connectMoonWave(LoginStore.user.email)
+  //moonStore.disconnectMoonWave()
 }
+
+
+function usePlay() {
+  if(moonStore.state.reconnect) {
+      moonStore.sendActions('use')
+  }
+  else{
+    playerStore.usePlay(); 
+  }
+}
+
+function useNext() {
+  if(moonStore.state.reconnect) {
+      moonStore.sendActions('next')
+  }
+  else{
+    QueueStore.nextSong(); 
+  }
+}
+
+function usePrevious() {
+  if(moonStore.state.reconnect) {
+      moonStore.sendActions('previous')
+  }
+  else{
+    if (QueueStore.state.history.length > 0) {
+      QueueStore.previousSong() 
+    }
+  }
+}
+
 
 
 </script>

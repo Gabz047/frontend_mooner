@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { reactive, computed } from 'vue';
-import { usePlayerStore } from './player';
+import { usePlayerStore, useMoonStore } from '@/stores';
 
 
 
@@ -13,10 +13,13 @@ export const useQueueStore = defineStore('queue', () => {
         saveOrder: [],
     }))
     const playerStore = usePlayerStore()
+    const moonStore = useMoonStore()
 
     const currentSong = computed(()=> state.value.currentSong)
     const is_playing = computed(()=> state.value.is_playing)
-    
+    const queue = computed(()=> (state.value.queue) ? state.value.queue : [])
+    const history = computed(()=> (state.value.history) ? state.value.history : [])
+
 
     function setCurrentSong(song) {
         if (state.value?.currentSong?.player) { 
@@ -34,6 +37,9 @@ export const useQueueStore = defineStore('queue', () => {
         }   
         else {
             state.value.currentSong = newSong
+        }
+        if(moonStore.state.reconnect) {
+            moonStore.sendActions('queue')
         }
     }
 
@@ -53,6 +59,7 @@ export const useQueueStore = defineStore('queue', () => {
     function previousSong() {
         state.value.queue.unshift(state.value.currentSong)
         state.value.currentSong = state.value.history.pop();
+        playerStore.pause()
     }
 
     function repeatSong() {
@@ -61,6 +68,9 @@ export const useQueueStore = defineStore('queue', () => {
         }
         else {
             state.value.queue.unshift(state.value.currentSong)
+        }
+        if(moonStore.state.reconnect) {
+            moonStore.sendActions('queue')
         }
     }
 
@@ -76,6 +86,9 @@ export const useQueueStore = defineStore('queue', () => {
             state.value.queue = state.value.saveOrder
             state.value.saveOrder = []
         }
+        if(moonStore.state.reconnect) {
+            moonStore.sendActions('queue')
+        }
     }
 
     function removeFromQueue(song) {
@@ -87,6 +100,8 @@ export const useQueueStore = defineStore('queue', () => {
         state,
         is_playing,
         currentSong,
+        queue,
+        history,
         setCurrentSong,
         addSongToQueue,
         addSongToHistory,
