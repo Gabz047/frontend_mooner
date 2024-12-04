@@ -21,6 +21,8 @@ import QueueDisplay from './queue/QueueDisplay.vue'
 const QueueStore = new useQueueStore();
 const playerStore = new usePlayerStore();
 const moonStore = new useMoonStore();
+const LoginStore = new useLoginStore();
+
 const showVolume = ref(false);
 const volume = ref(50);
 const time = ref(0)
@@ -70,9 +72,8 @@ const updateTime = () => {
   }
 }
 
-const executeMoonWave = () => {
-  //moonStore.connectMoonWave(LoginStore.user.email)
-  //moonStore.disconnectMoonWave()
+const createMoonWave = () => {
+  moonStore.connectMoonWave(LoginStore.user.email)
 }
 
 
@@ -147,7 +148,7 @@ function usePrevious() {
         :class="
           QueueStore.state.history.length == 0 ? 'brightness-50' : 'brightness-200 cursor-pointer'
         "
-        @click="QueueStore.state.history.length > 0 ? QueueStore.previousSong() : null"
+        @click="usePrevious()"
         class="w-6 h-6 z-30"
         :src="prev"
         alt=""
@@ -155,14 +156,14 @@ function usePrevious() {
       <div class=" rounded-full w-[40px] h-[40px] flex justify-center items-center bg-[#7422C1]">
         <img
           class="absolute z-40 w-[25px] h-[18px] brightness-200 cursor-pointer" :class="playerStore.state.is_playing ? '' : 'ml-1'"
-          @click="playerStore.usePlay()"
+          @click="usePlay()"
           :src="playerStore.state.is_playing ? pause : play"
         />
       </div>
       <img
         class="cursor-pointer w-6 h-6 z-30 brightness-200"
         :src="next"
-        @click="QueueStore.nextSong()"
+        @click="useNext()"
         alt=""
       />
       <img
@@ -189,7 +190,7 @@ function usePrevious() {
     </div>
 
     <div class="flex flex-row absolute right-8 gap-3 items-center">
-      <moonWave :color="moonStore.state.reconnect ? '#FFD700' : '#ffffff'" @click="executeMoonWave()" />
+      <moonWave :color="moonStore.state.reconnect ? '#FFD700' : '#ffffff'" @click="createMoonWave()" class="cursor-pointer" />
       <random
         @click="QueueStore.randomize"
         :color="QueueStore?.state?.saveOrder.length > 0 ? '#FFD700' : '#ffffff'"

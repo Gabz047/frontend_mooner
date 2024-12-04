@@ -45,11 +45,16 @@ const router = createRouter({
           name: 'artist',
           component: () => import('../views/ArtistView.vue'),
           props: true
-          },
-                            {
+        },
+        {
           path: 'createcommunity/',
           name: 'createcommunity',
           component: () => import('../views/CommunityCreateView.vue')
+        },
+        {
+          path: 'connect-moon/:email',
+          name: 'connect-moon',
+          component: () => import('../views/ConnectMoonWave.vue')
         }
       ],
     },
