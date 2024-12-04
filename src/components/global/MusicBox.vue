@@ -1,6 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-
+import { ref } from 'vue'
 import play from '../../assets/images/icons/play.svg'
 import pause from '../../assets/images/icons/pause.svg'
 import { useRouter } from 'vue-router';
@@ -123,7 +122,7 @@ const to = (id, artist) => {
               "
             />
             <img
-              class="h-full w-full rounded-md music-img"
+              class="h-full w-full rounded-l-md music-img"
               :src="
                 music_data.cover.url
                   ? music_data.cover.url

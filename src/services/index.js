@@ -16,6 +16,7 @@ import DocumentService from "./document/document";
 import ImageService from "./images/image";
 import PaymentMethodService from "./payments/paymentMethod";
 import MoonWaveService from "./music/moonWave"
+import RecomendationService from './music/recomendation'
 
 export {
     AlbumService,
@@ -35,5 +36,6 @@ export {
     ImageService,
     DocumentService,
     PaymentMethodService,
-    MoonWaveService
+    MoonWaveService,
+    RecomendationService,
 }
