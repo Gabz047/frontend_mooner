@@ -67,12 +67,12 @@ const isOpen = shallowRef(false)
 <template>
     <section class=" overflow-auto duration-500 mt-3 ml-3 rounded-lg flex flex-col items-center bg-[#121212] fixed z-[999]" :class="responsive < 1500 ? isOpen ? 'w-[300px]' :  'w-[80px]' : 'w-[300px]', queueStore.state?.currentSong ? 'h-[88dvh]' : 'h-[97dvh]'">
         <span v-if="responsive < 1500" @click="isOpen = !isOpen" :class="'duration-500 absolute bottom-10 bg-[#1f1f1f] px-4 py-2 text-white rounded-full'"><i class=" text-2xl" :class="!isOpen ? 'mdi mdi-arrow-right-thick' : 'mdi mdi-arrow-left-thick'"></i></span>
-        <div class="w-full flex justify-center h-12 items-center gap-3 mt-4">
+        <RouterLink to="/" class="w-full flex justify-center h-12 items-center gap-3 mt-4">
             <div class="h-full w-12" >
                 <img class="w-full h-[90%]" src="@/assets/images/logoMooner.png" alt="">
             </div>
             <p :class=" responsive < 1500 ? isOpen ? 'text-3xl font-light duration-500 opacity-100' : 'duration-500 opacity-0 hidden' : 'duration-500 text-3xl font-light opacity-100'" class="text-white">Mooner</p>
-        </div>
+        </RouterLink>
 
         <div class="w-full flex flex-col">
             <ul :class="responsive < 1500 ? 'duration-500 w-full list-none flex flex-col gap-3 items-center mt-10' : 'duration-500 w-full list-none flex flex-col gap-3 justify-center items-center mt-10'">

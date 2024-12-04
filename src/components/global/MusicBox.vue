@@ -98,23 +98,23 @@ const to = (id, artist) => {
 
 </script>
 <template>
-    <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[330px] min-h-[45px] relative rounded-md hover:bg-[rgba(0,0,0,0.2)] duration-100 lg:w-[300px] p-1 ">
+    <div  v-if="props.showInPlaylistAddComponent ? verifyInPlaylist(props.music_data) : !showInPlaylistAddComponent " @click="props.buttons ? clickToAdd = !clickToAdd : ''" class="w-[275px] min-h-[45px] relative rounded-lg hover:bg-[rgba(27,27,27,0.6)] duration-100 lg:w-[300px] p-2">
         <div v-if="props.buttons && clickToAdd " class='absolute w-full h-full rounded-md bg-[#6340AE] opacity-[0.95] top-0 left-0 z-50 flex justify-center items-center duration-150'>
            <img class="size-8" src="@/assets/images/icons/verified.svg">
            <p>Adicionado</p>
         </div>
     <div class="w-80 relative" :class="is_search_history ? 'bg-neutral-800 rounded-md' : null" @click="createsong">
-    <div class="flex items-center h-[48px] w-full relative gap-3 music-box z-20">
+    <div class="flex items-center h-[50px] w-full relative gap-3 music-box z-20">
         <div class="w-1/12 flex justify-center" v-if="props.has_index">
           <p class="text-2xl font-semibold text-white text-center">
             {{ props.has_index ? props.index : '' }}
           </p>
         </div>
         <div class="flex w-full h-full">
-          <div class="h-full w-4/12 duration-200 relative z-10 music-box-img">
+          <div class="h-full w-[28%] duration-200 relative z-10 flex justify-center items-center music-box-img">
             <AudioPlayer />
             <img
-              class="absolute top-2 left-[25px] w-6 h-6 z-20 brightness-200 music-play cursor-pointer"
+              class="absolute w-6 h-6 z-20 brightness-200 music-play cursor-pointer"
               @click="setSong"
               :src="
                 QueueStore.state.currentSong == props.music_data && playerStore.state.is_playing
@@ -123,7 +123,7 @@ const to = (id, artist) => {
               "
             />
             <img
-              class="h-full w-full rounded-l-md music-img"
+              class="h-full w-full rounded-md music-img"
               :src="
                 music_data.cover.url
                   ? music_data.cover.url
@@ -133,25 +133,27 @@ const to = (id, artist) => {
               "
             />
           </div>
-          <div class="w-11/12 flex flex-col justify-center pl-3 overflow-hidden">
-            <p
-              :class="
-                is_search_history
-                  ? 'font-semibold text-base text-white'
-                  : 'font-semibold text-lg text-white'
-              "
-            >
-              {{ adjusteSize(props.music_data.title, 14, 14) }}
-            </p>
+          
+          <div class="w-8/12 flex flex-col justify-center pl-3 overflow-hidden">
             <div class="flex gap-2">
               <p @click="to(artists.artistic_name, artists)"
                 :class="is_search_history ? 'text-white' : 'text-base[10px] text-white  flex'"
                 v-for="artists in music_data.artists"
-                :key="artists.id"
+                :key="artists.id" class="break-keep"
               >
                 {{ artists.artistic_name }}
               </p>
             </div>
+            <p :title="props.music_data.title" class="break-keep text-nowrap"
+              :class="
+                is_search_history
+                  ? 'font-semibold text-base text-white'
+                  : 'font-semibold text-[18px] text-white'
+              "
+            >
+              {{ adjusteSize(props.music_data.title, 12, 12) }}
+            </p>
+           
           </div>
           <div
             class="w-2/12 flex justify-end items-center music-play"
@@ -169,10 +171,10 @@ const to = (id, artist) => {
             />
           </div>
           <div
-            class="w-2/12 flex justify-end items-center music-play"
+            class="w-3/12 flex justify-end items-center music-play"
             v-if="!is_search_history || props.buttons"
           >
-            <h1 class="cursor-pointer text-xl text-neutral-700" @click="$emit('deletesong')">X</h1>
+            <!-- <h1 class="cursor-pointer text-xl text-neutral-700" @click="$emit('deletesong')">X</h1> -->
           </div>
         </div>
       </div>
@@ -180,7 +182,7 @@ const to = (id, artist) => {
     <SettingsGlobal
       v-if="!is_search_history"
       :is_on="songStore.simpleState.item_settings == props.music_data.id"
-      @addQueue="QueueStore.addSongToQueue(props.music_data)"
+      @addQueue="QueueStore.addSongToQueue(props.music_data), songStore.simpleState.item_settings = null"
     />
     <AddPlaylist
       v-if="!is_search_history"

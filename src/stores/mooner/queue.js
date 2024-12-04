@@ -4,6 +4,7 @@ import { reactive, computed } from 'vue';
 import { usePlayerStore } from './player';
 
 
+
 export const useQueueStore = defineStore('queue', () => {
     const state = useStorage('queue', reactive({
         queue: [],
@@ -76,6 +77,11 @@ export const useQueueStore = defineStore('queue', () => {
             state.value.saveOrder = []
         }
     }
+
+    function removeFromQueue(song) {
+              const index = state.value.queue.findIndex((s) => s.id === song)  
+              state.value.queue.splice(index, 1)  
+    }
     
     return {
         state,
@@ -88,5 +94,6 @@ export const useQueueStore = defineStore('queue', () => {
         previousSong,
         repeatSong,
         randomize,
+        removeFromQueue
     };
 });

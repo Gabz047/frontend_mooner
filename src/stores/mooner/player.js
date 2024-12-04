@@ -5,7 +5,8 @@ import { reactive } from 'vue';
 export const usePlayerStore = defineStore('player', () => {
     const state = reactive({
         is_playing: false,
-        songPlayer: null
+        songPlayer: null,
+        songPlayerVisual: null
     })
 
     const play = () => {
@@ -19,6 +20,7 @@ export const usePlayerStore = defineStore('player', () => {
             })
             .catch(error => {
                 state.songPlayer.play()
+                // state.songPlayerVisual.play()
                 console.log('deu pau e não funfou' + error)
             })
         }
@@ -28,15 +30,18 @@ export const usePlayerStore = defineStore('player', () => {
 
     const pause = () => {
         state.songPlayer.pause()
+        // state.songPlayerVisual.pause()
         state.is_playing = false
     }
     const usePlay = () => {
         if (state.is_playing) {
             state.songPlayer.pause()
+            // state.songPlayerVisual.pause()
             state.is_playing = false
         }
         else {
             state.songPlayer.play()
+            // state.songPlayerVisual.play()
             state.is_playing = true
         }
     }

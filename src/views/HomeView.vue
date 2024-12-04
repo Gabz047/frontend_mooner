@@ -9,7 +9,7 @@ const playlistStore = usePlaylistStore()
 import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
 import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
-import player from '@/components/global/MusicPlayer.vue';
+
 import MusicBox from '@/components/global/MusicBox.vue';
 import { data_section, data_page, data_music_home, selectSection} from '@/utils/music/music';
 
@@ -62,8 +62,6 @@ onMounted(async ()=>{
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="verifyHasPlaylist" />
       </MusicGlobalContainer>
     </section>
-
-    <player />
 
   </main>
 </template>
