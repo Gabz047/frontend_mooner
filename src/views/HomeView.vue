@@ -2,10 +2,11 @@
 
 import { computed, onMounted, ref } from 'vue';
 import router from '@/router';
-import { useSongStore, useLoginStore, usePlaylistStore } from '@/stores/index'
+import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore } from '@/stores/index'
 const songStore = useSongStore()
 const loginStore = useLoginStore()
 const playlistStore = usePlaylistStore()
+const queueStore = useQueueStore()
 import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
 import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
 import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
@@ -47,7 +48,7 @@ onMounted(async ()=>{
 
 </script>
 <template>
-  <main class=" w-full min-h-full flex justify-end gap-4 overflow-x-hidden">
+  <main :class="queueStore.state?.currentSong ? 'pb-[70px]' : ''" class=" w-full min-h-full flex justify-end gap-4 overflow-x-hidden">
     
     <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] xl:w-[100%] 2xl:m-0 bg-[rgb(18,18,18)] overflow-auto">
       <ContainerNavigateButtons class="mt-5">
