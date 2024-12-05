@@ -26,14 +26,14 @@ const playlistStore = usePlaylistStore()
   playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
   playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
   playlistStore.newPlaylist.id = playlistStore.selectedPlaylist.id
-  playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key,
+  playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key
   router.push('/playlist/' + id)
 }
 
 </script>
 
 <template>
-    <div @click="to(item.id, item)" class="w-full flex mt-3 gap-2 items-center cursor-pointer hover:bg-[#1C1C1C] p-1 rounded-xl" v-for="item in props.data">
+    <div @click="to(item.id, item)" class=" w-full flex mt-3 gap-2 items-center cursor-pointer hover:bg-[#1C1C1C] p-1 rounded-xl" v-for="item in props.data">
 
         <div class="ml-10 rounded-lg h-[35px] w-[40px]">
             <img class="w-full h-full rounded-md" :src="item.cover ? item.cover?.url : item.user.perfil?.url">

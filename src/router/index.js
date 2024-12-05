@@ -65,6 +65,11 @@ const router = createRouter({
           path: 'artists/',
           name: 'artists',
           component: () => import('../views/home/HomeArtistsView.vue')
+        },
+        {
+          path: 'luuna/',
+          name: 'luuna',
+          component: () => import('../views/LuunaView.vue')
         }
       ],
     },

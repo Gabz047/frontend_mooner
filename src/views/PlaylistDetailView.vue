@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore,} from '@/stores/index'
 import MusicBox from '@/components/global/MusicBox.vue'
 
@@ -18,7 +18,10 @@ const token = loginStore.access
 const songs = ref([])
 
 
-
+onUnmounted(() => {
+  window.location.reload()
+  window.location.replace('http://127.0.0.1:5173/')
+})
 onMounted(() => {
   console.log('rodou')
   songs.value = []
