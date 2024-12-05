@@ -1,13 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-
+import { ref } from 'vue'
 import play from '../../assets/images/icons/play.svg'
 import pause from '../../assets/images/icons/pause.svg'
 import { useRouter } from 'vue-router';
 import SettingsGlobal from './SettingsGlobal.vue'
 import AddPlaylist from './AddPlaylist.vue'
 import { adjusteSize, verify_active } from '@/utils/music/music'
-import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore, useSongStore, useArtistStore } from '@/stores'
+import { useQueueStore, usePlayerStore, usePlaylistStore, useHistoryStore, useLoginStore, useSongStore, useArtistStore, useMoonStore } from '@/stores'
 import AudioPlayer from './AudioPlayer.vue'
 
 const songStore = useSongStore()
@@ -16,6 +15,7 @@ const LoginStore = useLoginStore()
 const playerStore = usePlayerStore();
 const QueueStore = useQueueStore()
 const playlistStore = usePlaylistStore()
+const moonStore = useMoonStore()
 const artistStore = useArtistStore()
 const router = useRouter()
 
@@ -72,9 +72,13 @@ function setSong() {
   if (QueueStore.state.currentSong != props.music_data){
     QueueStore.setCurrentSong(props.music_data)
     playerStore.play()
+    if (moonStore.state.reconnect) {
+      moonStore.sendActions('song')
+    }
   }
   else {
-    playerStore.usePlay()
+    if (moonStore.state.reconnect) moonStore.sendActions('use');
+    else playerStore.usePlay();
   }
 }
 
@@ -123,7 +127,7 @@ const to = (id, artist) => {
               "
             />
             <img
-              class="h-full w-full rounded-md music-img"
+              class="h-full w-full rounded-l-md music-img"
               :src="
                 music_data.cover.url
                   ? music_data.cover.url

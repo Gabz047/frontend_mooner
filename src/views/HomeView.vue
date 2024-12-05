@@ -1,7 +1,7 @@
 <script setup>
-
 import { computed, onMounted, ref } from 'vue';
 import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore, useNavigationStore } from '@/stores/index'
+
 const songStore = useSongStore()
 const loginStore = useLoginStore()
 const playlistStore = usePlaylistStore()
@@ -15,6 +15,7 @@ import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
 import MusicBox from '@/components/global/MusicBox.vue';
 import { data_music_home } from '@/utils/music/music';
 
+
 const verifyHasPlaylist = computed(()=>{
   const playlists = playlistStore.playlistsByOwner.length
   return playlists > 0 ? true : false
@@ -25,27 +26,12 @@ onMounted(()=>{
 })
 
 onMounted(async ()=>{
-  data_music_home.value.forEach(item => {
-    item.music = []
-  });
-  
-  if (songStore.songs.length == 0) {  
-  await songStore.getSongs(loginStore.access)
-  for (let i = 0; i < data_music_home.value.length; i++) {
-    for (let a = 0; a < songStore.songs.length; a++) {
-      data_music_home.value[i].music.push(songStore.songs[a]) 
-    }
+  data_music_home.value[0].music = await songStore.getSongs(loginStore.access)
+  data_music_home.value[1].music = await songStore.GetRecommendedSongs(loginStore.user.email)
+  if(data_music_home.value[1].music.length === 0){
+    data_music_home.value[1].music = await songStore.getSongs(loginStore.access)
   }
-} else {
-  for (let i = 0; i < data_music_home.value.length; i++) {
-    for (let a = 0; a < songStore.songs.length; a++) {
-      data_music_home.value[i].music.push(songStore.songs[a]) 
-    }
-  }
-}
-
 })
-
 
 </script>
 <template>
@@ -59,7 +45,6 @@ onMounted(async ()=>{
       <ContainerNavigateButtons justify="justify-start" class="mt-2 px-5">
         <NavigateHomeButtons :has_active_bg="false" v-for="item,index in navigationStore.state.data_section" :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_section, 'navigate')" />
       </ContainerNavigateButtons>
-
       <MusicGlobalContainer :justify_div="'justify-start'" class="mt-3" :title="item.title" v-for="item, index in data_music_home" :key="index">
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="verifyHasPlaylist" />
       </MusicGlobalContainer>

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
-import { SongService } from '@/services'
+import { SongService, RecomendationService } from '@/services'
 import { useStorage } from '@vueuse/core'
 /**
  * Store for managing organs data.
@@ -30,6 +30,7 @@ export const useSongStore = defineStore('song', () => {
     songsByTitle: [],
     songsByGenre: [],
     songsByArtist: [],
+    songsRecommended: [],
     loading: false,
     error: null,
     connection: false,
@@ -86,6 +87,7 @@ export const useSongStore = defineStore('song', () => {
     state.value.loading = true
     try {
       state.value.songs = await SongService.getSong(token)
+      return state.value.songs
     } catch (error) {
       state.value.error = error
     } finally {
@@ -183,41 +185,6 @@ export const useSongStore = defineStore('song', () => {
     }
   }
 
-  /**
-   * Updates an existing organ.
-   * @async
-   * @function updateSpecie
-   * @param {Object} specie - The organ object to update.
-   */
-  const updateOrgan = async (organ) => {
-    state.value.loading = true
-    try {
-      const index = state.value.organs.findIndex((s) => s.id === organ.id)
-      state.value.organs[index] = await OrganService.getOrgans()
-    } catch (error) {
-      state.value.error = error
-    } finally {
-      state.value.loading = false
-    }
-  }
-  /**
-   * Deletes a organ.
-   * @async
-   * @function deleteSpecie
-   * @param {number} id - The ID of the organ to delete.
-   */
-  const deleteOrgan = async (id) => {
-    state.value.loading = true
-    try {
-      const index = state.value.organs.findIndex((s) => s.id === id)
-      state.value.organs.splice(index, 1)
-    } catch (error) {
-      state.value.error = error
-    } finally {
-      state.value.loading = false
-    }
-  }
-
   const GetSongByGenre = async (genre, token) => {
     state.value.loading = true
     try {
@@ -232,6 +199,22 @@ export const useSongStore = defineStore('song', () => {
     }
   }
 
+  const GetRecommendedSongs = async (user) => {
+    state.value.loading = true
+    try{
+      const response = await RecomendationService.getRecomendation(user)
+      state.value.songsRecommended = response
+      console.log(response)
+      return state.value.songsRecommended
+    }
+    catch(err){
+      state.value.error = err
+    }
+    finally{
+      state.value.loading = false
+      state.value.connection = true
+    }
+  }
 
   return {
     state,
@@ -251,9 +234,8 @@ export const useSongStore = defineStore('song', () => {
     getSongsByName,
     getSongsByArtist,
     createSong,
-    updateOrgan,
-    deleteOrgan,
     GetSongByGenre,
     createSongForAlbum,
+    GetRecommendedSongs
   }
 })

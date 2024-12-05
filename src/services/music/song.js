@@ -83,7 +83,7 @@ class SongService {
      * @returns {Promise<Object>} A promise that resolves to the deleted slide object.
      * @throws {Error} If an error occurs while deleting the slide
      */
-    async deletesong(idPost) {
+    async deletesong(idPost, token) {
         try {
             const { data } = await api.delete(`/songs/${idPost}`, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: DeletePost - return success")

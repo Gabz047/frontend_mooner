@@ -46,12 +46,13 @@ const router = createRouter({
           component: () => import('../views/ArtistView.vue'),
           props: true
           },
-          {
+        {
           path: 'createcommunity/',
           name: 'createcommunity',
           component: () => import('../views/CommunityCreateView.vue')
         },
         {
+
           path: 'musics/',
           name: 'musics',
           component: () => import('../views/home/HomeMusicsView.vue')
@@ -70,6 +71,11 @@ const router = createRouter({
           path: 'luuna/',
           name: 'luuna',
           component: () => import('../views/LuunaView.vue')
+        },
+        {
+          path: 'connect-moon/:email',
+          name: 'connect-moon',
+          component: () => import('../views/ConnectMoonWave.vue')
         }
       ],
     },
