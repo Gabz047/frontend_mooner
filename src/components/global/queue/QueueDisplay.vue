@@ -19,9 +19,9 @@ const remove = (id) => {
             <p @click="open = !open">{{open ? 'Fechar Fila' : 'Abrir Fila'}}</p>
             <span :class=" !open ? 'mdi mdi-arrow-up-circle-outline' : 'mdi mdi-arrow-down-circle-outline'"></span>
         </div>
-        <div :class="!open ? 'flex gap-4 w-full justify-center' : 'hidden'">
+        <div :class="!open ? 'flex gap-4 justify-center text-nowrap' : 'hidden'">
         <p>A seguir...</p>
-        <p class="text-white">{{ queueStore.state.queue[0].title }}</p>
+        <p class="text-white text-nowrap ">{{ adjusteSize(queueStore.state.queue[0].title, 16, 16) }}</p>
         </div>
         <QueueSongs @eraseQueue="queueStore.state.queue = []" @action="remove" v-if="open" :data_next="queueStore.state.queue" :data="queueStore.state.currentSong" />
     </div>
@@ -45,6 +45,7 @@ const remove = (id) => {
     padding: 8px;
     transition: 0.5s;
     height: 40px;
+    min-width: 240px;
     &:hover {
         height: 80px;
 
