@@ -199,7 +199,7 @@ function usePrevious() {
         <repeat
           :color="
             QueueStore?.state?.queue[0]
-              ? QueueStore?.state.currentSong.id == QueueStore.state?.queue[0].id
+              ? QueueStore?.state?.currentSong?.id == QueueStore?.state?.queue[0]?.id
                 ? '#FFD700'
                 : '#ffffff'
               : '#ffffff  '

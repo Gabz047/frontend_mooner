@@ -88,7 +88,7 @@ const isOpen = shallowRef(false)
                         <div v-if="item.title == 'Playlists'" @click="createPlaylist(playlistBody, token)" class="flex items-center gap-4 p-2 mt-2 w-full justify-center cursor-pointer hover:bg-[#1C1C1C] rounded-lg"><span :class="responsive < 1500 ? isOpen ? '' : 'hidden' : '' " v-if="item.isList && item.add " class="mdi mdi-plus-circle text-white text-lg"></span>
                         <p v-if="item.isList && item.add ">Create Playlist</p></div>
                         
-                        <div v-if="item.title == 'Communitys'" @click="createPlaylist(playlistBody, token)" class="flex items-center gap-4 p-2 mt-2 w-full justify-center cursor-pointer hover:bg-[#1C1C1C] rounded-lg"><span :class="responsive < 1500 ? isOpen ? '' : 'hidden' : '' " v-if="item.isList && item.add " class="mdi mdi-plus-circle text-white text-lg"></span>
+                        <div v-if="item.title == 'Comunidades'" @click="createPlaylist(playlistBody, token)" class="flex items-center gap-4 p-2 mt-2 w-full justify-center cursor-pointer hover:bg-[#1C1C1C] rounded-lg"><span :class="responsive < 1500 ? isOpen ? '' : 'hidden' : '' " v-if="item.isList && item.add " class="mdi mdi-plus-circle text-white text-lg"></span>
                             <p v-if="item.isList && item.add ">Create Community</p></div>
                             <SideHeaderOptions :data="showData(item.name)" />
                     </div>
