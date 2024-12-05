@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 
 import { useArtistStore } from '@/stores'
 import { adjusteSize } from '@/utils/music/music';
+import { onMounted } from 'vue';
 
 const artistStore = useArtistStore()
 
@@ -16,6 +17,10 @@ const props = defineProps({
         type: Object,
         required: true
     },
+})
+
+onMounted(()=>{
+  console.log(props.artist_data)
 })
 
 const to = (id, artist) => {

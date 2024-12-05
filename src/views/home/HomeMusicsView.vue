@@ -60,7 +60,7 @@ onMounted(async ()=>{
         <NavigateHomeButtons :has_active_bg="false" v-for="item,index in navigationStore.state.data_section"  :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_section, 'navigate')" />
       </ContainerNavigateButtons>
 
-      <MusicGlobalContainer class="mt-3" :title="item.title" v-for="(item, index) in data_music_home.filter(item => item.title != 'Artistas que Você Gosta')" :key="index">
+      <MusicGlobalContainer class="mt-3 pb-12" :title="item.title" v-for="(item, index) in data_music_home.filter(item => item.title != 'Artistas que Você Gosta')" :key="index">
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="verifyHasPlaylist" />
       </MusicGlobalContainer>
     </section>

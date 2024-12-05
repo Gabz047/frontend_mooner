@@ -76,7 +76,12 @@ const router = createRouter({
           path: 'connect-moon/:email',
           name: 'connect-moon',
           component: () => import('../views/ConnectMoonWave.vue')
-        }
+        },
+        {
+          path: '/navigation',
+          name: 'Navegar',
+          component: () => import('../views/NavigationView.vue')
+        },
       ],
     },
     {
@@ -126,11 +131,7 @@ const router = createRouter({
             auth: true
           }
         },
-        {
-          path: '/navigation',
-          name: 'Navegar',
-          component: () => import('../views/NavigationView.vue')
-        },
+      
         {
           path: '/historico',
           name: 'Historico',  

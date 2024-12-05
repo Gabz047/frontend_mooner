@@ -21,7 +21,7 @@ import ArtistBoxHome from '@/components/global/ArtistBoxHome.vue';
 <template>
   <main :class="queueStore.state?.currentSong ? 'pb-[70px]' : ''" class=" w-full min-h-full flex justify-end gap-4 overflow-x-hidden">
     
-    <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] xl:w-[100%] 2xl:m-0 bg-[rgb(18,18,18)] overflow-auto">
+    <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] xl:w-[100%] 2xl:m-0 bg-[rgb(18,18,18)] overflow-auto min-h-[90dvh]">
       <ContainerNavigateButtons class="mt-5">
         <NavigateHomeButtons :has_active_bg="true" v-for="item,index in navigationStore?.state?.data_page" :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_page, item.title)" />
       </ContainerNavigateButtons>
@@ -30,7 +30,7 @@ import ArtistBoxHome from '@/components/global/ArtistBoxHome.vue';
         <NavigateHomeButtons :has_active_bg="false" v-for="item,index in navigationStore.state.data_section" :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_section, 'navigate')" />
       </ContainerNavigateButtons>
 
-      <MusicGlobalContainer :justify_div="'justify-center'" class="mt-3" >
+      <MusicGlobalContainer :justify_div="'justify-center'" class="mt-3 pb-12" >
         <ArtistBoxHome v-for="artist in artistStore.artists" :artist_data="artist" />
       </MusicGlobalContainer>
     </section>

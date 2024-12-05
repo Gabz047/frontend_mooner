@@ -50,7 +50,7 @@ export const data_page = ref([
   ])
 
 export const data_music_home = ref([
-    {music: [], title: ''}, {music: [], title: 'Recomendamos para você'}, {music: [], title: 'Artistas que Você Gosta'}, {music: [], title: 'Descobertas da Semana'}
+    {music: [], title: ''}, {music: [], title: 'Recomendamos para você'}
   ])
 
 export const selectSection = (index, data, type) => {
