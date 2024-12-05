@@ -15,6 +15,7 @@ import forward from '@/assets/images/icons/forward.svg'
 import { useQueueStore, usePlayerStore, useMoonStore, useLoginStore } from '@/stores'
 import AudioPlayer from './AudioPlayer.vue'
 import QueueDisplay from './queue/QueueDisplay.vue'
+import MoonWaveManagement from '@/components/moonWave/MoonWaveManagement.vue'
 
 const QueueStore = new useQueueStore();
 const playerStore = new usePlayerStore();
@@ -130,7 +131,8 @@ function usePrevious() {
     v-show="QueueStore.state?.currentSong"
     class="flex w-[98%] ml-[1%] mr-[1%] fixed bottom-0 h-[9%] gap-1 items-center bg-[#0e0e0e] z-[9999] rounded-xl p-4"
   >
-  <QueueDisplay />
+  <QueueDisplay v-if="!moonStore.reconnect" />
+  <MoonWaveManagement />
   <div class="relative rounded-lg h-12 w-16">
         <AudioPlayer />
         <img

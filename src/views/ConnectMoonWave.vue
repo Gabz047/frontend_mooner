@@ -27,7 +27,7 @@ const cancel = () => {
     <div>  
       <div
         v-if="showPermission"
-        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-black"
       >
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
           <h2 class="text-lg font-bold mb-4">Entrar na Sessão</h2>
