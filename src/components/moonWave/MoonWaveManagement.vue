@@ -20,6 +20,8 @@ function copyToClipboard(text) {
         });
 }
 const link = `http://127.0.0.1:5174/connect-moon/${userStore.myuser.email}`
+const whatsappLink = ref(`https://wa.me/?text=${encodeURIComponent(link)}`);
+
 const open = ref(false)
 const coppied = ref(false)
 const copy = () => {
