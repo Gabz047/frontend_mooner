@@ -45,11 +45,32 @@ const router = createRouter({
           name: 'artist',
           component: () => import('../views/ArtistView.vue'),
           props: true
-        },
+          },
         {
           path: 'createcommunity/',
           name: 'createcommunity',
           component: () => import('../views/CommunityCreateView.vue')
+        },
+        {
+
+          path: 'musics/',
+          name: 'musics',
+          component: () => import('../views/home/HomeMusicsView.vue')
+        },
+        {
+          path: 'playlists/',
+          name: 'playlists',
+          component: () => import('../views/home/HomePlaylistsView.vue')
+        },
+        {
+          path: 'artists/',
+          name: 'artists',
+          component: () => import('../views/home/HomeArtistsView.vue')
+        },
+        {
+          path: 'luuna/',
+          name: 'luuna',
+          component: () => import('../views/LuunaView.vue')
         },
         {
           path: 'connect-moon/:email',
