@@ -1,28 +1,25 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore, useNavigationStore } from '@/stores/index'
 import PaginationManager from '@/components/global/PaginationManager.vue';
+import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
+import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
+import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
+import MusicBox from '@/components/global/MusicBox.vue';
+import GlobalApresentation from '@/components/global/GlobalApresentation.vue';
+import { data_music_home } from '@/utils/music/music';
+import { storage } from '@/utils/storage/apresentation';
+
 const songStore = useSongStore()
 const loginStore = useLoginStore()
 const playlistStore = usePlaylistStore()
 const queueStore = useQueueStore()
 const navigationStore = useNavigationStore()
 
-import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
-import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
-import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
-
-import MusicBox from '@/components/global/MusicBox.vue';
-import { data_music_home } from '@/utils/music/music';
-
 
 const verifyHasPlaylist = computed(()=>{
   const playlists = playlistStore.playlistsByOwner.length
   return playlists > 0 ? true : false
-})
-
-onMounted(()=>{
-  console.log(navigationStore)
 })
 
 onMounted(async ()=>{
@@ -31,6 +28,12 @@ onMounted(async ()=>{
   if(data_music_home.value[1].music.length === 0){
     data_music_home.value[1].music = await songStore.getSongs(loginStore.access)
   }
+  
+  setTimeout(() =>{
+    storage.value.apresentation = false
+  }, 6000)
+
+  console.log(storage.value.apresentation)
 })
 
 
@@ -51,6 +54,6 @@ onMounted(async ()=>{
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="verifyHasPlaylist" />
       </MusicGlobalContainer>
     </section>
-
+    <GlobalApresentation v-if="storage.apresentation"/>
   </main>
 </template>
