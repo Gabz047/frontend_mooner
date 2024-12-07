@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore, useNavigationStore } from '@/stores/index'
 import PaginationManager from '@/components/global/PaginationManager.vue';
 import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
@@ -35,8 +35,6 @@ onMounted(async ()=>{
 
   console.log(storage.value.apresentation)
 })
-
-
 </script>
 <template>
   <main :class="queueStore.state?.currentSong ? 'pb-[70px]' : ''" class=" w-full min-h-[31dvh] flex justify-end gap-4 overflow-x-hidden">
