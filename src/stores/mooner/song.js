@@ -31,7 +31,7 @@ export const useSongStore = defineStore('song', () => {
     songsByGenre: [],
     songsByArtist: [],
     songsRecommended: [],
-    songsByLast: [{}],
+    songsByLast: [],
     loading: false,
     error: null,
     connection: false,

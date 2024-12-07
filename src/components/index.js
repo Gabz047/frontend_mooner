@@ -4,11 +4,23 @@ import SearchBar from "./global/headerGlobal/SearchBar.vue";
 import UserPerfil from "./global/headerGlobal/UserPerfil.vue";
 import SearchOptions from "./global/headerGlobal/SearchOptions.vue";
 import MusicBoxExtended from "./music/MusicBoxExtended.vue";
+import MobileSearchOptions from "./global/headerGlobal/MobileSearchOptions.vue";
+import MobileSearchForSearchOptions from "./global/headerGlobal/MobileSerachForSearchOptions.vue";
+import MusicBoxCard from "./music/MusicBoxCard.vue";
+import MusicGlobalContainer from "./global/MusicGlobalContainer.vue";
+import CarroselContainer from "./music/carrossel/CarroselContainer.vue";
+import ContainerSliderSong from "./music/Containers/ContainerSliderSong.vue";
 export {
     GlobalHeader,
     SideHeader,
     SearchBar,
     UserPerfil,
     SearchOptions,
-    MusicBoxExtended
+    MusicBoxExtended,
+    MobileSearchOptions,
+    MobileSearchForSearchOptions,
+    MusicBoxCard,
+    MusicGlobalContainer,
+    CarroselContainer,
+    ContainerSliderSong
 }
