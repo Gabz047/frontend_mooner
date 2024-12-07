@@ -70,7 +70,7 @@ const data_add_secondary = (music, setAction) => {
       ></span>
       <p class="h-[10%] text-xl text-white mt-3">Adicione Suas Músicas</p>
 
-      <div class="max-h-[85%] h-[85%] w-11/12 bg-[#1a1a1a] overflow-auto ">
+      <div class="max-h-[85%] h-[85%] w-auto overflow-auto ">
         <div class="w-full p-4 flex flex-col gap-3">
           <MusicBox v-if="setAction == 'add'"
             showInPlaylistAddComponent="true"
@@ -101,7 +101,7 @@ const data_add_secondary = (music, setAction) => {
   </div>
   <main :class="queueStore.state?.currentSong ? 'h-[82dvh]' : 'min-h-dvh h-dvh'" class=" w-full xl:w-dvw lg:h-full flex justify-end gap-4">
     <section class="my-auto mr-2 xl:m-0 xl:w-full h-full flex rounded-l-lg w-[98%] bg-[#121212] lg:flex-col lg:justify-center">
-    <InfoContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
+    <InfoContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id, true)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
     <ContentContainer :setAction="setAction" @setAddOn="isOn = !isOn, setAction = 'add'" @setRemoveOn="setAction != 'remove' ? setAction = 'remove' : setAction = ''" :settings="settings" @setSettings="settings = !settings"  @sendEmitData="captureEmit" @removeFromPlaylist="addToPlaylist(saveData, songs, token)" @addToPlaylist="addToPlaylist(saveData, songs, token)" />
     </section>
   </main>

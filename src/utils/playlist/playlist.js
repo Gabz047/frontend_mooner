@@ -7,7 +7,7 @@ let imgStore = null
 let queueStore = null
 let loginStore = null
 let token = null
-const router = useRoute()
+import router from '@/router'
 
 setTimeout(()=>{
   playlistStore = usePlaylistStore()
@@ -35,7 +35,7 @@ export const transformToId = () => {
     await playlistStore.updatePlaylist(playlist, token)
   }
   
-export const updatePlaylists = async (playlist, token, image, songs, id) => {
+export const updatePlaylists = async (playlist, token, image, songs, id, reload) => {
     playlistStore.state.selectedPlaylist.songs = playlistStore.state.selectedPlaylist.songs.concat(songs)
     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
     if (image != null) {
@@ -59,6 +59,10 @@ export const updatePlaylists = async (playlist, token, image, songs, id) => {
       playlistStore.state.selectedPlaylist.songs.concat(playlistStore.newPlaylist.songs)
       transformToId()
       updateBody(playlist, token)
+
+      if (reload) {
+        router.push('/')
+      }
 
     }, 500)
 

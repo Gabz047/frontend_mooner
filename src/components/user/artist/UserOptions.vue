@@ -1,5 +1,6 @@
 <script setup>
 import { useLoginStore, useUserStore, useArtistStore } from '@/stores';
+import { onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 
     const LoginStore = useLoginStore()
@@ -21,6 +22,10 @@ import { RouterLink, useRouter } from 'vue-router';
             type: Function,
             required: true
         }
+    })
+
+    onMounted(()=>{
+        console.log(LoginStore.user)
     })
 
 </script>

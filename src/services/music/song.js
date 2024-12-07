@@ -10,9 +10,9 @@ class SongService {
      * @returns {Promise<Array>} A promise that resolves to an array of slides
      * @throws {Error} If an error occurs while retrieving the slides
      */
-    async getSong(token) {
+    async getSong(token, page) {
         try {
-            const { data } = await api.get('/songs');
+            const { data } = await api.get(`/songs/?page=${page != undefined ? page : ''}`);
             console.log( "Service: GetSong - return success")
             return data.results;
         } catch (error) {

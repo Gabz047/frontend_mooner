@@ -83,10 +83,10 @@ export const useSongStore = defineStore('song', () => {
    * @async
    * @function getSpecies
    */
-  const getSongs = async (token) => {
+  const getSongs = async (token, page) => {
     state.value.loading = true
     try {
-      state.value.songs = await SongService.getSong(token)
+      state.value.songs = await SongService.getSong(token, page)
       return state.value.songs
     } catch (error) {
       state.value.error = error

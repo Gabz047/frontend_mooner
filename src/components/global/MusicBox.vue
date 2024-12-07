@@ -107,7 +107,7 @@ const to = (id, artist) => {
            <img class="size-8" src="@/assets/images/icons/verified.svg">
            <p>Adicionado</p>
         </div>
-    <div class="w-80 relative" :class="is_search_history ? 'bg-neutral-800 rounded-md' : null" @click="createsong">
+    <div class="w-80 relative" :class="is_search_history ? ' rounded-md' : null" @click="createsong">
     <div class="flex items-center h-[50px] w-full relative gap-3 music-box z-20">
         <div class="w-1/12 flex justify-center" v-if="props.has_index">
           <p class="text-2xl font-semibold text-white text-center">
@@ -127,7 +127,7 @@ const to = (id, artist) => {
               "
             />
             <img
-              class="h-full w-full rounded-l-md music-img"
+              class="h-full w-full rounded-md music-img"
               :src="
                 music_data.cover.url
                   ? music_data.cover.url
@@ -143,9 +143,9 @@ const to = (id, artist) => {
               <p @click="to(artists.artistic_name, artists)"
                 :class="is_search_history ? 'text-white' : 'text-base[10px] text-white  flex'"
                 v-for="artists in music_data.artists"
-                :key="artists.id" class="break-keep"
+                :key="artists.id" class="break-keep text-nowrap"
               >
-                {{ artists.artistic_name }}
+                {{ artists.artistic_name ? adjusteSize(artists.artistic_name, 16, 16) : '' }}
               </p>
             </div>
             <p :title="props.music_data.title" class="break-keep text-nowrap"

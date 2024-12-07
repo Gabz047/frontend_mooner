@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore, useNavigationStore } from '@/stores/index'
-
+import PaginationManager from '@/components/global/PaginationManager.vue';
 const songStore = useSongStore()
 const loginStore = useLoginStore()
 const playlistStore = usePlaylistStore()
@@ -33,6 +33,7 @@ onMounted(async ()=>{
   }
 })
 
+
 </script>
 <template>
   <main :class="queueStore.state?.currentSong ? 'pb-[70px]' : ''" class=" w-full min-h-[31dvh] flex justify-end gap-4 overflow-x-hidden">
@@ -45,6 +46,7 @@ onMounted(async ()=>{
       <ContainerNavigateButtons justify="justify-start" class="mt-2 px-5">
         <NavigateHomeButtons :has_active_bg="false" v-for="item,index in navigationStore.state.data_section" :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_section, 'navigate')" />
       </ContainerNavigateButtons>
+      
       <MusicGlobalContainer :justify_div="'justify-start'" class="mt-3" :title="item.title" v-for="item, index in data_music_home" :key="index">
         <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="verifyHasPlaylist" />
       </MusicGlobalContainer>

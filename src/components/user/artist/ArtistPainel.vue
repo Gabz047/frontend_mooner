@@ -24,7 +24,7 @@
 </script>
 <template>
 <div class="flex w-full flex-col">
-    <h1 class="text-center text-4xl text-white font-extralight">Lance sua nova obra!</h1>
+    <h1 class="text-center text-4xl mt-24 text-white font-extralight">Lance sua nova obra!</h1>
     <h2 class="text-center text-base text-white font-extralight">Sera uma musica ou album?</h2>
     <ContainerNavigateButtons class="p-5">
         <NavigateHomeButtons :has_active_bg="true" v-for="item, index in ArtistProgressStore.state.Select_song_option" :key="index" :title="item.title"
