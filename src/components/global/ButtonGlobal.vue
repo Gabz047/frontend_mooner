@@ -1,6 +1,6 @@
 <template>
     <button id="btn_id" :class="class" :style="{background: background, width: width, height: height, padding: padding, color:color, fontSize: font_size, border:border, borderRadius: border_radius}" class="flex gap-2 justify-center">
-        <i v-if="has_icon" :class="icon"></i><p v-if="!is_arrow">{{title}}</p><img src="../../assets/images/EmailSend.png" id="sendsvg" v-else></button>
+        <i v-if="has_icon" :class="icon"></i><p v-if="!is_arrow">{{title}}</p><img src="../../assets/images/PaperPlane.png" id="sendsvg" v-else></button>
 </template>
 <script setup>
     defineProps({
