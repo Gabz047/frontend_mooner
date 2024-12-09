@@ -31,6 +31,7 @@ export const useSongStore = defineStore('song', () => {
     songsByGenre: [],
     songsByArtist: [],
     songsRecommended: [],
+    songsByLast: [{}],
     loading: false,
     error: null,
     connection: false,
@@ -77,6 +78,7 @@ export const useSongStore = defineStore('song', () => {
   const songsCount = computed(() => state.value.songs.length)
   const songsByGenre = computed(() => state.value.songsByGenre)
   const songsByArtist = computed(()=> state.value.songsByArtist)
+  const songsByLast = computed(()=> state.value.songsByLast)
 
   /**
    * Fetches organs data.
@@ -112,6 +114,10 @@ export const useSongStore = defineStore('song', () => {
       state.value.loading = false
       state.value.connection = true
     }
+  }
+
+  const createLastSongs = (song) => {
+    state.value.songsByLast.push(song)
   }
 
   const getSongsByArtist = async (name, token) => {
@@ -226,6 +232,7 @@ export const useSongStore = defineStore('song', () => {
     selectedSong,
     songsByGenre,
     songsByArtist,
+    songsByLast,
     err,
     msg,
     simpleState,
@@ -236,6 +243,7 @@ export const useSongStore = defineStore('song', () => {
     createSong,
     GetSongByGenre,
     createSongForAlbum,
-    GetRecommendedSongs
+    GetRecommendedSongs,
+    createLastSongs
   }
 })

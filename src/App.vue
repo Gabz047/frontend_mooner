@@ -2,7 +2,6 @@
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useUserStore, usePlaylistStore, useLoginStore, useCommunityStore, useFollowingStore } from '@/stores';
-import AudioPlayer from "@/components/global/AudioPlayer.vue";
 import { dataHeader } from './utils/header/header';
 
 const userStore = useUserStore()
@@ -11,9 +10,7 @@ const loginStore = useLoginStore()
 const communityStore = useCommunityStore()
 const followingStore = useFollowingStore()
 
-// router.beforeEach((to, from, next) => {
-//   if (to.path == '/login' ||)
-// })
+
 onMounted(async()=>{
     await userStore.getUser(loginStore.access)
     await playlistStore.getPlaylistsByOwner(userStore.myuser.email, loginStore.access)
@@ -23,12 +20,14 @@ onMounted(async()=>{
     dataHeader.artist.content = followingStore.followersByUser
     dataHeader.community.content = communityStore.communitys
     console.log(dataHeader.artist.content)
+
+    
+    
   })
 </script>
 <template>
   <RouterView />
 </template>
-
 <style>
   *{
     padding: 0;

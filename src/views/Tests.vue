@@ -1,19 +1,11 @@
 <script setup>
-import { onMounted } from 'vue';
+import { SideHeader, GlobalHeader } from '@/components';
 import { dataHeader } from '@/utils/header/header';
-import SideHeader from '@/components/newDesign/SideHeader.vue';
-import { useUserStore, useArtistStore, usePlaylistStore, useCommunityStore, useFollowingStore } from '@/stores';
-
-import MoonWaveManagement from '@/components/moonWave/MoonWaveManagement.vue'
-
-const playlistStore = usePlaylistStore()
-const userStore = useUserStore()
-const artistStore = useArtistStore()
-const communityStore = useCommunityStore()
-const followingStore = useFollowingStore()
-
-
 </script>
 <template>
-    <MoonWaveManagement />
+    
+    <SideHeader :data="dataHeader" />
+    <main class="w-[80%] absolute right-0 mt-4">
+    <GlobalHeader />
+    </main>
 </template>
