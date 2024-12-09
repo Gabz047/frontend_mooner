@@ -77,6 +77,18 @@ class FollowingService {
      * @returns {Promise<Object>} A promise that resolves to the updated slides Object
      * @throws {Error} If an error occurs while updating the slide
      */
+
+    async deleteFollowing(id, token){
+        try {
+            const { data } = await api.delete(`/following/${id}/`, {headers: {'authorization': `Bearer ${token}`}});
+            console.log( "Service: AddCommunity - return success")
+            return data.results;
+        } catch (error) {
+            console.log("Service: AddCommunity - return error", error);
+            throw error;
+        }
+        }
     }
+
 
 export default new FollowingService();
