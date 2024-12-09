@@ -10,6 +10,9 @@ import MusicBoxCard from "./music/MusicBoxCard.vue";
 import MusicGlobalContainer from "./global/MusicGlobalContainer.vue";
 import CarroselContainer from "./music/carrossel/CarroselContainer.vue";
 import ContainerSliderSong from "./music/Containers/ContainerSliderSong.vue";
+import CarroselItem from "./music/carrossel/CarroselItem.vue";
+import CarrosselMidItem from "./music/carrossel/CarrosselMidItem.vue";
+import CarrosselShortItem from "./music/carrossel/CarrosselShortItem.vue";
 export {
     GlobalHeader,
     SideHeader,
@@ -22,5 +25,8 @@ export {
     MusicBoxCard,
     MusicGlobalContainer,
     CarroselContainer,
-    ContainerSliderSong
+    ContainerSliderSong,
+    CarroselItem,
+    CarrosselMidItem,
+    CarrosselShortItem
 }

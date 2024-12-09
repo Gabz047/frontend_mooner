@@ -10,7 +10,7 @@ const songStore = useSongStore()
     <SideHeader :data="dataHeader" />
     <main class="w-[80%] absolute right-0 mt-4">
     <GlobalHeader />
-    <CarroselContainer />
+    <CarroselContainer :data="songStore.songs" />
     <ContainerSliderSong>
         <MusicBoxCard class="mt-3" v-for="song in songStore.songs" :data="song" />
     </ContainerSliderSong>

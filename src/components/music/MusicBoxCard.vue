@@ -1,5 +1,6 @@
 <script setup>
 import { shallowRef } from 'vue';
+import { adjusteSize } from '@/utils/music/music';
 const props = defineProps({
     data: {
         type: Object
@@ -26,8 +27,8 @@ const onHover = shallowRef(false)
             <img :src="props.data?.cover?.url" class="mt-[3px] w-[141px] h-[129px] rounded-[20px] object-cover" alt="">
         </div>
         <div class="h-40 mt-[5px] w-full flex justify-center items-center flex-col text-white">
-            <p class="text-[14px] text-center font-semibold">{{props.data.title}}</p>
-            <p v-for="artist in props.data.artists" class="text-[12px] font-light">{{ artist.artistic_name }}</p>
+            <p class="text-[14px] text-center font-semibold">{{adjusteSize(props.data.title, 16, 16) }}</p>
+            <p class="text-[12px] font-light">{{ props.data.artists[0].artistic_name }} {{ props.data.artists.length > 1 ? '+' : '' }}</p>
         </div>
         
     </div>

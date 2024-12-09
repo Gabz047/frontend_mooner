@@ -17,7 +17,9 @@ const emits = defineEmits([
             <img class="w-full h-full rounded-xl object-cover" :src="props.data?.cover?.url" alt="">
         </div>
         <div class="h-full flex flex-col justify-center ml-2">
-            <p v-for="artists in props.data.artists" class=" text-xs font-light">{{artists.artistic_name}}</p>
+            <div class="flex w-full">
+            <p class=" text-xs font-light">{{props.data.artists[0].artistic_name}} {{ props.data.artists.length > 1 ? '+' : '' }}</p>
+            </div>
             <p class="text-lg font-medium">{{props.data.title}}</p>
         </div>
     </div>
