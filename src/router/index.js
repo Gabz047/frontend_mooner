@@ -7,8 +7,8 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
-      name: "fullLayout",
+      path: '/',
+      name: 'fullLayout',
       component: () => import('../layout/fullLayout.vue'),
       meta: {
         auth: true
@@ -22,13 +22,12 @@ const router = createRouter({
         {
           path: '/:genre',
           name: 'genre',
-          component: () => import('../views/GenreView.vue'),
+          component: () => import('../views/GenreView.vue')
         },
         {
           path: '/artist/:id',
           name: 'artist',
-          component: () => import('../views/ArtistDetailView.vue'),
-        
+          component: () => import('../views/ArtistDetailView.vue')
         },
         {
           path: '/artistpainel',
@@ -41,18 +40,25 @@ const router = createRouter({
           component: () => import('../views/PlaylistDetailView.vue')
         },
         {
+          path: '/plans',
+          name: 'plans',
+          component: () => import('../views/PlansView.vue'),
+          meta: {
+            auth: true
+          }
+        },
+        {
           path: '/artistDetail/:id',
           name: 'artist',
           component: () => import('../views/ArtistView.vue'),
           props: true
-          },
+        },
         {
           path: 'createcommunity/',
           name: 'createcommunity',
           component: () => import('../views/CommunityCreateView.vue')
         },
         {
-
           path: 'musics/',
           name: 'musics',
           component: () => import('../views/home/HomeMusicsView.vue')
@@ -81,19 +87,19 @@ const router = createRouter({
           path: '/navigation',
           name: 'Navegar',
           component: () => import('../views/NavigationView.vue')
-        },
-      ],
+        }
+      ]
     },
     {
-      path: "/",
-      name: "blankLayout",
+      path: '/',
+      name: 'blankLayout',
       component: () => import('../layout/blankLayout.vue'),
       children: [
         {
           path: '/login',
           name: 'login',
           component: () => import('../views/auth/LoginView.vue'),
-          meta:{
+          meta: {
             auth: false
           }
         },
@@ -101,16 +107,8 @@ const router = createRouter({
           path: '/sign-up',
           name: 'sign-up',
           component: () => import('../views/auth/SignView.vue'),
-          meta:{
+          meta: {
             auth: false
-          }
-        },
-        {
-          path: '/plans',
-          name: 'plans',
-          component: () => import('../views/PlansView.vue'),
-          meta:{
-            auth: true
           }
         },
         {
@@ -127,27 +125,26 @@ const router = createRouter({
           path: '/plans/payments',
           name: 'payments',
           component: () => import('../views/PaymentsView.vue'),
-          meta:{
+          meta: {
             auth: true
           }
         },
-      
+
         {
           path: '/historico',
-          name: 'Historico',  
-          component: () => import('../views/HistoryView.vue'),
-          
+          name: 'Historico',
+          component: () => import('../views/HistoryView.vue')
         },
-        { 
-          path: '/:pathMatch(.*)*', 
-          name: 'NotFound', 
-          component: ()=> import('../views/NotFound.vue'),
+        {
+          path: '/:pathMatch(.*)*',
+          name: 'NotFound',
+          component: () => import('../views/NotFound.vue')
         },
         {
           path: '/beanartist',
           name: 'beartist',
           component: () => import('../views/BeAnArtistView.vue')
-        },
+        }
       ]
     },
     {

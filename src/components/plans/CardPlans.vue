@@ -1,59 +1,44 @@
 <script setup>
-import router from '@/router';
-import ButtonGlobal from '../global/ButtonGlobal.vue';
-import { usePaymentStore } from '@/stores';
-const paymentstore = usePaymentStore()
-const props = defineProps({
-        title: {
-            type: String,
-            required: true
-        },
-        price: {
-            type: Number,
-            required: true,
-        },
-        type_service: {
-            type: String,
-            required: true
-        },
-        advantages: {
-            type: Array,
-            required: true
-        },
-        notice:{
-            type: String,
-            required: true
-        },
-        action_btn: {
-            type: Function,
-            required: true
-        },
-        gradient:{
-            type: String,
-            required: true
-        }
-    })
-    function gotopaymentPage(){
-        paymentstore.getAssign(props.title)
-        router.push('/plans/payments')
-    }
+import { plans } from "@/utils/plans/plans";
 </script>
+
 <template>
-    <div class="card-plan" :style="{background: gradient}">
-        <p v-if="notice" id="notice">{{notice}}</p>
-        <div class="plans-description">
-            <h1>{{title}}</h1>
-        <div>
-            <p>${{price}}</p>
-            <span>por {{type_service == 'mensal' ? 'mês' : 'ano'}}</span>
+    <div class="h-[78.3vh] flex flex-col px-[5%]">
+        <div class="flex w-665px h-5vh justify-center">
+            <h1 class="flex justify-end font-semibold w-[380px] text-[#5310CE]">Melhor Custo Beneficio</h1>
         </div>
+        <div class="flex justify-between items-center">
+            <div v-for="(plan, index) in plans" :key="index"
+                class="w-[380px] h-[655px] nth-last-child(3n-1):w-[400px] nth-last-child(3n-1):h-[710px] nth-last-child(3n-1):border-[#5310CE] bg-gradient-to-br from-[#200C4B] from-[90%] via-[#ffffff] via-10% rounded-[20px] p-7">
+
+                <div class="h-[18%] ">
+                    <div class="text-white ">
+                        <h1 class="flex  items-center text-[40px] font-semibold">{{ plan.name }}</h1>
+                    </div>
+                    <div class="flex flex-wrap w-full">
+                        <h1 class="text-white">{{ plan.subtittle }}</h1>
+                    </div>
+                </div>
+                <div class=" w-full h-[40%] ">
+                    <div class="odd:text-[#5310CE] odd:text-[30px] odd:font-medium">R<span
+                            class="ml-[-1%] mdi mdi-currency-usd"></span></div>
+                    <h1 class="text-white text-center text-[80px] font-bold">
+                        {{ plan.price }}
+                    </h1>
+                    <div class=" flex justify-center">
+                        <button
+                            class="w-[280px] h-[50px] border-white border-[1px] text-white font-medium rounded-[60px]">Obter</button>
+                    </div>
+                </div>
+                <div class="h-[42%] flex items-center">
+                    <ul>
+                        <li v-for="(advantage, index) in plan.advantages" :key="index"
+                            class="text-white text-[17px] p-3">
+                            {{ advantage }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <hr>
-        <div class="plans-advantage">
-            <ul>
-                <li v-for="advantage in advantages">{{advantage}}</li>
-            </ul>
-        </div>
-        <ButtonGlobal title="Obter" font_size="17.5px" border="none" background="white" width="250px" border_radius="20px" color="blueviolet" @click="gotopaymentPage"></ButtonGlobal>
     </div>
 </template>
