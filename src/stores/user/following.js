@@ -105,6 +105,18 @@ export const useFollowingStore = defineStore('following', () => {
     }
   }
 
+  const deleteFollow = async (id, index, token) =>{
+    state.loading = true
+    try {
+      await FollowingService.deleteFollowing(id, token)
+      followersByUser.value.splice(index, 1)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
   /**
    * Updates an existing organ.
    * @async
@@ -124,5 +136,6 @@ export const useFollowingStore = defineStore('following', () => {
     getFollowingByArtist,
     getFollowingByUser,
     createFollow,
+    deleteFollow,
   }
 })

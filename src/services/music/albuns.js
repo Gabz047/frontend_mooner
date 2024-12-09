@@ -23,7 +23,7 @@ class AlbumService {
 
     async getAlbunsByAutor(autor, token) {
         try {
-            const {data} = await api.get(`/albuns/?autor_id=${autor}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/albuns/?autor=${autor}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getAlbunsByAutor', error);
