@@ -9,34 +9,33 @@ import { plans } from "@/utils/plans/plans";
         </div>
         <div class="flex justify-between items-center">
             <div v-for="(plan, index) in plans" :key="index"
-                class="w-[380px] h-[655px] nth-last-child(3n-1):w-[400px] nth-last-child(3n-1):h-[710px] nth-last-child(3n-1):border-[#5310CE] bg-gradient-to-br from-[#200C4B] from-[90%] via-[#ffffff] via-10% rounded-[20px] p-7">
-
-                <div class="h-[18%] ">
-                    <div class="text-white ">
-                        <h1 class="flex  items-center text-[40px] font-semibold">{{ plan.name }}</h1>
-                    </div>
-                    <div class="flex flex-wrap w-full">
+                class=" rounded-[20px]"
+                :class="[plan.name !== 'Lua Nova' ? 'w-[20vw] h-[60vh]' : 'w-[22vw] h-[65vh] ']">
+                <div class="backdrop-blur-[100px] backdrop-opacity-100 w-full h-full rounded-[20px] p-8">
+                    <div class="h-[18%] ">
+                        <h1 class="flex  items-center text-[40px] font-semibold text-white">{{ plan.name }}</h1>
                         <h1 class="text-white">{{ plan.subtittle }}</h1>
                     </div>
-                </div>
-                <div class=" w-full h-[40%] ">
-                    <div class="odd:text-[#5310CE] odd:text-[30px] odd:font-medium">R<span
-                            class="ml-[-1%] mdi mdi-currency-usd"></span></div>
-                    <h1 class="text-white text-center text-[80px] font-bold">
-                        {{ plan.price }}
-                    </h1>
-                    <div class=" flex justify-center">
-                        <button
-                            class="w-[280px] h-[50px] border-white border-[1px] text-white font-medium rounded-[60px]">Obter</button>
+                    <div class="flex flex-col justify-center w-full h-[40%] ">
+
+                        <a class="text-[40px] leading-none">R$</a>
+
+                        <h1 class="text-white text-center leading-none text-[80px] font-bold">
+                            {{ plan.price }}
+                        </h1>
+                        <div class=" flex justify-center">
+                            <button
+                                class="w-[280px] h-[50px] border-white border-[1px] text-white font-medium rounded-[60px]">Obter</button>
+                        </div>
                     </div>
-                </div>
-                <div class="h-[42%] flex items-center">
-                    <ul>
-                        <li v-for="(advantage, index) in plan.advantages" :key="index"
-                            class="text-white text-[17px] p-3">
-                            {{ advantage }}
-                        </li>
-                    </ul>
+                    <div class="h-[42%] flex items-center">
+                        <ul>
+                            <li v-for="(advantage, index) in plan.advantages" :key="index"
+                                class="text-white text-[17px] p-3">
+                                {{ advantage }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
