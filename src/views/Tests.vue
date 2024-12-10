@@ -1,8 +1,8 @@
 <script setup>
-import { SideHeader, GlobalHeader, MusicGlobalContainer, ContainerSliderSong, MusicBoxCard, CarroselContainer, GenreAndTypeFilterContainer, GenreBox, GenreContainer } from '@/components';
+import { SideHeader, GlobalHeader, MusicGlobalContainer, ContainerSliderSong, MusicBoxCard, CarroselContainer, GenreAndTypeFilterContainer, GenreBox, GenreContainer, player } from '@/components';
 import { useAlbumStore, useArtistStore, useGenreStore, useLoginStore, usePlaylistStore, useSongStore } from '@/stores';
 import { dataHeader } from '@/utils/header/header';
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { onMounted} from 'vue';
 
 const songStore = useSongStore()
 const genreStore = useGenreStore()
@@ -74,7 +74,7 @@ onMounted(async ()=>{
 <template>
     
     <SideHeader :data="dataHeader" />
-    <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[55px]">
+    <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
   
     <GlobalHeader />
     <p class="text-2xl text-white lg:lg" v-for="playlist in playlistStore.playlists">{{ playlist.name }}</p>
@@ -90,4 +90,5 @@ onMounted(async ()=>{
         <MusicBoxCard :type="genreStore.selectGetType.type" class="mt-3" v-for="song in genreStore.selectGetType.type == 'Músicas' ? songStore.songsByGenre : genreStore.selectGetType.type == 'Playlists' ? playlistStore.playlists : genreStore.selectGetType.type == 'Álbuns' ? albumStore.albuns : artistsStore.artists" :data="song" />
     </MusicGlobalContainer>
     </main>
+    <player />
 </template>

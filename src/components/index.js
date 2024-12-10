@@ -16,6 +16,11 @@ import CarrosselShortItem from "./music/carrossel/CarrosselShortItem.vue";
 import GenreAndTypeFilterContainer from "./music/FilterComponents/GenreAndTypeFilterContainer.vue";
 import GenreBox from "./music/FilterComponents/GenreBox.vue";
 import GenreContainer from "./music/FilterComponents/GenreContainer.vue";
+import SettingsGlobal from "./global/SettingsGlobal.vue";
+import AddPlaylist from "./global/AddPlaylist.vue";
+import AudioPlayer from "./global/AudioPlayer.vue";
+import player from '@/components/global/MusicPlayer.vue';
+
 export {
     GlobalHeader,
     SideHeader,
@@ -34,5 +39,9 @@ export {
     CarrosselShortItem,
     GenreAndTypeFilterContainer,
     GenreBox,
-    GenreContainer
+    GenreContainer,
+    SettingsGlobal,
+    AddPlaylist,
+    AudioPlayer,
+    player
 }
