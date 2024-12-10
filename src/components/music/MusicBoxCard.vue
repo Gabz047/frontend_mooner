@@ -135,7 +135,7 @@ const onHover = shallowRef(false)
     <AudioPlayer />
     <span @click="setSong" v-if="onHover && props.type == 'Músicas'" :class="`${QueueStore.state.currentSong == props.data && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'} absolute top-14 px-3 py-2 flex justify-center items-center bg-[rgba(255,255,255,0.5)] backdrop-blur-sm brightness-100 text-white rounded-full text-2xl z-[30]`"></span>
     </div>
-    <SettingsGlobal :artist="props.data.artists[0]" :artist_name="props.data.artists[0].artistic_name"
+    <SettingsGlobal :artist="props.data?.artists[0]" :artist_name="props.data?.artists[0].artistic_name"
       :is_on="songStore.simpleState.item_settings == props.data.id"
       @addQueue="QueueStore.addSongToQueue(props.data), songStore.simpleState.item_settings = null"
     />

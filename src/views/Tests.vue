@@ -62,7 +62,7 @@ const getTypeData = async (data) => {
 onMounted(async ()=>{
     await genreStore.GetGenre()
     if (songStore.songsByGenre.length == 0) {
-        getTypeData()
+        getTypeData(genreStore.selectGetType.type)
     }
    
     console.log(genreStore.genre)
