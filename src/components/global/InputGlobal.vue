@@ -63,7 +63,7 @@
             required: false,
         },
         value:{
-            type: '',
+            type: String,
             required: false
         }
     })
