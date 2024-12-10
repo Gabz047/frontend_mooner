@@ -1,4 +1,5 @@
 <script setup>
+import { adjusteSize } from '@/utils/music/music';
 import { ref, onMounted } from 'vue';
 
 const props = defineProps({
@@ -35,8 +36,8 @@ onMounted(() => {
         { disappear: isHidden }
       ]">
       <div class="ml-5">
-        <p v-for="artist in props.data?.artists" :key="artist.id" class="text-lg">
-          {{ artist.artistic_name }}
+        <p class="text-lg">
+          {{ props.data?.artists[0]?.artistic_name }} {{ props.data?.artists?.length > 1 ? '+' : '' }}
         </p>
         <p class="text-2xl">{{ props.data?.title }}</p>
       </div>
@@ -50,7 +51,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .animation {
   animation: animation 1s infinite;
 }
@@ -78,4 +79,4 @@ onMounted(() => {
 .disappear.hidden {
   opacity: 0;
 }
-</style>
+</style> -->

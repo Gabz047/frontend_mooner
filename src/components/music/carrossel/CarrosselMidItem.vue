@@ -32,7 +32,7 @@ onMounted(() => {
     <div class="absolute w-full h-full z-10 top-0 rounded-[20px] bg-gradient-to-t from-black to-transparent"></div>
   </div>
 </template>
-
+<!-- 
 <style scoped>
 .animation {
   animation: animation 1s infinite;
@@ -41,7 +41,7 @@ onMounted(() => {
 .animation_right {
   animation: animation_right 1s infinite;
 }
-
+/* 
 @keyframes animation {
   from {
     width: 342px;
@@ -68,7 +68,7 @@ onMounted(() => {
     width: 303px;
     height: 303px;
     margin-left: 265px;
-    z-index: 20;
+    z-index: 10;
   }
 }
-</style>
+</style> */ -->

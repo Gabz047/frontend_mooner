@@ -191,10 +191,10 @@ export const useSongStore = defineStore('song', () => {
     }
   }
 
-  const GetSongByGenre = async (genre, token) => {
+  const GetSongByGenre = async (genre, artist) => {
     state.value.loading = true
     try {
-      const response = await SongService.getSongByGenre(genre, token)
+      const response = await SongService.getSongByGenre(genre, artist)
       state.value.songsByGenre = response
    
     } catch (error) {

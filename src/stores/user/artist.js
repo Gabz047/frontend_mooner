@@ -67,10 +67,10 @@ export const useArtistStore = defineStore('artist', () => {
   * @async
   * @function getOrgansBySystem
   */
-  const getArtistsByName = async (name, token) => {
+  const getArtistsByName = async (name) => {
     state.value.loading = true
     try {
-      const response = await ArtistService.getArtistsByName(name, token)
+      const response = await ArtistService.getArtistsByName(name)
       state.value.artistsByName = response
     } catch (error) {
       state.value.error = error

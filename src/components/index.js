@@ -13,6 +13,9 @@ import ContainerSliderSong from "./music/Containers/ContainerSliderSong.vue";
 import CarroselItem from "./music/carrossel/CarroselItem.vue";
 import CarrosselMidItem from "./music/carrossel/CarrosselMidItem.vue";
 import CarrosselShortItem from "./music/carrossel/CarrosselShortItem.vue";
+import GenreAndTypeFilterContainer from "./music/FilterComponents/GenreAndTypeFilterContainer.vue";
+import GenreBox from "./music/FilterComponents/GenreBox.vue";
+import GenreContainer from "./music/FilterComponents/GenreContainer.vue";
 export {
     GlobalHeader,
     SideHeader,
@@ -28,5 +31,8 @@ export {
     ContainerSliderSong,
     CarroselItem,
     CarrosselMidItem,
-    CarrosselShortItem
+    CarrosselShortItem,
+    GenreAndTypeFilterContainer,
+    GenreBox,
+    GenreContainer
 }
