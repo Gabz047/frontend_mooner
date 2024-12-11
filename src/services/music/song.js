@@ -31,9 +31,9 @@ class SongService {
         }
     }
 
-    async getSongByGenre(genre, token){
+    async getSongByGenre(genre, artist){
         try {
-            const { data } = await api.get(`/songs/?search=${genre}`);
+            const { data } = await api.get(`/songs/?artists=${artist}&search=${genre}`);
             console.log( "Service: AddSong - return success")
             return data.results;
         } catch (error) {

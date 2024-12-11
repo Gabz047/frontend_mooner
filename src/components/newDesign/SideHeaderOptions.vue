@@ -33,7 +33,7 @@ const playlistStore = usePlaylistStore()
 </script>
 
 <template>
-    <div @click="to(item.id, item)" class=" w-full flex mt-3 gap-2 items-center cursor-pointer hover:bg-[#1C1C1C] p-1 rounded-xl" v-for="item in props.data">
+    <div @click="to(item.id, item)" class=" w-full flex mt-3 gap-2 items-center cursor-pointer hover:bg-[#1C1C1C] p-1 rounded-xl" v-for="item in props.data" :key="item.id">
 
         <div class="ml-10 rounded-lg h-[35px] w-[40px]">
             <img class="w-full h-full rounded-md" :src="item.cover ? item.cover?.url : item.user.perfil?.url">

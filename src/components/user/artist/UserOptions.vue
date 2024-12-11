@@ -32,7 +32,7 @@ import { RouterLink, useRouter } from 'vue-router';
 <template>
     <div>
         <div class="flex flex-col">
-            <RouterLink to="/user" class="flex flex-col h-[35px] w-full duration-200 active">
+            <RouterLink to="/profile" class="flex flex-col h-[35px] w-full duration-200 active">
                 <div class=" font-extralight flex gap-2 items-center">
                 <i class="mdi mdi-account-outline"></i>Perfil
                 </div>

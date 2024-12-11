@@ -69,6 +69,19 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const GetArtist = async (email, token) => {
+    state.value.loading = true
+    try {
+      const response = await UserMeService.GetMeArtist(email, token)
+      return response.artistic_name
+    } catch (error) {
+      state.value.error = error
+    } finally {
+      state.value.loading = false
+      state.value.connection = true
+    }
+  }
+
    /**
    * Fetches organs data.
    * @async
@@ -146,6 +159,7 @@ export const useUserStore = defineStore('user', () => {
     users,
     myuser,
     selectedUser,
+    GetArtist,
     getUsers,
     getUser,
     updateOrgan,

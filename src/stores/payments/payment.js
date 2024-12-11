@@ -52,6 +52,9 @@ export const usePaymentStore = defineStore('payment', ()=>{
                 msg.value = response.data.msg
                 err.value = false
             }
+            else{
+                return response.data
+            }
         }
         catch(error){
             state.error = error
@@ -62,6 +65,39 @@ export const usePaymentStore = defineStore('payment', ()=>{
         }
         
     }
-    
-    return { typeAssign, getAssign, createPayment, err, msg }
+
+    const GetQrCode = async (token) => {
+        state.loading = true
+        try{
+            const response = await PaymentMethodService.GetQrCode(token)
+            return response
+        }
+        catch(error){
+            state.error = error
+        }
+        finally{
+            state.loading = false,
+            state.connection = true
+        }
+    }
+
+    const getStatus = async (id, name, email) =>{
+        state.loading = true
+        try{
+            const response = await PaymentMethodService.getStatus(id, name, email)
+            if(response.status === 200){
+                msg.value = response.data.msg
+                 err.value = false
+            }
+        }
+        catch(error){
+            state.error = error
+        }
+        finally{
+            state.loading = false
+            state.connection = true
+        }
+    }
+
+    return { typeAssign, getAssign, createPayment, getStatus, GetQrCode, err, msg }
 })

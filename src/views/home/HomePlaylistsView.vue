@@ -22,7 +22,7 @@ onMounted(()=>{
 onMounted(async ()=>{
   data_music_home.value.forEach(item => {
   item.music = []
-  playlistStore.getPlaylist(loginStore.access)
+  // playlistStore.getPlaylist(loginStore.access)
   });
 
 })
@@ -45,7 +45,7 @@ onMounted(async ()=>{
         <PlaylistBoxHome v-for="playlist in playlistStore.playlists" :playlist_data="playlist" />
     </MusicGlobalContainer>
     <div class="w-full flex justify-center mt-16">
-    <PaginationManager @previous="playlistStore.getPlaylist(loginStore.access, navigationStore.simpleState.page)" @next="playlistStore.getPlaylist(loginStore.access, navigationStore.simpleState.page)" class="bottom-5" />
+    <!-- <PaginationManager @previous="playlistStore.getPlaylist(loginStore.access, navigationStore.simpleState.page)" @next="playlistStore.getPlaylist(loginStore.access, navigationStore.simpleState.page)" class="bottom-5" /> -->
     </div>
     </section>
     

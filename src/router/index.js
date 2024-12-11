@@ -88,7 +88,24 @@ const router = createRouter({
           name: 'Navegar',
           component: () => import('../views/NavigationView.vue')
         }
-      ]
+      ],
+        },
+        {
+          path: '/profile',
+          name: 'profile',
+          component: () => import('../views/ProfileView.vue')
+        },
+        {
+          path: '/createcommunity',
+          name: 'comunity',
+          component: () => import('../views/ComunityCreateView.vue')
+        },
+        {
+          path: '/community/:id',
+          name: 'community',
+          component: () => import('../views/CommunityPostsView.vue')
+        }
+      ],
     },
     {
       path: '/',
@@ -151,6 +168,11 @@ const router = createRouter({
       path: '/tests',
       name: 'tests',
       component: () => import('../views/Tests.vue')
+    },
+    {
+      path: '/tests_carrossel',
+      name: 'tests_carrossel',
+      component: () => import('../views/carrossel_test.vue')
     }
   ]
 })

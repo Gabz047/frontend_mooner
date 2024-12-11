@@ -1,150 +1,81 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useSongStore, useLoginStore, usePlaylistStore, useAlbumStore, useArtistStore, useQueueStore,} from '@/stores/index'
-import MusicBox from '@/components/global/MusicBox.vue'
+import { onMounted, ref } from 'vue';
+import { useAlbumStore, useArtistStore, useLoginStore, useSongStore, useFollowingStore, useCommunityStore } from '@/stores';
+import { useRoute } from 'vue-router';
+import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
+import FollowArtist from '@/components/artists/FollowArtist.vue';
+import DiscographyArtist from '@/components/artists/DiscographyArtist.vue';
+import BiographyArtist from '@/components/artists/BiographyArtist.vue';
+import GlobalBlur from '@/components/global/GlobalBlur.vue';
+import CommunityArtist from '@/components/artists/CommunityArtist.vue';
+import router from '@/router';
 
-import ButtonGlobal from '@/components/global/ButtonGlobal.vue'
-import ContentArtistContainer from '@/components/PlaylistDisplay/ContentArtistContainer.vue'
-import InfoArtistContainer from '@/components/PlaylistDisplay/InfoArtistContainer.vue'
-import { useRoute, useRouter } from 'vue-router'
-import { addToPlaylist, captureEmit, saveData, updatePlaylists, playAndQueue } from '@/utils/playlist/playlist'
-const songStore = useSongStore()
-const loginStore = useLoginStore()
-const playlistStore = usePlaylistStore()
-const queueStore = useQueueStore()
-const albumStore = useAlbumStore()
-const artistStore = useArtistStore()
 const route = useRoute()
-const router = useRouter()
-const id = route.params.email
-const token = loginStore.access
-const songs = ref([])
+const ArtistStore = useArtistStore()
+const LoginStore = useLoginStore()
+const SongStore = useSongStore()
+const AlbumStore = useAlbumStore()
+const FollowingStore = useFollowingStore()
+const UserIsFollowing = ref(null)
+const CommunityStore = useCommunityStore()
+
+async function enterCommunity(id){
+  const response = await CommunityStore.CreateCommunityUser({user: LoginStore.user.email, community: id}, LoginStore.access)
+  router.push(`/community/${response.community}/`)
+} 
 
 onMounted(async () => {
-  console.log('rodou')
-  songs.value = []
- 
+  const artist = route.params.id
+  await ArtistStore.getArtistsByName(artist, LoginStore.access)
+  await SongStore.getSongsByArtist(artist, LoginStore.access)
+  await AlbumStore.getAlbunsByAutor(ArtistStore.artistsByName[0]?.user?.email, LoginStore.access)
+  await CommunityStore.getCommunitysByAutor(artist, LoginStore.access)
+  UserIsFollowing.value = FollowingStore.followersByUser.find(artistic => artistic.artist.artistic_name === artist)
+  
 })
-const edit = ref(false)
-const play = ref(false)
-const settings = ref(false)
-
-const img = ref(null)
-const saveimg = ref(null)
-
-async function handleFileUpload(e) {
-  const target = e.target
-  if (target && target.files) {
-    const file = target.files[0]
-    img.value = URL.createObjectURL(file)
-    saveimg.value = file
-  }
-
-}
-
-const alreadyHas = ref(false)
-
-const isOn = ref(false)
-
-const close = () => {
-  isOn.value = !isOn.value
-}
-
-const setAction = ref('')
-
-const data_add_secondary = (music, setAction) => {
-  return {
-    song: music,
-    action: setAction
-  }
-}
-</script>
+  </script>
 <template>
-  <div v-if="isOn" class="fixed left-0 z-[50] w-dvw min-h-dvh flex justify-center items-center" >
-    <div class="w-96 h-[500px] bg-[#121212] rounded-lg absolute z-[60] flex flex-col items-center">
-      <span
-        @click="close()"
-        class="absolute right-3 cursor-pointer text-xl top-2 mdi mdi-close-circle text-red-500"
-      ></span>
-      <p class="h-[10%] text-xl text-white mt-3">Adicione Suas Músicas</p>
-
-      <div class="max-h-[85%] h-[85%] w-11/12 bg-[#1a1a1a] overflow-auto ">
-        <div class="w-full p-4 flex flex-col gap-3">
-          <MusicBox v-if="setAction == 'add'"
-            showInPlaylistAddComponent="true"
-            @click="addToPlaylist(data_add_secondary(music, 'add'), songs, token )"
-            buttons="true"
-            is_search_history="false"
-            v-for="(music, index) in songStore.songs"
-            :key="index"
-            :music_data="music"
-            :index="index"
-            :has_playlist="verifyHasPlaylist"
-          />
+  <div :style="{
+      backgroundImage: `linear-gradient(315deg, rgba(0,0,0, 0.65) 10%, rgba(0,0,0,1) 65%), url(${ArtistStore.artistsByName[0]?.user?.background_image?.url})`}"
+    style="background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+    <GlobalBlur :light_color="ArtistStore.artistsByName.user?.background_light_color" :dark_color="ArtistStore.artistsByName[0]?.user?.background_dark_color"/>
+    <div class="z-20 relative">
+      <FollowArtist :artistic_name="ArtistStore.artistsByName[0]?.artistic_name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
+      <div class="flex items-center w-full gap-20 p-5">
+        <img :src="ArtistStore.artistsByName[0]?.user?.perfil?.url" width="200" class="rounded-full object-cover h-[200px] mt-8">
+        <div class="flex flex-col gap-4 mt-5 w-full">
+          <div class="flex justify-between items-center w-full">
+            <h1 class="text-xl text-white font-bold">Albuns</h1>
+            <div class="flex text-white me-20">
+              <ButtonGlobal title="<" class="text-xl" />
+              <ButtonGlobal title=">" class="text-xl" />
+            </div>
+          </div>
+          <div v-if="AlbumStore.albunsByAutor.length > 0">
+            <div v-for="albuns in AlbumStore.albunsByAutor" :style="{ backgroundColor: albuns.background_dark_color }"
+              class="rounded-3xl w-44 p-1 h-52 flex flex-col justify-between items-center text-white transition-transform hover:scale-105"
+              :key="albuns.id">
+              <img :src="albuns.cover.url" class="h-36 w-52 rounded-3xl">
+              <div class="flex flex-col items-center">
+                <h1 class="text-xl ">{{ albuns.name }}</h1>
+                <p class="font-extralight">{{ albuns.autor.artistic_name }}</p>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <h1 class="text-white ">O artista ainda não possui album</h1>
+          </div>
         </div>
       </div>
-      <ButtonGlobal
-        class="mt-3 mb-3"
-        @click="
-          updatePlaylists(playlistStore.showNewPlaylist, token, null, songs, id),
-            alreadyHas ? (alreadyHas = false) : alreadyHas, settings = !settings, isOn = !isOn, songs = []
-        "
-        title="Salvar Músicas"
-        background="#6340AE"
-        border_radius="10px"
-        color="white"
-      />
+      <div class="p-5">
+        <DiscographyArtist :discography="SongStore.songsByArtist"/>
+      </div>
+      <div class="p-5">
+        <CommunityArtist :artistcommunity="CommunityStore.communitysByAutor" @entercom="enterCommunity"/>
+      </div>
+      <div class="w-full flex p-5 justify-center items-center">
+        <BiographyArtist :perfil="ArtistStore.artistsByName[0]?.user?.perfil?.url" :description="ArtistStore.artistsByName[0]?.user?.description"/>
+      </div>
     </div>
-    <div class="w-full h-full bg-black opacity-50"></div>
   </div>
-  <main class="w-full xl:w-dvw h-dvh lg:h-auto flex justify-end gap-4" :class="queueStore.state?.currentSong ? 'h-[82dvh]' : 'min-h-dvh '">
-    <section class="my-auto mr-2 xl:m-0 xl:w-full h-full flex rounded-l-lg w-[98%] bg-[#121212] lg:flex-col lg:justify-center relative">
-    <InfoArtistContainer @sendEmitData="captureEmit()" @updatePlaylist="updatePlaylists(playlistStore.newPlaylist, token, saveimg, saveData != undefined ? saveData.songs : [], id)" @playAndQueue="playAndQueue" @isEdit="edit = !edit" @isPlay="play = !play" :edit="edit" :play="play" :img="img" :saveimg="saveimg"/>
-    <ContentArtistContainer :setAction="setAction" @setAddOn="isOn = !isOn, setAction = 'add'" @setRemoveOn="setAction != 'remove' ? setAction = 'remove' : setAction = ''" :settings="settings" @setSettings="settings = !settings"  @sendEmitData="captureEmit" @removeFromPlaylist="addToPlaylist(saveData, songs, token)" @addToPlaylist="addToPlaylist(saveData, songs, token)" />
-    </section>
-  </main>
-  <input class="hidden" type="file" id="photo" @change="handleFileUpload" />
 </template>
-
-<style scoped>
-.edit-text {
-  transition: 1s;
-  position: absolute;
-  right: 0;
-}
-
-.icon {
-  transition: 0.3s;
-  position: absolute;
-  left: 0;
-  z-index: 9999;
-}
-.edit {
-  width: 20%;
-  transition: 0.5s;
-  background-color: aquamarine;
-
-  & .text_edit {
-    transition: 0.3s;
-    opacity: 0;
-  }
-  & .icon {
-    left: 35px;
-    font-size: 30px;
-  }
-}
-
-::-webkit-scrollbar {
-  width: 3px; /* width of the entire scrollbar */
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 20px; /* color of the tracking area */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: transparent; /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-}
-</style>

@@ -12,7 +12,7 @@ class AlbumService {
      */
     async getAlbuns(token) {
         try {
-            const { data } = await api.get('albuns/', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get('albuns/');
             console.log( "Service: GetAlbuns - return success")
             return data.results;
         } catch (error) {
@@ -23,7 +23,7 @@ class AlbumService {
 
     async getAlbunsByAutor(autor, token) {
         try {
-            const {data} = await api.get(`/albuns/?autor_id=${autor}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/albuns/?autor_id=${autor}`);
         return data.results
         } catch (error) {
             console.log('Error in getAlbunsByAutor', error);
