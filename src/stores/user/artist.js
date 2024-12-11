@@ -72,6 +72,7 @@ export const useArtistStore = defineStore('artist', () => {
     try {
       const response = await ArtistService.getArtistsByName(name)
       state.value.artistsByName = response
+      console.log(response)
     } catch (error) {
       state.value.error = error
     } finally {

@@ -20,6 +20,6 @@ export const plans = [
         type: 'mensal',
         price: "25,99",
         notice: 'Mais assinado',
-        subtittle:" A experiência premium definitiva"
+        subtittle:" A experiência premium completa e definitiva"
     },
 ]

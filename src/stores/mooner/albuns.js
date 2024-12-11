@@ -38,6 +38,9 @@ export const useAlbumStore = defineStore('album', () => {
     connection: false
   })
 
+  const toLeft = ref(0)
+  
+
   const stateStorage = useStorage('albumstorage', {
     name: '',
     file: '',
@@ -170,6 +173,7 @@ export const useAlbumStore = defineStore('album', () => {
     getAlbuns,
     getAlbunsByAutor,
     getAlbunsBySearch,
-    createAlbum
+    createAlbum,
+    toLeft
   }
 })

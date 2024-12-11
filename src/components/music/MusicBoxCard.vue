@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref, shallowRef } from 'vue';
+import { onMounted, reactive, shallowRef } from 'vue';
 import { adjusteSize } from '@/utils/music/music';
-import { useQueueStore, useMoonStore, usePlaylistStore, useSongStore, usePlayerStore } from '@/stores';
+import { useQueueStore, useMoonStore, usePlaylistStore, useSongStore, usePlayerStore, useArtistStore } from '@/stores';
 import { SettingsGlobal, AddPlaylist, AudioPlayer } from '@/components';
 import router from '@/router';
 
@@ -9,6 +9,8 @@ const QueueStore = useQueueStore()
 const playlistStore = usePlaylistStore()
 const moonStore = useMoonStore()
 const playerStore = usePlayerStore()
+const artistStore = useArtistStore() 
+
 
 const songStore = useSongStore()
 const props = defineProps({
@@ -30,7 +32,8 @@ const objData = reactive({
     image: null,
     feat: false,
     light: '',
-    dark: ''
+    dark: '',
+    route: '',
 })
 
 const getData = () => {
@@ -58,10 +61,10 @@ const getData = () => {
     } else {
         objData.name = props?.data.artistic_name
         objData.autor = ''
-        objData.image = props?.data.user.perfil.url
-        objData.light = props?.data.user.background_light_color
-        objData.dark = props?.data.user.background_dark_color
-        
+        objData.image = props?.data?.user?.perfil?.url
+        objData.light = props?.data?.user?.background_light_color
+        objData.dark = props?.data?.user?.background_dark_color
+        objData.route = `/ArtistDetail/${objData.name}/`
     }
 }
 
@@ -83,17 +86,6 @@ function hexToRgb(hex) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-const clickToAdd = ref(false)
-
-async function createsong() {
-  if (!props.is_history) {
-    await HistoryStore.CreateSongHistory(
-      LoginStore.user.email,
-      LoginStore.access,
-      props.data.id
-    )
-  }
-}
 
 function setSong() {
   if (QueueStore.state.currentSong != props.data){
@@ -128,11 +120,18 @@ const to = (id, playlist) => {
   router.push('/playlist/' + id)
 }
 
+const toArtist = (id, artist) => {
+  artistStore.state.selectedArtist = {}
+  localStorage.removeItem("artistStorage")
+  artistStore.state.selectedArtist = artist
+  router.push('/artistDetail/' + id)
+}
+
 const onHover = shallowRef(false)
 </script>
 <template>
-    <div class="relative">
-    <div @click="props.type == 'Playlists' ? to(props.data.id, props.data ) : ''" class="relative flex flex-col items-center justify-center px-2" @mouseenter="onHover = true" @mouseleave="onHover = false">
+    <div @click="props.type === 'Artistas' ? toArtist(props?.data?.artistic_name, props?.data) : ''" class="relative">
+    <div @click="props.type == 'Playlists' ? to(props.data.id, props.data) : ''" class="relative flex flex-col items-center justify-center px-2" @mouseenter="onHover = true" @mouseleave="onHover = false">
     <div  class="w-[155px] h-[185px] duration-200 rounded-[20px] flex flex-col items-center hover:brightness-[25%]" :class="onHover ? 'brightness-[25%]' : ''" :style="`background: linear-gradient(-34deg, ${hexToRgb(objData.light)} 0%, ${hexToRgb(objData.dark)} 100%);`">
         <div class="w-[146px] h-[137px] ">
             <img :src="objData.image" class="mt-[3px] w-[146px] h-[129px] rounded-[20px] object-cover" alt="">

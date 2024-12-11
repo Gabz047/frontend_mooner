@@ -3,14 +3,13 @@ import { plans } from "@/utils/plans/plans";
 import GlobalBlur from "../global/GlobalBlur.vue";
 import router from '@/router'
 </script>
-
 <template>
-    <div class="h-[78.3vh] flex flex-col px-[5%]">
+    <div class="h-screen flex flex-col  p-5">
         <div class="flex w-665px h-5vh justify-center">
             <h1 class="flex justify-end font-semibold w-[380px] text-[#5310CE]">Melhor Custo Beneficio</h1>
         </div>
-        <div class="flex justify-between items-center">
-            <div v-for="(plan, index) in plans" :key="index" class="rounded-[20px] backdrop-blur-[100px] backdrop-opacity-400 w-[30vw]" :class="plan.name === 'Lua Nova' ? 'scale-110' : null " :style="plan.name === 'Lua Nova' ? {border: '1px solid linear-gradient(circle, rgba(255,255,255,1) 0%, rgba(7,1,21,1) 80%)'} : null">
+        <div class="flex px-[2%] justify-between mt-5 items-center">
+            <div v-for="(plan, index) in plans" :key="index" class="rounded-[20px] backdrop-blur-lg w-[25vw]" :class="plan.name === 'Lua Nova' ? 'border-purple-800' : '' ">
                 <div class=" w-full h-full  rounded-[20px] p-8">
                     <div class="h-[18%]">
                         <h1 class="flex  items-center text-[32px] font-semibold text-white">{{ plan.name }}</h1>
