@@ -17,6 +17,7 @@ import ImageService from "./images/image";
 import PaymentMethodService from "./payments/paymentMethod";
 import MoonWaveService from "./music/moonWave"
 import RecomendationService from './music/recomendation'
+import CommunityUsersService from './music/CommunityUsers'
 
 export {
     AlbumService,
@@ -38,4 +39,5 @@ export {
     PaymentMethodService,
     MoonWaveService,
     RecomendationService,
+    CommunityUsersService
 }

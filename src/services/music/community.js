@@ -12,7 +12,7 @@ class CommunityService {
      */
     async getCommunitys(token) {
         try {
-            const { data } = await api.get('/communitys', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get('/communitys/', {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: GetCommunity - return success")
             return data.results;
         } catch (error) {
@@ -21,10 +21,20 @@ class CommunityService {
         }
     }
 
-    async getCommunitysByAutor(autor, token) {
+    async getCommunitysByAutor(user, token) {
         try {
-            const {data} = await api.get(`/communitys/?autor_email=${autor}`, {headers: {'authorization': `Bearer ${token}`}});
-        return data.results
+            const {data} = await api.get(`/communitys/?artist_name=${user}`, {headers: {'authorization': `Bearer ${token}`}});
+            return data.results
+        } catch (error) {
+            console.log('Error in getCommunityByAutor', error);
+            throw error;
+        }
+    }
+
+    async GetChatCommunity(id, token){
+        try {
+            const {data} = await api.get(`/communitys/${id}/`, {headers: {'authorization': `Bearer ${token}`}});
+            return data
         } catch (error) {
             console.log('Error in getCommunityByAutor', error);
             throw error;
@@ -64,12 +74,13 @@ class CommunityService {
         try {
             const { data } = await api.post('/communitys/', newCommunity, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddCommunity - return success")
-            return data.results;
+            return data;
         } catch (error) {
             console.log("Service: AddCommunity - return error", error);
             throw error;
         }
     }
+
 
     /**
      * Updates an existing slide

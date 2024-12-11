@@ -8,7 +8,7 @@
         },
         dark_color: {
             type: String,
-            default: '#FFFFFF'
+            default: '#ffffff'
         }
     })
 
