@@ -3,6 +3,7 @@ import { onMounted, reactive, ref, shallowRef } from 'vue';
 import { adjusteSize } from '@/utils/music/music';
 import { useQueueStore, useMoonStore, usePlaylistStore, useSongStore, usePlayerStore } from '@/stores';
 import { SettingsGlobal, AddPlaylist, AudioPlayer } from '@/components';
+import router from '@/router';
 
 const QueueStore = useQueueStore()
 const playlistStore = usePlaylistStore()
@@ -16,6 +17,10 @@ const props = defineProps({
     },
     type: {
         type: String
+    },
+    isSuggestionDisplay: {
+      type: Boolean,
+      default: false
     }
 })
 
@@ -62,8 +67,8 @@ const getData = () => {
 
 onMounted(()=>{
     // console.log(props.data.artists[0].artistic_name, props.data)
-
     getData()
+    console.log(objData)
 })
 
 function hexToRgb(hex) {
@@ -112,12 +117,22 @@ const verifyInPlaylist = (song) => {
   }
 }
 
+const to = (id, playlist) => {
+  playlistStore.state.selectedPlaylist = {}
+  localStorage.removeItem("playlistStorage")
+  playlistStore.state.selectedPlaylist = playlist
+  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
+  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
+  playlistStore.newPlaylist.id = playlistStore.selectedPlaylist.id
+  playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key
+  router.push('/playlist/' + id)
+}
 
 const onHover = shallowRef(false)
 </script>
 <template>
     <div class="relative">
-    <div class="relative flex flex-col items-center justify-center px-2" @mouseenter="onHover = true" @mouseleave="onHover = false">
+    <div @click="props.type == 'Playlists' ? to(props.data.id, props.data ) : ''" class="relative flex flex-col items-center justify-center px-2" @mouseenter="onHover = true" @mouseleave="onHover = false">
     <div  class="w-[155px] h-[185px] duration-200 rounded-[20px] flex flex-col items-center hover:brightness-[25%]" :class="onHover ? 'brightness-[25%]' : ''" :style="`background: linear-gradient(-34deg, ${hexToRgb(objData.light)} 0%, ${hexToRgb(objData.dark)} 100%);`">
         <div class="w-[146px] h-[137px] ">
             <img :src="objData.image" class="mt-[3px] w-[146px] h-[129px] rounded-[20px] object-cover" alt="">
@@ -134,16 +149,19 @@ const onHover = shallowRef(false)
     </div>
     <AudioPlayer />
     <span @click="setSong" v-if="onHover && props.type == 'Músicas'" :class="`${QueueStore.state.currentSong == props.data && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'} absolute top-14 px-3 py-2 flex justify-center items-center bg-[rgba(255,255,255,0.5)] backdrop-blur-sm brightness-100 text-white rounded-full text-2xl z-[30]`"></span>
+    <div class="w-[155px] items-center flex justify-center h-12 "v-if="props.isSuggestionDisplay"><p class="rounded-full py-1 px-3 bg-[#151515]">+</p></div>
     </div>
-    <SettingsGlobal :artist="props.data?.artists[0]" :artist_name="props.data?.artists[0].artistic_name"
+    
+    <SettingsGlobal v-if="props.type == 'Músicas'" :artist="props.data?.artists[0]" :artist_name="props.data?.artists[0].artistic_name"
       :is_on="songStore.simpleState.item_settings == props.data.id"
       @addQueue="QueueStore.addSongToQueue(props.data), songStore.simpleState.item_settings = null"
     />
-    <AddPlaylist
+    <AddPlaylist v-if="props.type == 'Músicas'"
       :is_on="songStore.simpleState.item_playlist == props.data.id"
       @createPlaylist="emits('createPlaylist')"
       :has_playlist="props.has_playlist"
       :music_data="props.data"
     />
+   
 </div>
 </template>

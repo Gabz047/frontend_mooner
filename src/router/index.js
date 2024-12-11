@@ -35,11 +35,7 @@ const router = createRouter({
           name: 'artistpainel',
           component: () => import('../views/ArtistPainelView.vue')
         },
-        {
-          path: '/playlist/:id',
-          name: 'playlist',
-          component: () => import('../views/PlaylistDetailView.vue')
-        },
+        
         {
           path: '/artistDetail/:id',
           name: 'artist',
@@ -169,7 +165,12 @@ const router = createRouter({
       path: '/tests_carrossel',
       name: 'tests_carrossel',
       component: () => import('../views/carrossel_test.vue')
-    }
+    },
+    {
+      path: '/playlist/:id',
+      name: 'playlist',
+      component: () => import('../views/Mooner/PlaylistView.vue')
+    },
   ]
 })
 export default router

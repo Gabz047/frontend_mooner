@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useUserStore, usePlaylistStore, useLoginStore, useCommunityStore, useFollowingStore } from '@/stores';
 import { dataHeader } from './utils/header/header';
+import { AudioPlayer, player } from './components';
 
 const userStore = useUserStore()
 const playlistStore = usePlaylistStore()
@@ -26,6 +27,8 @@ onMounted(async()=>{
   })
 </script>
 <template>
+  <AudioPlayer />
+  <player />
   <RouterView />
 </template>
 <style>

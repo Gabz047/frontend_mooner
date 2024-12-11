@@ -1,16 +1,20 @@
 <script setup>
-    import MusicBox from '../global/MusicBox.vue';
+import MusicBox from '../global/MusicBox.vue';
     defineProps({
         discography: {
             type: Array,
             required: true
+        },
+        playlistView: {
+          type: Boolean,
+          default: false
         }
     })
 </script>
 <template>
     <div class="flex justify-between items-center p-5 text-white">
-        <h1 class="text-3xl font-bold">Discografia</h1>
-        <p class="text-xl font-semibold">Vizualizações</p>
+        <h1 class="text-3xl font-bold">{{ playlistView ? 'Músicas' : 'Discografia' }}</h1>
+        <p :class="playlistView ? 'ml-10' : ''" class="text-xl font-semibold">Vizualizações</p>
         <p class="text-xl font-semibold">Lançamento</p>
       </div>
       <div v-for="song in discography" class="flex justify-between p-2 ms-4 me-4" :key="song.id">

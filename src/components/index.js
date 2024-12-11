@@ -20,6 +20,7 @@ import SettingsGlobal from "./global/SettingsGlobal.vue";
 import AddPlaylist from "./global/AddPlaylist.vue";
 import AudioPlayer from "./global/AudioPlayer.vue";
 import player from '@/components/global/MusicPlayer.vue';
+import GlobalInfoHeader from "./global/headers_layout/GlobalInfoHeader.vue";
 
 export {
     GlobalHeader,
@@ -43,5 +44,6 @@ export {
     SettingsGlobal,
     AddPlaylist,
     AudioPlayer,
-    player
+    player,
+    GlobalInfoHeader
 }

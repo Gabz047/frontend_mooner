@@ -65,3 +65,5 @@ export const selectSection = (index, data, type) => {
     data[index].title == 'Minha Biblioteca' ? router.push('/') : router.push('/navigation')
   }
   };
+
+export const songs = ref([])
