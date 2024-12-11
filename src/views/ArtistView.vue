@@ -8,6 +8,7 @@ import DiscographyArtist from '@/components/artists/DiscographyArtist.vue';
 import BiographyArtist from '@/components/artists/BiographyArtist.vue';
 import GlobalBlur from '@/components/global/GlobalBlur.vue';
 import CommunityArtist from '@/components/artists/CommunityArtist.vue';
+import MusicBoxCard from '@/components/music/MusicBoxCard.vue';
 import router from '@/router';
 
 const route = useRoute()
@@ -51,16 +52,9 @@ onMounted(async () => {
               <ButtonGlobal title=">" class="text-xl" />
             </div>
           </div>
-          <div v-if="AlbumStore.albunsByAutor.length > 0">
-            <div v-for="albuns in AlbumStore.albunsByAutor" :style="{ backgroundColor: albuns.background_dark_color }"
-              class="rounded-3xl w-44 p-1 h-52 flex flex-col justify-between items-center text-white transition-transform hover:scale-105"
-              :key="albuns.id">
-              <img :src="albuns.cover.url" class="h-36 w-52 rounded-3xl">
-              <div class="flex flex-col items-center">
-                <h1 class="text-xl ">{{ albuns.name }}</h1>
-                <p class="font-extralight">{{ albuns.autor.artistic_name }}</p>
-              </div>
-            </div>
+          <div class="flex" v-if="AlbumStore.albunsByAutor.length > 0">
+            <MusicBoxCard type="Álbuns" v-for="albuns in AlbumStore.albunsByAutor" :data="albuns"/>
+          
           </div>
           <div v-else>
             <h1 class="text-white ">O artista ainda não possui album</h1>

@@ -3,6 +3,7 @@ import { SideHeader, GlobalHeader, MusicGlobalContainer, ContainerSliderSong, Mu
 import { useAlbumStore, useArtistStore, useGenreStore, useLoginStore, usePlaylistStore, useSongStore } from '@/stores';
 import { dataHeader } from '@/utils/header/header';
 import { onMounted} from 'vue';
+import { songs } from '@/utils/music/music';
 
 const songStore = useSongStore()
 const genreStore = useGenreStore()
@@ -10,6 +11,7 @@ const playlistStore = usePlaylistStore()
 const albumStore = useAlbumStore()
 const artistsStore = useArtistStore()
 const loginStore = useLoginStore()
+
 
 const getEmitData = (data) => {
     songStore.state.songsByGenre = []
@@ -26,10 +28,13 @@ const getEmitData = (data) => {
 
 
 const getTypeData = async (data) => {
+    await songStore.getSongs()
+    songs.value = songStore.songs
     if (data == 'Músicas') {
         artistsStore.state.artists = []
         albumStore.state.albuns = []
         playlistStore.state.playlists = []
+       
         await songStore.GetSongByGenre('', '')
         genreStore.selectGetType.type = data
     }
@@ -38,6 +43,7 @@ const getTypeData = async (data) => {
         albumStore.state.albuns = []
         songStore.state.songsByGenre = []
         songStore.state.songs = []
+        
        await playlistStore.getPlaylist(loginStore.access, '')
         genreStore.selectGetType.type = data
         
@@ -77,9 +83,8 @@ onMounted(async ()=>{
     <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
   
     <GlobalHeader />
-    <p class="text-2xl text-white lg:lg" v-for="playlist in playlistStore.playlists">{{ playlist.name }}</p>
 
-    <CarroselContainer :data="songStore.songs" />
+    <CarroselContainer :data="songs" />
     <GenreAndTypeFilterContainer :genre="genreStore.selectGetType.type" @action="getTypeData" :data="genreStore" />
     <GenreContainer :activeLeft="genreStore.selectGetType.toLeft > 0 ? true : false" :activeRight="genreStore.selectGetType.toLeft < 500 ? true : false" @left="genreStore.selectGetType.toLeft <= 0 ? '' : genreStore.selectGetType.toLeft -= 188" @right="genreStore.selectGetType.toLeft >= 500 ? '' : genreStore.selectGetType.toLeft += 188" v-if="genreStore.selectGetType.type == 'Músicas'" :artists="artistsStore.artists" width="w-[94%]" >
     <div :class="`flex w-full gap-4 duration-300`" :style="{marginLeft: `-${genreStore.returnToLeft}px`}">
