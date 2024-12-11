@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
-import { CommunityService, CommunityPostsService } from '@/services'
+import { computed, reactive, ref } from 'vue'
+import { CommunityService, CommunityPostsService, CommunityUsersService } from '@/services'
+
 
 /**
  * Store for managing organs data.
@@ -30,9 +31,11 @@ export const useCommunityStore = defineStore('community', () => {
     communitysByName: [],
     selectedCommunity: {},
     communitysPosts: [],
+    communityChat: [],
     communitysPostsByAutor: [],
     communitysPostsByCommunity: [],
     selectedCommunityPost: {},
+    communityUser: [],
     loading: false,
     error: null,
     connection: false
@@ -41,11 +44,13 @@ export const useCommunityStore = defineStore('community', () => {
   const communitysByAutor = computed(() => state.communitysByAutor)
   const communitysByName = computed(() => state.communitysByName)
   const selectedCommunity = computed(() => state.selectedCommunity)
-
+  const CommunityChat = computed(() => state.communityChat)
   const communitysPosts = computed(() => state.communitysPosts)
   const communitysPostsByAutor = computed(() => state.communitysPostsByAutor)
   const communitysPostsByCommunity = computed(() => state.communitysPostsByCommunity)
   const selectedCommunityPost = computed(() => state.selectedCommunityPost)
+  const CommunityUser = computed(() => state.communityUser)
+  const communitycover = ref(null)
 
 
   /**
@@ -82,11 +87,26 @@ export const useCommunityStore = defineStore('community', () => {
    * @async
    * @function getOrgansBySystem
    */
-   const getCommunitysByAutor = async (autor,token) => {
+   const getCommunitysByAutor = async (autor ,token) => {
     state.loading = true
     try {
-      const response = await CommunityService.getCommunitysByAutor(autor,token)  
+      const response = await CommunityService.getCommunitysByAutor(autor ,token)  
       state.communitysByAutor = response
+      console.log(response)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+      state.connection = true
+    }
+  }
+
+  const GetCommunityChat = async (id, token) =>{
+    state.loading = true
+    try {
+      const response = await CommunityService.GetChatCommunity(id ,token)  
+      state.communityChat = response
+      console.log(response)
     } catch (error) {
       state.error = error
     } finally {
@@ -126,6 +146,7 @@ export const useCommunityStore = defineStore('community', () => {
     try {
       const response = await CommunityPostsService.getCommunitysPostsByCommunity(community,token)  
       state.communitysPostsByCommunity = response
+      console.log(response)
     } catch (error) {
       state.error = error
     } finally {
@@ -143,7 +164,10 @@ export const useCommunityStore = defineStore('community', () => {
   const createCommunity = async (newCommunity, token) => {
     state.loading = true
     try {
-      state.communitys.push(await CommunityService.createCommunity(newCommunity, token))
+      const response = await CommunityService.createCommunity(newCommunity, token)
+      state.communitys.push(response)
+      console.log(response)
+      return response
     } catch (error) {
       state.error = error
     } finally {
@@ -154,7 +178,8 @@ export const useCommunityStore = defineStore('community', () => {
   const createCommunityPost = async (newCommunityPost, token) => {
     state.loading = true
     try {
-      state.communitysPosts.push(await CommunityPostsService.createCommunityPost(newCommunityPost, token))
+      console.log(newCommunityPost)
+      state.communitysPostsByCommunity.push(await CommunityPostsService.createCommunityPost(newCommunityPost, token))
     } catch (error) {
       state.error = error
     } finally {
@@ -162,6 +187,39 @@ export const useCommunityStore = defineStore('community', () => {
     }
   }
 
+  const getCommunityUser = async (id, token) => {
+    state.loading = true
+    try {
+      state.communityUser = await CommunityUsersService.getUserCommunitys(id, token)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const CreateCommunityUser = async (EnterCommunity, token) => {
+    state.loading = true
+    try {
+      const response = await CommunityUsersService.createUserCommunity(EnterCommunity, token)
+      state.communityUser = response
+      return response
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
+
+  const deleteCommunity = async (id, token) => {
+    try {
+      await CommunityUsersService.deleteCommunity(id, token)
+    } catch (error) {
+      state.error = error
+    } finally {
+      state.loading = false
+    }
+  }
   /**
    * Updates an existing organ.
    * @async
@@ -179,13 +237,20 @@ export const useCommunityStore = defineStore('community', () => {
     communitysPosts,
     communitysPostsByCommunity,
     communitysPostsByAutor,
+    communitycover,
+    CommunityUser,
+    CommunityChat,
     getCommunitys,
+    GetCommunityChat,
     getCommunitysByAutor,
     getCommunitysByName,
     createCommunity,
     getCommunitysPosts,
     getCommunitysPostsByAutor,
     getCommunitysPostsByCommunity,
-    createCommunityPost
+    createCommunityPost, 
+    getCommunityUser,
+    CreateCommunityUser,
+    deleteCommunity
   }
 })

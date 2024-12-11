@@ -20,7 +20,7 @@ class ArtistService {
             throw error;
         }
     }
-
+  
     async getArtistsByName(name) {
         try {
             const {data} = await api.get(`/artists/?search=${name}`);

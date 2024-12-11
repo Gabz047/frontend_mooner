@@ -11,6 +11,17 @@ class UserMeService{
             throw error;
         }
     }
+
+    async GetMeArtist(email, token){
+        try {
+            const { data } = await api.get(`/artists`, {headers: {'authorization': `Bearer ${token}`}});
+            const ArtistMe = data.results.find((user) => user.user.email === email)
+            return ArtistMe;
+        } catch (error) {
+            console.log("Service: GetArtists - return error", error);
+            throw error;
+        }
+    }
     
     async getUser(token) {
         try {
