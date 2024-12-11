@@ -1,20 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-const token = localStorage.getItem('access')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'fullLayout',
-      component: () => import('../layout/fullLayout.vue'),
-      meta: {
-        auth: true
-      },
-      children: [
-        {
+      {
           path: '/',
           name: 'Minha Biblioteca',
           component: HomeView
@@ -50,32 +41,27 @@ const router = createRouter({
           props: true
         },
         {
-          path: 'createcommunity/',
-          name: 'createcommunity',
-          component: () => import('../views/CommunityCreateView.vue')
-        },
-        {
-          path: 'musics/',
+          path: '/musics',
           name: 'musics',
           component: () => import('../views/home/HomeMusicsView.vue')
         },
         {
-          path: 'playlists/',
+          path: '/playlists',
           name: 'playlists',
           component: () => import('../views/home/HomePlaylistsView.vue')
         },
         {
-          path: 'artists/',
+          path: '/artists',
           name: 'artists',
           component: () => import('../views/home/HomeArtistsView.vue')
         },
         {
-          path: 'luuna/',
+          path: '/luuna',
           name: 'luuna',
           component: () => import('../views/LuunaView.vue')
         },
         {
-          path: 'connect-moon/:email',
+          path: '/connect-moon/:email',
           name: 'connect-moon',
           component: () => import('../views/ConnectMoonWave.vue')
         },
@@ -83,32 +69,23 @@ const router = createRouter({
           path: '/navigation',
           name: 'Navegar',
           component: () => import('../views/NavigationView.vue')
-        }
-      ],
         },
-        {
-          path: '/profile',
-          name: 'profile',
-          component: () => import('../views/ProfileView.vue')
-        },
-        {
-          path: '/createcommunity',
-          name: 'comunity',
-          component: () => import('../views/ComunityCreateView.vue')
-        },
-        {
-          path: '/community/:id',
-          name: 'community',
-          component: () => import('../views/CommunityPostsView.vue')
-        }
-      ],
-    },
-    {
-      path: '/',
-      name: 'blankLayout',
-      component: () => import('../layout/blankLayout.vue'),
-      children: [
-        {
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('../views/ProfileView.vue')
+      },
+      {
+        path: '/createcommunity',
+        name: 'comunity',
+        component: () => import('../views/ComunityCreateView.vue')
+      },
+      {
+        path: '/community/:id',
+        name: 'community',
+        component: () => import('../views/CommunityPostsView.vue')
+      },
+      {
           path: '/login',
           name: 'login',
           component: () => import('../views/auth/LoginView.vue'),
@@ -157,24 +134,13 @@ const router = createRouter({
           path: '/beanartist',
           name: 'beartist',
           component: () => import('../views/BeAnArtistView.vue')
-        }
+        },
+        {
+          path: '/playlist/:id',
+          name: 'playlist',
+          component: () => import('../views/Mooner/PlaylistView.vue')
+        },
       ]
-    },
-    {
-      path: '/tests',
-      name: 'tests',
-      component: () => import('../views/Tests.vue')
-    },
-    {
-      path: '/tests_carrossel',
-      name: 'tests_carrossel',
-      component: () => import('../views/carrossel_test.vue')
-    },
-    {
-      path: '/playlist/:id',
-      name: 'playlist',
-      component: () => import('../views/Mooner/PlaylistView.vue')
-    },
-  ]
 })
+
 export default router

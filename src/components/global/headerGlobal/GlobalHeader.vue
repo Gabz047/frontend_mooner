@@ -2,9 +2,13 @@
 import SearchBar from './SearchBar.vue';
 import { useUserStore } from '@/stores';
 import { UserPerfil } from '@/components';
-import { shallowRef } from 'vue';
+import { onMounted } from 'vue';
+
 const userStore = useUserStore()
 
+onMounted(() =>{
+  console.log(userStore.myuser)
+})
 </script>
 
 <template>

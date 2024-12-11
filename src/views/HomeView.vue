@@ -1,57 +1,90 @@
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue';
-import { useSongStore, useLoginStore, usePlaylistStore, useQueueStore, useNavigationStore } from '@/stores/index'
-import PaginationManager from '@/components/global/PaginationManager.vue';
-import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
-import ContainerNavigateButtons from '@/components/buttons/ContainerNavigateButtons.vue';
-import MusicGlobalContainer from '@/components/global/MusicGlobalContainer.vue';
-import MusicBox from '@/components/global/MusicBox.vue';
-import GlobalApresentation from '@/components/global/GlobalApresentation.vue';
-import { data_music_home } from '@/utils/music/music';
-import { storage } from '@/utils/storage/apresentation';
+import { SideHeader, GlobalHeader, MusicGlobalContainer, ContainerSliderSong, MusicBoxCard, CarroselContainer, GenreAndTypeFilterContainer, GenreBox, GenreContainer, player } from '@/components';
+import { useAlbumStore, useArtistStore, useGenreStore, useLoginStore, usePlaylistStore, useSongStore } from '@/stores';
+import { dataHeader } from '@/utils/header/header';
+import { onMounted} from 'vue';
 
 const songStore = useSongStore()
-const loginStore = useLoginStore()
+const genreStore = useGenreStore()
 const playlistStore = usePlaylistStore()
-const queueStore = useQueueStore()
-const navigationStore = useNavigationStore()
+const albumStore = useAlbumStore()
+const artistsStore = useArtistStore()
+const loginStore = useLoginStore()
 
+const getEmitData = (data) => {
+    songStore.state.songsByGenre = []
+    if (genreStore.selectGetType.type == 'Músicas') {
+    if (data === 'Todos') {
+       
+        songStore.GetSongByGenre('', '')
+    } else {
+        songStore.GetSongByGenre(data, '')
+    }
+    genreStore.selectGetType.selectedGenre = data
+}
+}
 
-const verifyHasPlaylist = computed(()=>{
-  const playlists = playlistStore.playlistsByOwner.length
-  return playlists > 0 ? true : false
-})
+const getTypeData = async (data) => {
+    if (data == 'Músicas') {
+        artistsStore.state.artists = []
+        albumStore.state.albuns = []
+        playlistStore.state.playlists = []
+        await songStore.GetSongByGenre('', '')
+        genreStore.selectGetType.type = data
+    }
+    else if (data == 'Playlists') {
+        artistsStore.state.artists = []
+        albumStore.state.albuns = []
+        songStore.state.songsByGenre = []
+        songStore.state.songs = []
+       await playlistStore.getPlaylist(loginStore.access, '')
+        genreStore.selectGetType.type = data
+        
+    } else if (data == 'Álbuns') {
+        artistsStore.state.artists = []
+        playlistStore.state.playlists = []
+        songStore.state.songsByGenre = []
+        songStore.state.songs = []
+       await albumStore.getAlbuns()
+        genreStore.selectGetType.type = data
+    } else {
+        albumStore.state.albuns = []
+        playlistStore.state.playlists = []
+        songStore.state.songsByGenre = []
+        songStore.state.songs = []
+       await artistsStore.getArtists()
+        genreStore.selectGetType.type = data
+    }
+}
 
 onMounted(async ()=>{
-  data_music_home.value[0].music = await songStore.getSongs(loginStore.access)
-  data_music_home.value[1].music = await songStore.GetRecommendedSongs(loginStore.user.email)
-  if(data_music_home.value[1].music.length === 0){
-    data_music_home.value[1].music = await songStore.getSongs(loginStore.access)
-  }
-  
-  setTimeout(() =>{
-    storage.value.apresentation = false
-  }, 6000)
-
-  console.log(storage.value.apresentation)
+    await genreStore.GetGenre()
+    if (songStore.songsByGenre.length == 0) {
+        getTypeData(genreStore.selectGetType.type)
+    }
+   
+    console.log(genreStore.genre)
 })
+
 </script>
 <template>
-  <main :class="queueStore.state?.currentSong ? 'pb-[70px]' : ''" class=" w-full min-h-[31dvh] flex justify-end gap-4 overflow-x-hidden">
     
-    <section class="my-auto mr-2 min-h-full rounded-lg w-[98%] xl:w-[100%] 2xl:m-0 bg-[rgb(18,18,18)] overflow-auto">
-      <ContainerNavigateButtons class="mt-5">
-        <NavigateHomeButtons :has_active_bg="true" v-for="item,index in navigationStore?.state?.data_page" :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_page, item.title)" />
-      </ContainerNavigateButtons>
+    <SideHeader :data="dataHeader" />
+    <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
+  
+    <GlobalHeader />
+    <p class="text-2xl text-white lg:lg" v-for="playlist in playlistStore.playlists">{{ playlist.name }}</p>
 
-      <ContainerNavigateButtons justify="justify-start" class="mt-2 px-5">
-        <NavigateHomeButtons :has_active_bg="false" v-for="item,index in navigationStore.state.data_section" :key="index" :title="item.title" :active="item.active" @goSection="navigationStore.selectSection(index, navigationStore.state.data_section, 'navigate')" />
-      </ContainerNavigateButtons>
-      
-      <MusicGlobalContainer :justify_div="'justify-start'" class="mt-3" :title="item.title" v-for="item, index in data_music_home" :key="index">
-        <MusicBox  v-for="music, index in item.music" :key="index" :music_data="music" :index="index" :has_playlist="verifyHasPlaylist" />
-      </MusicGlobalContainer>
-    </section>
-    <GlobalApresentation v-if="storage.apresentation"/>
-  </main>
+    <CarroselContainer :data="songStore.songs" />
+    <GenreAndTypeFilterContainer :genre="genreStore.selectGetType.type" @action="getTypeData" :data="genreStore" />
+    <GenreContainer :activeLeft="genreStore.selectGetType.toLeft > 0 ? true : false" :activeRight="genreStore.selectGetType.toLeft < 500 ? true : false" @left="genreStore.selectGetType.toLeft <= 0 ? '' : genreStore.selectGetType.toLeft -= 188" @right="genreStore.selectGetType.toLeft >= 500 ? '' : genreStore.selectGetType.toLeft += 188" v-if="genreStore.selectGetType.type == 'Músicas'" :artists="artistsStore.artists" width="w-[94%]" >
+    <div :class="`flex w-full gap-4 duration-300`" :style="{marginLeft: `-${genreStore.returnToLeft}px`}">
+    <GenreBox :active="genreStore.selectGetType.selectedGenre == genre.description" @action="getEmitData" v-for="genre in genreStore.genre" :data="genre" />
+    </div>
+    </GenreContainer>
+    <MusicGlobalContainer width="w-11/12" justify_div="justify-start" >
+        <MusicBoxCard :type="genreStore.selectGetType.type" class="mt-3" v-for="song in genreStore.selectGetType.type == 'Músicas' ? songStore.songsByGenre : genreStore.selectGetType.type == 'Playlists' ? playlistStore.playlists : genreStore.selectGetType.type == 'Álbuns' ? albumStore.albuns : artistsStore.artists" :data="song" />
+    </MusicGlobalContainer>
+    </main>
+    <player />
 </template>
