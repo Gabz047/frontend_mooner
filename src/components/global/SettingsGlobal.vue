@@ -1,6 +1,10 @@
 <script setup>
 import { data, verify_active } from '@/utils/music/music';
 import { onMounted, ref } from 'vue';
+import { useArtistStore, useSongStore } from '@/stores';
+import router from '@/router';
+const artistStore = useArtistStore()
+const songStore = useSongStore()
 const props = defineProps({
     is_on: {
         type: Boolean,
@@ -9,7 +13,14 @@ const props = defineProps({
     history: {
         type: Boolean,
         default: false
+    },
+    artist_name: {
+        type: String
+    },
+    artist: {
+        type: Object
     }
+
 })
 
 const emits = defineEmits([
@@ -27,6 +38,15 @@ const addQueue = () => {
     
 }
 
+const to = (id, artist) => {
+  artistStore.state.selectedArtist = {}
+  localStorage.removeItem("artistStorage")
+  artistStore.state.selectedArtist = artist
+  
+    router.push('/artistDetail/' + id)
+ 
+  
+}
 </script>
 <template>
 <div v-if="props.is_on" class="w-52 bg-[rgb(49,49,49)] p-2 rounded-xl absolute z-30 top-16 right-0">
@@ -39,8 +59,9 @@ const addQueue = () => {
     <img :src="item.tittle != 'Curtir' ? item.img : !item.liked ? item.img[0] : item.img[1]" class="w-6 h-6">
  </div>
  </div> -->
+ 
 
-<div @click="(item.tittle == 'Adicionar a Fila') ? addQueue() : item.liked = !item.liked, item.history === history ? $emit('deletesong') : null" v-for="item, index in data" :key="index" class="relative w-full flex h-10 justify-between items-center cursor-pointer rounded-md p-1 hover:bg-[#3a3a3a]">
+<div @click="(item.tittle == 'Adicionar a Fila') ? addQueue() : item.liked = !item.liked, item.history === history ? $emit('deletesong') : item.tittle == 'Artista' ? [to(props.artist_name, props.artist), songStore.simpleState.item_settings = null]  : null" v-for="item, index in data" :key="index" class="relative w-full flex h-10 justify-between items-center cursor-pointer rounded-md p-1 hover:bg-[#3a3a3a]">
     <div v-if="item.tittle == 'Adicionar a Fila' && added" class="w-full h-full bg-[rgb(49,49,49)] absolute flex justify-center items-center gap-2 select-none">
         <p class="text-[#AA5AF5]">Adicionado</p>
         <span class="mdi mdi-check-decagram text-[#AA5AF5]"></span>

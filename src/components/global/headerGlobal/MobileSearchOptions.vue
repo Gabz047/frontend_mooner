@@ -9,9 +9,6 @@ const props = defineProps({
     },
     data: {
         type: Array
-    },
-    isOnSearch: {
-        type: Boolean
     }
 })
 
@@ -24,43 +21,19 @@ const getAddToSearch = (song) => {
 }
 </script>
 <template>
-   <div :class="props.open ? 'animation' : 'animationOut'" class="w-[285px] duration-200 backdrop-blur-sm rounded-2xl z-40 min-h-[222px] max-h-[400px] overflow-auto overflow-x-hidden pb-1 absolute top-0  flex flex-col" style="background: linear-gradient(180deg, rgba(21,21,21,0.8) 0%, rgba(21,21,21,1) 80%);">
+   
+   <div class="w-[300px] mt-16 duration-200 backdrop-blur-sm rounded-2xl min-h-[222px] max-h-[400px] overflow-auto overflow-x-hidden z-[9999] flex flex-col " style="background: linear-gradient(180deg, rgba(21,21,21,0.8) 0%, rgba(21,21,21,1) 80%);">
     <div class="mt-10 text-white w-full flex flex-col">
         <p class="p-3">Pesquisas Recentes</p>
     </div>
         <div class="w-full h-[290px] overflow-auto overflow-x-hidden flex flex-col gap-3">
-        <MusicBoxExtended :isOnSearch="props.isOnSearch" @addToSearch="getAddToSearch" v-for="music in props.data" :data="music" />
+        <MusicBoxExtended @addToSearch="getAddToSearch" v-for="music in props.data" :data="music" />
         </div>
    </div>
+
 </template>
 
 <style scoped>
-.animation {
-    animation: animation 0.5s 1 forwards
-}
-
-.animationOut {
-    animation: animationOut 0.5s 1 forwards;
-}
-
-@keyframes animation {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes animationOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        
-        opacity: 0;
-    }
-    }
 
     ::-webkit-scrollbar {
   width: 3px; /* width of the entire scrollbar */

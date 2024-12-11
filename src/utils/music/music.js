@@ -1,4 +1,4 @@
-import {ref, computed} from 'vue'
+import {ref, computed, reactive} from 'vue'
 import { trash, wave, heart, disc, artist, copy, unlike, house, luuna, queue } from "@/assets/images/icons/settingsIndex"
 import Logo from '@/assets/images/Logo.png'
 import monn from '@/assets/images/monn.jpg'
