@@ -47,11 +47,6 @@ const router = createRouter({
           props: true
           },
         {
-          path: 'createcommunity/',
-          name: 'createcommunity',
-          component: () => import('../views/CommunityCreateView.vue')
-        },
-        {
 
           path: 'musics/',
           name: 'musics',
@@ -82,6 +77,21 @@ const router = createRouter({
           name: 'Navegar',
           component: () => import('../views/NavigationView.vue')
         },
+        {
+          path: '/profile',
+          name: 'profile',
+          component: () => import('../views/ProfileView.vue')
+        },
+        {
+          path: '/createcommunity',
+          name: 'comunity',
+          component: () => import('../views/ComunityCreateView.vue')
+        },
+        {
+          path: '/community/:id',
+          name: 'community',
+          component: () => import('../views/CommunityPostsView.vue')
+        }
       ],
     },
     {

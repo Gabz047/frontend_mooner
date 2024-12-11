@@ -1,13 +1,14 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useAlbumStore, useArtistStore, useLoginStore, useSongStore, useFollowingStore } from '@/stores';
+import { useAlbumStore, useArtistStore, useLoginStore, useSongStore, useFollowingStore, useCommunityStore } from '@/stores';
 import { useRoute } from 'vue-router';
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
 import FollowArtist from '@/components/artists/FollowArtist.vue';
 import DiscographyArtist from '@/components/artists/DiscographyArtist.vue';
 import BiographyArtist from '@/components/artists/BiographyArtist.vue';
 import GlobalBlur from '@/components/global/GlobalBlur.vue';
-
+import CommunityArtist from '@/components/artists/CommunityArtist.vue';
+import router from '@/router';
 
 const route = useRoute()
 const ArtistStore = useArtistStore()
@@ -15,22 +16,29 @@ const LoginStore = useLoginStore()
 const SongStore = useSongStore()
 const AlbumStore = useAlbumStore()
 const FollowingStore = useFollowingStore()
-const artist = route.params.id
 const UserIsFollowing = ref(null)
+const CommunityStore = useCommunityStore()
+
+async function enterCommunity(id){
+  const response = await CommunityStore.CreateCommunityUser({user: LoginStore.user.email, community: id}, LoginStore.access)
+  router.push(`/community/${response.community}/`)
+} 
 
 onMounted(async () => {
+  const artist = route.params.id
   await ArtistStore.getArtistsByName(artist, LoginStore.access)
   await SongStore.getSongsByArtist(artist, LoginStore.access)
   await AlbumStore.getAlbunsByAutor(ArtistStore.artistsByName[0]?.user?.email, LoginStore.access)
+  await CommunityStore.getCommunitysByAutor(artist, LoginStore.access)
   UserIsFollowing.value = FollowingStore.followersByUser.find(artistic => artistic.artist.artistic_name === artist)
+  
 })
-</script>
+  </script>
 <template>
-  <div
-    :style="{
-      backgroundImage: `linear-gradient(315deg, rgba(0,0,0, 0.65) 10%, rgba(0,0,0,1) 65%), url(${ArtistStore.artistsByName[0].user.background_image.url})`}"
+  <div :style="{
+      backgroundImage: `linear-gradient(315deg, rgba(0,0,0, 0.65) 10%, rgba(0,0,0,1) 65%), url(${ArtistStore.artistsByName[0]?.user?.background_image?.url})`}"
     style="background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
-    <GlobalBlur :light_color="ArtistStore.artistsByName[0]?.user?.background_light_color" :dark_color="ArtistStore.artistsByName[0]?.user?.background_dark_color"/>
+    <GlobalBlur :light_color="ArtistStore.artistsByName.user?.background_light_color" :dark_color="ArtistStore.artistsByName[0]?.user?.background_dark_color"/>
     <div class="z-20 relative">
       <FollowArtist :artistic_name="ArtistStore.artistsByName[0]?.artistic_name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
       <div class="flex items-center w-full gap-20 p-5">
@@ -62,8 +70,11 @@ onMounted(async () => {
       <div class="p-5">
         <DiscographyArtist :discography="SongStore.songsByArtist"/>
       </div>
+      <div class="p-5">
+        <CommunityArtist :artistcommunity="CommunityStore.communitysByAutor" @entercom="enterCommunity"/>
+      </div>
       <div class="w-full flex p-5 justify-center items-center">
-        <BiographyArtist :perfil="ArtistStore.artistsByName[0].user?.perfil?.url" :description="ArtistStore.artistsByName[0]?.user?.description"/>
+        <BiographyArtist :perfil="ArtistStore.artistsByName[0]?.user?.perfil?.url" :description="ArtistStore.artistsByName[0]?.user?.description"/>
       </div>
     </div>
   </div>

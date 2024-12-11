@@ -21,6 +21,7 @@ class ArtistService {
         }
     }
 
+
     async getArtistsByName(name, token) {
         try {
             const {data} = await api.get(`/artists/?artistic_name=${name}`, {headers: {'authorization': `Bearer ${token}`}});
