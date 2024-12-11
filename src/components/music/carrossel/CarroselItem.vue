@@ -1,16 +1,37 @@
 <script setup>
-import { adjusteSize } from '@/utils/music/music';
 import { ref, onMounted } from 'vue';
-
+import { useQueueStore, usePlayerStore, useMoonStore } from '@/stores';
+const QueueStore = useQueueStore()
+const playerStore = usePlayerStore()
+const moonStore = useMoonStore()
 const props = defineProps({
   data: {
     type: Object,
   },
+  frame: {
+    type: String
+  },
+  song: {
+    type: Object
+  }
 });
 
-const isMoving = ref(false);
-const isHidden = ref(false);
 const isAnimating = ref(false);
+
+function setSong() {
+  if (QueueStore.state.currentSong != props.song){
+    QueueStore.setCurrentSong(props.song)
+    playerStore.play()
+    if (moonStore.state.reconnect) {
+      moonStore.sendActions('song')
+    }
+  }
+  else {
+    if (moonStore.state.reconnect) moonStore.sendActions('use');
+    else playerStore.usePlay();
+  }
+}
+
 
 onMounted(() => {
     isAnimating.value = false
@@ -23,15 +44,14 @@ onMounted(() => {
 
 <template>
   <div :class="[
-      'h-[380px] w-[380px] z-30 relative bg-slate-500 rounded-[20px]',
-      isAnimating ? 'animation' : ''
+      `${props.frame} duration-300 absolute bg-slate-500 rounded-[20px]`
     ]">
     <img
       class="h-full w-full object-cover rounded-[20px]"
       :src="props.data?.cover.url"
       alt=""
     />
-    <div :class="[
+    <div v-if="props.frame == 'frame_2'" :class="[
         'absolute bottom-8 flex justify-between z-20 text-white w-[370px]',
         { disappear: isHidden }
       ]">
@@ -42,8 +62,9 @@ onMounted(() => {
         <p class="text-2xl">{{ props.data?.title }}</p>
       </div>
       <div>
-        <span
-          class="mdi mdi-play-outline mr-5 px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.4)] backdrop-blur-sm brightness-100 text-white rounded-full text-4xl z-[30]"
+        <span @click="setSong"
+
+        :class="`${QueueStore.state.currentSong == props.data && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'}`" class=" mr-5 px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.4)] backdrop-blur-sm brightness-100 text-white rounded-full text-4xl z-[30]"
         ></span>
       </div>
     </div>
@@ -51,24 +72,43 @@ onMounted(() => {
   </div>
 </template>
 
-<!-- <style scoped>
-.animation {
-  animation: animation 1s infinite;
+<style scoped>
+.frame_0 {
+    width: 303px;
+    height: 303px;
+    z-index: 10;
+    left: 40px;
 }
 
-@keyframes animation {
-  from {
-    width: 380px;
-    height: 380px;
-    margin-left: 0px;
-    z-index: 30;
-  }
-  to {
+.frame_1 {
     width: 342px;
     height: 342px;
-    margin-left: 568px;
     z-index: 20;
-  }
+    left: 180px;
+}
+
+.frame_2 {
+    width: 380px;
+    height: 380px;
+    position: absolute;
+    z-index: 30;
+    left: 407px;
+}
+
+.frame_3 {
+    width: 342px;
+    height: 342px;
+    position: absolute;
+    z-index: 20;
+    left: 675px;
+}
+
+.frame_4 {
+    width: 303px;
+    height: 303px;
+    position: absolute;
+    z-index: 10;
+    left: 860px;
 }
 
 .disappear {
@@ -79,4 +119,4 @@ onMounted(() => {
 .disappear.hidden {
   opacity: 0;
 }
-</style> -->
+</style>

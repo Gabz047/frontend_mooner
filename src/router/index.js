@@ -164,6 +164,11 @@ const router = createRouter({
       path: '/tests',
       name: 'tests',
       component: () => import('../views/Tests.vue')
+    },
+    {
+      path: '/tests_carrossel',
+      name: 'tests_carrossel',
+      component: () => import('../views/carrossel_test.vue')
     }
   ]
 })
