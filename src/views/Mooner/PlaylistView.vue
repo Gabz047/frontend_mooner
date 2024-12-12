@@ -136,11 +136,11 @@ const updateAllPlaylist = (playlist) => {
 <template>
     <PlaylistEdition @addPlaylist="updatePlaylist" v-if="edit":data="playlistStore.selectedPlaylist" />
     <SideHeader :data="dataHeader" />
-    <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
+    <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] ">
     <GlobalHeader />
   <div :style="{
      backgroundImage: `linear-gradient(270deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 10%, rgba(0,0,0,1) 40%), url(${playlistStore.selectedPlaylist?.cover?.url})`}"
-    style="background-repeat: no-repeat; background-size: contain; background-attachment: fixed; background-position: right; object-fit: cover;">
+    style="background-repeat: no-repeat; background-size: contain; background-attachment: fixed; background-position: right; object-fit: cover;" class="pb-[60px]">
     <GlobalBlur :light_color="playlistStore.selectedPlaylist.background_light_color" :dark_color="playlistStore.selectedPlaylist.background_dark_color"/>
     <div class="z-20 relative ">
       <GlobalInfoHeader @edit="edit = !edit" @save="edit = !edit" :isEdit="edit" :isOwner="verifyOwner()" :title="playlistStore?.selectedPlaylist?.name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
