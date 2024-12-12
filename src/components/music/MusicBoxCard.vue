@@ -1,14 +1,17 @@
 <script setup>
 import { onMounted, reactive, ref, shallowRef } from 'vue';
 import { adjusteSize } from '@/utils/music/music';
-import { useQueueStore, useMoonStore, usePlaylistStore, useSongStore, usePlayerStore } from '@/stores';
+import { useQueueStore, useMoonStore, usePlaylistStore, useSongStore, usePlayerStore, useLoginStore } from '@/stores';
 import { SettingsGlobal, AddPlaylist, AudioPlayer } from '@/components';
 import router from '@/router';
+import axios from 'axios';
 
 const QueueStore = useQueueStore()
 const playlistStore = usePlaylistStore()
 const moonStore = useMoonStore()
 const playerStore = usePlayerStore()
+const LoginStore = useLoginStore()
+const token = LoginStore.access
 
 const songStore = useSongStore()
 const props = defineProps({
@@ -32,6 +35,12 @@ const objData = reactive({
     light: '',
     dark: ''
 })
+
+// const addToPlaylist = (songs, token) => {
+
+//   playlistStore.updatePlaylist()
+// } 
+
 
 const getData = () => {
     if (props.type == 'Músicas') {
@@ -68,7 +77,7 @@ const getData = () => {
 onMounted(()=>{
     // console.log(props.data.artists[0].artistic_name, props.data)
     getData()
-    console.log(objData)
+    
 })
 
 function hexToRgb(hex) {
@@ -122,11 +131,14 @@ const to = (id, playlist) => {
   localStorage.removeItem("playlistStorage")
   playlistStore.state.selectedPlaylist = playlist
   playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
-  playlistStore.newPlaylist.name = playlistStore.selectedPlaylist.name
   playlistStore.newPlaylist.id = playlistStore.selectedPlaylist.id
   playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key
   router.push('/playlist/' + id)
 }
+
+const emits = defineEmits([
+  'addPlaylist'
+])
 
 const onHover = shallowRef(false)
 </script>
@@ -149,7 +161,7 @@ const onHover = shallowRef(false)
     </div>
     <AudioPlayer />
     <span @click="setSong" v-if="onHover && props.type == 'Músicas'" :class="`${QueueStore.state.currentSong == props.data && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'} absolute top-14 px-3 py-2 flex justify-center items-center bg-[rgba(255,255,255,0.5)] backdrop-blur-sm brightness-100 text-white rounded-full text-2xl z-[30]`"></span>
-    <div class="w-[155px] items-center flex justify-center h-12 "v-if="props.isSuggestionDisplay"><p class="rounded-full py-1 px-3 bg-[#151515]">+</p></div>
+    <div class="w-[155px] items-center flex justify-center h-12 "v-if="props.isSuggestionDisplay" @click="emits('addPlaylist', props.data)"><p class="rounded-full py-1 px-3 bg-[#151515]">+</p></div>
     </div>
     
     <SettingsGlobal v-if="props.type == 'Músicas'" :artist="props.data?.artists[0]" :artist_name="props.data?.artists[0].artistic_name"

@@ -5,7 +5,9 @@
     const FollowingStore = useFollowingStore()
     const LoginStore  = useLoginStore()
     const ArtistStore = useArtistStore()
-
+    const emits = defineEmits([
+        'edit', 'save'
+    ])
     const props = defineProps({
         title: {
             type: String,
@@ -22,6 +24,9 @@
         isOwner: {
             type: Boolean,
             default: false
+        },
+        isEdit: {
+            type: Boolean
         }
     }) 
 
@@ -29,7 +34,7 @@
 <template>
     <div class="w-full flex justify-between p-5 items-center">
         <h1 class="text-white text-6xl font-semibold ms-3">{{ title }}</h1>
-        <ButtonGlobal v-if="props.isOwner" :title="'Editar'" border="1px solid white" width="150px" border_radius="20px" color="white"
-          padding="5px" class="me-32" @click="FolloworUnfollow" />
+        <ButtonGlobal v-if="props.isOwner" :title="props.isEdit ?'Salvar' : 'Editar'" border="1px solid white" width="150px" border_radius="20px" color="white"
+          padding="5px" class="me-32" @click="emits(props.isEdit ?'save' : 'edit')" />
       </div>
 </template>

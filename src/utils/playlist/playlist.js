@@ -26,8 +26,8 @@ export async function handleFileUpload(e, img, saveimg) {
   }
   
 export const transformToId = () => {
-    for (let i = 0; i < playlistStore.newPlaylist.songs.length; i++) {
-      playlistStore.newPlaylist.songs[i] = playlistStore.newPlaylist.songs[i].id
+    for (let i = 0; i < playlistStore.selectedPlaylist.songs.length; i++) {
+      playlistStore.newPlaylist.songs.push(playlistStore.selectedPlaylist.songs[i].id)
     }
   }
 

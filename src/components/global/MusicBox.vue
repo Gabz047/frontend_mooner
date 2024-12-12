@@ -129,10 +129,10 @@ const to = (id, artist) => {
             <img
               class="h-full w-full rounded-md music-img"
               :src="
-                music_data.cover.url
-                  ? music_data.cover.url
-                  : music_data.cover.file
-                    ? music_data.cover.file
+                music_data?.cover?.url
+                  ? music_data?.cover?.url
+                  : music_data?.cover?.file
+                    ? music_data?.cover?.file
                     : null
               "
             />
@@ -145,7 +145,7 @@ const to = (id, artist) => {
                 v-for="artists in music_data.artists"
                 :key="artists.id" class="break-keep text-nowrap"
               >
-                {{ artists.artistic_name ? adjusteSize(artists.artistic_name, 16, 16) : '' }}
+                {{ artists.artistic_name ? adjusteSize(artists.artistic_name, 20, 20) : '' }}
               </p>
             </div>
             <p :title="props.music_data.title" class="break-keep text-nowrap"
@@ -155,7 +155,7 @@ const to = (id, artist) => {
                   : 'font-semibold text-[18px] text-white'
               "
             >
-              {{ adjusteSize(props.music_data.title, 12, 12) }}
+              {{ props.music_data.title ? adjusteSize(props.music_data?.title, 12, 12) : '' }}
             </p>
            
           </div>
