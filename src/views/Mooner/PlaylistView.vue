@@ -1,14 +1,16 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue';
-import { useArtistStore, useLoginStore, useSongStore, useFollowingStore, usePlaylistStore, useQueueStore, usePlayerStore, useUserStore } from '@/stores';
+import { onMounted, ref, computed, reactive, onUnmounted } from 'vue';
+import { useArtistStore, useLoginStore, useSongStore, useFollowingStore, usePlaylistStore, useQueueStore, usePlayerStore, useUserStore, useMoonStore } from '@/stores';
 import { useRoute } from 'vue-router';
 import DiscographyArtist from '@/components/artists/DiscographyArtist.vue';
 
 import GlobalBlur from '@/components/global/GlobalBlur.vue';
 
-import { MusicBoxCard, GlobalHeader, SideHeader, GlobalInfoHeader, AudioPlayer } from '@/components';
+import { MusicBoxCard, GlobalHeader, SideHeader, GlobalInfoHeader, AudioPlayer, PlaylistEdition } from '@/components';
 
 import { dataHeader } from '@/utils/header/header';
+import { transformToId, updatePlaylists } from '@/utils/playlist/playlist';
+import router from '@/router';
 const route = useRoute()
 const ArtistStore = useArtistStore()
 const LoginStore = useLoginStore()
@@ -19,24 +21,31 @@ const playlistStore = usePlaylistStore()
 const QueueStore = useQueueStore()
 const playerStore = usePlayerStore()
 const userStore = useUserStore()
+const moonStore = useMoonStore()
+const token = LoginStore.access
+// const edit = ref(false)
+
 onMounted(async () => {
   const artist = route.params.id
   await ArtistStore.getArtistsByName(artist)
   await SongStore.getSongs()
   await SongStore.getSongsByArtist(artist, LoginStore.access)
   UserIsFollowing.value = FollowingStore.followersByUser.find(artistic => artistic.artist.artistic_name === artist)
-  
+  verifyOwner()
 })
 
+
 const verifyOwner = () => {
+    if (playlistStore.selectedPlaylist.owners) {
     const verified = playlistStore.selectedPlaylist.owners.filter((s) => s.email === userStore.myuser.email)
     return verified.length > 0 ? true : false
+}
 }
 
 function setSong() {
   if (QueueStore.state.currentSong != {}){
     QueueStore.setCurrentSong(QueueStore.state.queue[0])
-    playerStore.play()
+    setTimeout(()=>{playerStore.play()},500)
     if (moonStore.state.reconnect) {
       moonStore.sendActions('song')
     }
@@ -48,31 +57,80 @@ function setSong() {
 }
 
 const verifyInPlaylist = computed(() => {
+    if (playlistStore.selectedPlaylist.songs) {
     const verified = playlistStore.selectedPlaylist.songs.filter((s) => s.id === QueueStore.currentSong.id)
 
     return verified.length > 0 ? true : false
+    }
 })
 
+
+const firstPlay = ref(false)
+
 const setPlaylistSongs = () => {
-    if (verifyInPlaylist.value) {
+    if (!firstPlay.value) {
     playlistStore.selectedPlaylist.songs.forEach(element => {
         QueueStore.addSongToQueue(element)
     });
-    if (verifyInPlaylist.value && QueueStore.currentSong) {
-        playerStore.usePlay()
-    } else {
-        setSong()
-    }
+    setSong()
+    firstPlay.value = !firstPlay.value
+    } else {   
+        if (moonStore.state.reconnect) {
+            moonStore.sendActions('use')
+        } else {
+            playerStore.usePlay()
+        }
+        
+    
 }
 }
 
+// const updatePlaylist = (newSong) => {
+//     transformToId()
+//     playlistStore.newPlaylist.songs.push(newSong.id)
+//     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
+//     console.log(playlistStore.newPlaylist.songs)
+//   const newPlaylist = reactive({
+//     id: playlistStore.selectedPlaylist.id,
+//     name: playlistStore.selectedPlaylist.name,
+//     owners: playlistStore.newPlaylist.owners,
+//     cover: playlistStore.selectedPlaylist.cover.attachment_key,
+//     songs: playlistStore.newPlaylist.songs,
+//   });
 
+//   playlistStore.updatePlaylist(newPlaylist, token);
+//   playlistStore.state.selectedPlaylist.songs.push(newSong)
+// };
 
-onMounted(()=>{
-    verifyOwner()
-})
+// const updateAllPlaylist = (playlist) => {
+//     transformToId()
+//     playlist.songs.forEach(element => {
+//         playlistStore.newPlaylist.songs.push(element.id)
+//     });
+//     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
+//     playlistStore.newPlaylist.cover = playlist.cover.attachment_key
+
+//   const newPlaylist = reactive({
+//     id: playlistStore.selectedPlaylist.id,
+//     name: playlist.name,
+//     owners: playlistStore.newPlaylist.owners,
+//     cover: playlistStore.newPlaylist.cover,
+//     songs: playlistStore.newPlaylist.songs,
+//   });
+//   console.log(newPlaylist)
+//     playlistStore.updatePlaylist(newPlaylist, token);
+//     playlistStore.state.selectedPlaylist.songs.push(newSong)
+   
+//     router.push('/tests')
+// }
+
+// onUnmounted(()=>{
+//     window.location.reload()
+// })
+
   </script>
 <template>
+    <PlaylistEdition @addPlaylist="updatePlaylist" v-if="edit":data="playlistStore.selectedPlaylist" />
     <SideHeader :data="dataHeader" />
     <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
     <GlobalHeader />
@@ -81,19 +139,19 @@ onMounted(()=>{
     style="background-repeat: no-repeat; background-size: contain; background-attachment: fixed; background-position: right; object-fit: cover;">
     <GlobalBlur :light_color="playlistStore.selectedPlaylist.background_light_color" :dark_color="playlistStore.selectedPlaylist.background_dark_color"/>
     <div class="z-20 relative ">
-      <GlobalInfoHeader :isOwner="verifyOwner()" :title="playlistStore.selectedPlaylist.name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
+      <GlobalInfoHeader @edit="edit = !edit" @save="edit = !edit" :isEdit="edit" :isOwner="verifyOwner()" :title="playlistStore?.selectedPlaylist?.name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
       <div class="flex items-center w-full gap-10 p-5 min-h-64 ">
         <div class="min-w-[140px] flex items-center justify-center h-[200px] ">
-        <span @click="setPlaylistSongs()" :class="`${verifyInPlaylist && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'}`" class="w-[120px] h-[120px] px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.7)] backdrop-blur-sm brightness-100 text-white rounded-full text-7xl z-[30]"
+        <span @click="setPlaylistSongs()" :class="`${verifyInPlaylist && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'}`" class="w-[120px] h-[120px] px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.7)] backdrop-blur-sm brightness-100 text-white rounded-full text-7xl z-[30] hover:brightness-125 duration-200 active:scale-110"
     ></span>
     </div>
         <div class="flex flex-col gap-4 w-full">
-          <div class="flex justify-between items-center w-[77%]">
+          <div class="flex justify-between items-center w-full">
             <h1 class="text-xl text-white font-bold">Sugestões</h1>
-            <p class="flex border-b-[1px] text-lg text-white font-medium ">+ Sugestões</p>
+            <p class="flex border-b-[1px] mr-5 text-lg text-white font-medium ">+ Sugestões</p>
           </div>
           <div class="flex ">
-            <MusicBoxCard isSuggestionDisplay="true":type="'Músicas'" class="mt-3" v-for="song in SongStore.songs" :data="song" />
+            <MusicBoxCard @addPlaylist="updatePlaylist" isSuggestionDisplay="true":type="'Músicas'" class="mt-3" v-for="song in SongStore.songs.slice(0, 6)" :data="song" />
           </div>
     </div>
   </div>

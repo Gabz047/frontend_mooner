@@ -20,6 +20,7 @@ const getEmitData = (data) => {
        
         songStore.GetSongByGenre('', '')
     } else {
+        
         songStore.GetSongByGenre(data, '')
     }
     genreStore.selectGetType.selectedGenre = data

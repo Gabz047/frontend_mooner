@@ -15,8 +15,8 @@ const remove = (id) => {
 </script>
 <template>
     <div v-if="queueStore.state.queue.length > 0" :class=" !open ? 'absolute z-[999] right-0 bottom-[70px] flex gap-4 rounded-lg bg-[rgba(14,14,14,0.95)] queue-container flex-col justify-end' : 'absolute z-[999] right-0 bottom-[70px] flex gap-4 rounded-lg bg-[rgba(14,14,14,1)] queue-container-open flex-col justify-end'">
-        <div class=" text-[#AA5AF5] gap-2 openQueue">
-            <p @click="open = !open">{{open ? 'Fechar Fila' : 'Abrir Fila'}}</p>
+        <div  @click="open = !open" class=" text-[#AA5AF5] gap-2 openQueue">
+            <p >{{open ? 'Fechar Fila' : 'Abrir Fila'}}</p>
             <span :class=" !open ? 'mdi mdi-arrow-up-circle-outline' : 'mdi mdi-arrow-down-circle-outline'"></span>
         </div>
         <div :class="!open ? 'flex gap-4 justify-center text-nowrap' : 'hidden'">

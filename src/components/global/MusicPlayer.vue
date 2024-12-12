@@ -155,7 +155,7 @@ function usePrevious() {
    
     <div class="flex flex-row relative items-center gap-2 ml-24">
       <img
-        class="cursor-pointer w-6 h-6 z-30 brightness-200"
+        class="cursor-pointer w-6 h-6 z-30 brightness-200 animate"
         :src="backward"
         @click="updateTime10s('-')"
         alt=""
@@ -183,7 +183,7 @@ function usePrevious() {
         alt=""
       />
       <img
-        class="cursor-pointer w-6 h-6 z-30 brightness-200"
+        class="cursor-pointer w-6 h-6 z-30 brightness-200 animatePlus"
         :src="forward"
         @click="updateTime10s('+')"
         alt=""
@@ -409,5 +409,23 @@ function usePrevious() {
   outline: none;
 }
 
+.animate {
+  transition: 0.2s ease-in-out;
+}
 
+.animate:active {
+   transform: scale(1.1);
+   transform: rotate(-30deg);
+  filter: brightness(60%);
+}
+
+.animatePlus {
+  transition: 0.2s ease-in-out;
+}
+
+.animatePlus:active {
+   transform: scale(1.1);
+   transform: rotate(30deg);
+  filter: brightness(60%);
+}
 </style>

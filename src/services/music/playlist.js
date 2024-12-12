@@ -12,7 +12,7 @@ class PlaylistService {
      */
     async getPlaylist(token, page) {
         try {
-            const { data } = await api.get(`/playlists/?page=${page != undefined ? page : ''}`, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get(`/playlists/?page=${page != undefined ? page : ''}`);
             console.log( "Service: GetPlaylist - return success")
             return data.results;
         } catch (error) {
@@ -23,7 +23,7 @@ class PlaylistService {
 
     async getPlaylistsBySongs(songs, token) {
         try {
-            const {data} = await api.get(`/playlists/?song_id=${songs}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/playlists/?song_id=${songs}`);
         return data.results
         } catch (error) {
             console.log('Error in getPlaylistsBySongs', error);
@@ -34,7 +34,7 @@ class PlaylistService {
     async getPlaylistsByOwner(owner, token) {
         try {
             
-            const {data} = await api.get(`/playlists/?owners_email=${owner}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/playlists/?owners_email=${owner}`);
         return data.results
         } catch (error) {
             console.log('Error in getPlaylistsBySongs', error);
