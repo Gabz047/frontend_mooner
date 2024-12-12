@@ -3,12 +3,12 @@ import router from '@/router';
 import ButtonGlobal from '../global/ButtonGlobal.vue';
 </script>
 <template>
-    <div class="flex justify-center items-center flex-col h-full">
+    <div class="flex justify-center items-center p-5 flex-col h-full">
         <h1 class="text-center text-5xl text-white">Seja um Artista</h1>
         <div class="w-full flex justify-center items-center">
-            <div class="flex justify-center items-center p-10 gap-20">
-                <img src="../../assets/images/manplaysguitar.png" width="500" class="h-96 rounded-xl">
-                <h2 class="text-white text-2xl w-2/4">No Mooner, sua música brilha: mais renda, conexão direta com fãs, liberdade criativa total e dados poderosos para impulsionar sua carreira. Aqui, você é prioridade, não estatística.</h2>
+            <div class="flex justify-center md2:flex-col md2:p-5 md2:gap-5 items-center p-10 gap-20">
+                <img src="../../assets/images/manplaysguitar.png"  class="h-96 w-[500px] md2:h-72 rounded-xl">
+                <h2 class="text-white text-2xl w-2/4 md2:w-full md2:text-justify">No Mooner, sua música brilha: mais renda, conexão direta com fãs, liberdade criativa total e dados poderosos para impulsionar sua carreira. Aqui, você é prioridade, não estatística.</h2>
             </div>
         </div>
         <div class="flex justify-center items-center  w-full">

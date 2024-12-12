@@ -103,9 +103,10 @@ export const useArtistStore = defineStore('artist', () => {
         msg.value = aboutvalidation.value
       }
       else {
+        state.value.artists.push(await ArtistService.createArtist(newartist, token))
         msg.value = 'verifique seu email'
         err.value = false
-        state.value.artists.push(await ArtistService.createArtist(newartist, token))
+        console.log(newartist)
       }
     } catch (error) {
       state.value.error = error

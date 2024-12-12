@@ -16,10 +16,7 @@ const SongsStore = useSongStore()
 const AlbumStore = useAlbumStore()
 const LoginStore = useLoginStore()
 const props = defineProps({
-    fields: {
-        type: Array,
-        required: true
-    },
+    
     is_album:{
         type: Boolean,
         required: true
@@ -67,7 +64,7 @@ onMounted(async () => {
                 <div class="flex justify-center items-center gap-20 p-5 w-full">
                     <PerfilPhoto :is-album="is_album" :is_music="true" />
                     <div class="flex flex-col items-center w-3/4">
-                        <InputGlobal v-for="input, index in fields" :key="index"
+                        <InputGlobal v-for="input, index in ArtistProgressStore.state.artist_create_song_fields" :key="index"
                             container_class="artist-fields-container" :field_name="input.fieldname" :type="input.type"
                             :is_required="input.required" :options="input.options" v-model:value="input.value" :multiple="input.multiple"/>
                         <FeatInput />

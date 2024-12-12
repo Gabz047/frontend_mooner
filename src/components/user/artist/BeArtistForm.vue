@@ -17,8 +17,6 @@ const newartist = reactive({
         about:  StoreProgressArtist.state.progress_artist_fields[4].value
 })
 
-const artistComputed = computed(() => newartist) 
-
 defineProps({
     fields_input: {
         type: Array,
@@ -39,7 +37,7 @@ function nextsection(err){
 </script>
 <template>
     <div class="flex flex-col w-2/4 h-full justify-center items-center p-5 mt-16 gap-5 overflow-hidden" >
-        <InputGlobal  v-for="fields in fields_input" :key="fields.id" :field_name="fields.fieldname" :maxlength="fields.maxlength" :minlength="fields.minlength" :is_required="fields.required" :type="fields.type" :placeholder="fields.placeholder"  v-model:value="fields.value"  container_class="artist-fields-container"/>
+        <InputGlobal  v-for="fields in StoreProgressArtist.state.progress_artist_fields" :key="fields.id" :field_name="fields.fieldname" :maxlength="fields.maxlength" :minlength="fields.minlength" :is_required="fields.required" :type="fields.type" :placeholder="fields.placeholder"  v-model:value="fields.value"  container_class="artist-fields-container"/>
         <ButtonGlobal  title="enviar" background="purple" color="white" width="150px" border_radius="10px" font_size="17px" @click="ArtistStore.createArtist(newartist, LoginStore.access)"/>
         <MsgGlobal v-show="ArtistStore.msg" :msg="ArtistStore.msg" :err="ArtistStore.err" @confirm="nextsection"/>
     </div>
