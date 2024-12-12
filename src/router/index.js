@@ -68,7 +68,7 @@ const router = createRouter({
         {
           path: '/navigation',
           name: 'Navegar',
-          component: () => import('../views/NavigationView.vue')
+          component: () => import('../views/Mooner/NavigationView.vue')
         },
       {
         path: '/profile',

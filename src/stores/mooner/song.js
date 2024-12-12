@@ -37,6 +37,8 @@ export const useSongStore = defineStore('song', () => {
     connection: false,
   })
 
+  const toLeft = ref(0)
+
   const simpleState = reactive({
     active: false,
     item_playlist: null,
@@ -245,6 +247,7 @@ export const useSongStore = defineStore('song', () => {
     GetSongByGenre,
     createSongForAlbum,
     GetRecommendedSongs,
-    createLastSongs
+    createLastSongs,
+    toLeft
   }
 })

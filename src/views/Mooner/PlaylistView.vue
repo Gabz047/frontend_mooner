@@ -139,7 +139,7 @@ const updateAllPlaylist = (playlist) => {
     <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
     <GlobalHeader />
   <div :style="{
-     backgroundImage: `linear-gradient(270deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 10%, rgba(0,0,0,1) 40%), url(${playlistStore.selectedPlaylist?.cover?.url})`}"
+     backgroundImage: `linear-gradient(270deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 10%, rgba(0,0,0,1) 40%), url(${playlistStore.selectedPlaylist?.cover?.url})`}"
     style="background-repeat: no-repeat; background-size: contain; background-attachment: fixed; background-position: right; object-fit: cover;">
     <GlobalBlur :light_color="playlistStore.selectedPlaylist.background_light_color" :dark_color="playlistStore.selectedPlaylist.background_dark_color"/>
     <div class="z-20 relative ">

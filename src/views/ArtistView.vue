@@ -10,7 +10,10 @@ import GlobalBlur from '@/components/global/GlobalBlur.vue';
 import CommunityArtist from '@/components/artists/CommunityArtist.vue';
 import MusicBoxCard from '@/components/music/MusicBoxCard.vue';
 import router from '@/router';
-import GenreContainer from '@/components/music/FilterComponents/GenreContainer.vue';
+import GenreContainer from '@/components/music/FilterComponents/NavigationContainers.vue';
+import GlobalHeader from '@/components/global/headerGlobal/GlobalHeader.vue';
+import SideHeader from '@/components/newDesign/SideHeader.vue';
+import { dataHeader } from '@/utils/header/header';
 const route = useRoute()
 const ArtistStore = useArtistStore()
 const LoginStore = useLoginStore()
@@ -40,6 +43,10 @@ onMounted(async () => {
 // })
   </script>
 <template>
+   <SideHeader :data="dataHeader" />  
+  <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] pb-[60px]">
+   
+  <GlobalHeader />
   <div :style="{
       backgroundImage: `linear-gradient(315deg, rgba(0,0,0, 0.65) 10%, rgba(0,0,0,1) 65%), url(${ArtistStore.selectedArtist?.user?.background_image?.url})`}"
     style="background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
@@ -71,4 +78,5 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+  </main>
 </template>
