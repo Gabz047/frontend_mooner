@@ -121,14 +121,12 @@ function usePrevious() {
   }
 }
 
-
-
 </script>
 
 <template>
  
   <div
-    v-if="QueueStore.state?.currentSong"
+    v-show="QueueStore.state.currentSong"
     class="flex w-[98%] ml-[1%] mr-[1%] fixed bottom-0 h-[9%] gap-1 items-center bg-[#151515] z-[9999] rounded-xl p-4"
   >
   <QueueDisplay v-if="!moonStore.reconnect" />

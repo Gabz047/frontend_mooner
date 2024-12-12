@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { useAlbumStore, useArtistStore, useLoginStore, useSongStore, useFollowingStore, useCommunityStore } from '@/stores';
 import { useRoute } from 'vue-router';
 import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
@@ -30,9 +30,14 @@ onMounted(async () => {
   await ArtistStore.getArtistsByName(artist, LoginStore.access)
   await SongStore.getSongsByArtist(artist, LoginStore.access)
   await AlbumStore.getAlbunsByAutor(artist, LoginStore.access)
+  console.log(AlbumStore.albunsByAutor)
   await CommunityStore.getCommunitysByAutor(artist, LoginStore.access)
   UserIsFollowing.value = FollowingStore.followersByUser.find(artistic => artistic.artist.artistic_name === artist)
 })
+
+// onUnmounted(()=>{
+//   AlbumStore.albunsByAutor = []
+// })
   </script>
 <template>
   <div :style="{
@@ -40,7 +45,7 @@ onMounted(async () => {
     style="background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
     <GlobalBlur :light_color="ArtistStore?.artistsByName.user?.background_light_color" :dark_color="ArtistStore.selectedArtist?.user?.background_dark_color"/>
     <div class="z-20 relative">
-      <FollowArtist :artistic_name="ArtistStore.selectedArtist?.artistic_name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
+      <FollowArtist :email="ArtistStore.selectedArtist.user.email" :artistic_name="ArtistStore.selectedArtist?.artistic_name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
       <div class="flex items-center w-full gap-20 p-5">
         <img :src="ArtistStore.selectedArtist?.user?.perfil?.url" width="200" class="rounded-full object-cover h-[200px] mt-8">
         <div class="flex flex-col gap-4 mt-5 w-full">
@@ -62,7 +67,7 @@ onMounted(async () => {
         <CommunityArtist :artistcommunity="CommunityStore.communitysByAutor" @entercom="enterCommunity"/>
       </div>
       <div class="w-full flex p-5 justify-center items-center">
-        <BiographyArtist :perfil="ArtistStore.selectedArtist?.user?.perfil?.url" :description="ArtistStore.artistsByName[0]?.user?.description"/>
+        <BiographyArtist :perfil="ArtistStore.selectedArtist?.user?.perfil?.url" :description="ArtistStore.artistsByName?.user?.description"/>
       </div>
     </div>
   </div>

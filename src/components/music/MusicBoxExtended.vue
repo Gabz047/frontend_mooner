@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-
+import { adjusteSize } from '@/utils/music/music';
 const props = defineProps({
     data: {
         type: Object
@@ -36,8 +36,8 @@ const hover = ref(false)
             <div class="flex w-full">
             <p :class="`text-${isOnAddSearch ? 'lg' : 'xsm'} font-light`">{{props.data.artists[0].artistic_name}} {{ props.data.artists.length > 1 ? '+' : '' }}</p>
             </div>
-            <p :class="`text-${isOnAddSearch ? 'xl' : 'lg'} font-${isOnAddSearch ? 'semibold' : 'medium'}`">{{props.data.title}}</p>
+            <p :class="`text-${isOnAddSearch ? 'xl' : 'lg'} font-${isOnAddSearch ? 'semibold' : 'medium'}`">{{adjusteSize(props.data.title, 16, 16)}}</p>
         </div>
-        <span v-show="hover || props.selected.active && veriftySelected()":class="`mdi ${props.selected.active && veriftySelected() ? 'mdi-checkbox-marked-circle-outline' : 'mdi-plus-circle'} absolute right-5 text-2xl`"></span>
+        <!-- <span v-show="hover || props.selected.active && veriftySelected()":class="`mdi ${props.selected.active && veriftySelected() ? 'mdi-checkbox-marked-circle-outline' : 'mdi-plus-circle'} absolute right-5 text-2xl`"></span> -->
     </div>
 </template>

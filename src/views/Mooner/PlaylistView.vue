@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed, reactive, onUnmounted } from 'vue';
+import { onMounted, ref, computed, reactive, onUnmounted, watch } from 'vue';
 import { useArtistStore, useLoginStore, useSongStore, useFollowingStore, usePlaylistStore, useQueueStore, usePlayerStore, useUserStore, useMoonStore } from '@/stores';
 import { useRoute } from 'vue-router';
 import DiscographyArtist from '@/components/artists/DiscographyArtist.vue';
@@ -23,7 +23,7 @@ const playerStore = usePlayerStore()
 const userStore = useUserStore()
 const moonStore = useMoonStore()
 const token = LoginStore.access
-// const edit = ref(false)
+const edit = ref(false)
 
 onMounted(async () => {
   const artist = route.params.id
@@ -57,11 +57,13 @@ function setSong() {
 }
 
 const verifyInPlaylist = computed(() => {
-    if (playlistStore.selectedPlaylist.songs) {
-    const verified = playlistStore.selectedPlaylist.songs.filter((s) => s.id === QueueStore.currentSong.id)
+    if (QueueStore.currentSong != null) {
+    if (playlistStore.selectedPlaylist.song) {
+    const verified = playlistStore.selectedPlaylist.songs.filter((s) => s.id === QueueStore?.currentSong?.id)
 
     return verified.length > 0 ? true : false
     }
+}
 })
 
 
@@ -69,9 +71,8 @@ const firstPlay = ref(false)
 
 const setPlaylistSongs = () => {
     if (!firstPlay.value) {
-    playlistStore.selectedPlaylist.songs.forEach(element => {
-        QueueStore.addSongToQueue(element)
-    });
+        QueueStore.state.queue  = playlistStore.selectedPlaylist.songs
+        playlistStore.state.currentPlaylist = playlistStore.selectedPlaylist.name
     setSong()
     firstPlay.value = !firstPlay.value
     } else {   
@@ -85,48 +86,51 @@ const setPlaylistSongs = () => {
 }
 }
 
-// const updatePlaylist = (newSong) => {
-//     transformToId()
-//     playlistStore.newPlaylist.songs.push(newSong.id)
-//     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
-//     console.log(playlistStore.newPlaylist.songs)
-//   const newPlaylist = reactive({
-//     id: playlistStore.selectedPlaylist.id,
-//     name: playlistStore.selectedPlaylist.name,
-//     owners: playlistStore.newPlaylist.owners,
-//     cover: playlistStore.selectedPlaylist.cover.attachment_key,
-//     songs: playlistStore.newPlaylist.songs,
-//   });
+watch(QueueStore.state.currentSong, () => {
+    if (!playlistStore.state.selectedPlaylist.includes(QueueStore.state.currentSong)) {
+        playlistStore.state.currentPlaylist = null
+    }
+})
 
-//   playlistStore.updatePlaylist(newPlaylist, token);
-//   playlistStore.state.selectedPlaylist.songs.push(newSong)
-// };
 
-// const updateAllPlaylist = (playlist) => {
-//     transformToId()
-//     playlist.songs.forEach(element => {
-//         playlistStore.newPlaylist.songs.push(element.id)
-//     });
-//     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
-//     playlistStore.newPlaylist.cover = playlist.cover.attachment_key
+const updatePlaylist = (newSong) => {
+    transformToId()
+    playlistStore.newPlaylist.songs.push(newSong.id)
+    playlistStore.newPlaylist.owners.push(userStore.myuser.email)
+    console.log(playlistStore.newPlaylist.songs)
+  const newPlaylist = reactive({
+    id: playlistStore.selectedPlaylist.id,
+    name: playlistStore.selectedPlaylist.name,
+    owners: playlistStore.newPlaylist.owners,
+    cover: playlistStore.selectedPlaylist.cover.attachment_key,
+    songs: playlistStore.newPlaylist.songs,
+  });
 
-//   const newPlaylist = reactive({
-//     id: playlistStore.selectedPlaylist.id,
-//     name: playlist.name,
-//     owners: playlistStore.newPlaylist.owners,
-//     cover: playlistStore.newPlaylist.cover,
-//     songs: playlistStore.newPlaylist.songs,
-//   });
-//   console.log(newPlaylist)
-//     playlistStore.updatePlaylist(newPlaylist, token);
-//     playlistStore.state.selectedPlaylist.songs.push(newSong)
+  playlistStore.updatePlaylist(newPlaylist, token);
+  playlistStore.state.selectedPlaylist.songs.push(newSong)
+};
+
+const updateAllPlaylist = (playlist) => {
+    transformToId()
+    playlist.songs.forEach(element => {
+        playlistStore.newPlaylist.songs.push(element.id)
+    });
+    playlistStore.newPlaylist.owners.push(userStore.myuser.email)
+    playlistStore.newPlaylist.cover = playlist.cover.attachment_key
+
+  const newPlaylist = reactive({
+    id: playlistStore.selectedPlaylist.id,
+    name: playlist.name,
+    owners: playlistStore.newPlaylist.owners,
+    cover: playlistStore.newPlaylist.cover,
+    songs: playlistStore.newPlaylist.songs,
+  });
+  console.log(newPlaylist)
+    playlistStore.updatePlaylist(newPlaylist, token);
+    playlistStore.state.selectedPlaylist.songs.push(newSong)
    
-//     router.push('/tests')
-// }
-
-// onUnmounted(()=>{
-//     window.location.reload()
-// })
+    router.push('/')
+}
 
   </script>
 <template>
@@ -142,7 +146,7 @@ const setPlaylistSongs = () => {
       <GlobalInfoHeader @edit="edit = !edit" @save="edit = !edit" :isEdit="edit" :isOwner="verifyOwner()" :title="playlistStore?.selectedPlaylist?.name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
       <div class="flex items-center w-full gap-10 p-5 min-h-64 ">
         <div class="min-w-[140px] flex items-center justify-center h-[200px] ">
-        <span @click="setPlaylistSongs()" :class="`${verifyInPlaylist && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'}`" class="w-[120px] h-[120px] px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.7)] backdrop-blur-sm brightness-100 text-white rounded-full text-7xl z-[30] hover:brightness-125 duration-200 active:scale-110"
+        <span @click="setPlaylistSongs()" :class="`${ playlistStore.state.currentPlaylist == playlistStore.selectedPlaylist.name && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'}`" class="w-[120px] h-[120px] px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.7)] backdrop-blur-sm brightness-100 text-white rounded-full text-7xl z-[30] hover:brightness-125 duration-200 active:scale-110"
     ></span>
     </div>
         <div class="flex flex-col gap-4 w-full">

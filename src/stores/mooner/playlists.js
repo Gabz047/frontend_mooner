@@ -37,6 +37,7 @@ export const usePlaylistStore = defineStore('playlist', () => {
     loading: false,
     error: null,
     connection: false,
+    currentPlaylist: '',
   })
 
   const attach = ref(null)

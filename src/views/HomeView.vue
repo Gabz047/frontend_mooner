@@ -67,7 +67,9 @@ const getTypeData = async (data) => {
 }
 
 onMounted(async ()=>{
+    await songStore.getSongs()
     await genreStore.GetGenre()
+    songs.value = songStore.songs
     if (songStore.songsByGenre.length == 0) {
         getTypeData(genreStore.selectGetType.type)
     }
