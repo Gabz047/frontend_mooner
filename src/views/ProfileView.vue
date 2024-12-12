@@ -20,7 +20,7 @@ onMounted( async () =>{
 
 <template>
     <GlobalBlur/>
-    <BeAnArtistSlide v-if="!LoginStore.user.is_artist"/>
+    <BeAnArtistSlide :IsArtist="LoginStore.user.is_artist" />
     <CommunityCreateSlide v-if="!storeCommunity.communitysByAutor[0]?.name && LoginStore.user.is_artist"/> 
     <CommunityUpdated :name="storeCommunity.communitysByAutor[0]?.name" :id="storeCommunity.communitysByAutor[0]?.id" :description="storeCommunity.communitysByAutor[0]?.description"  :photo="storeCommunity.communitysByAutor[0]?.cover?.url"  v-if="storeCommunity.communitysByAutor[0]?.name && LoginStore.user.is_artist"/>
 </template>

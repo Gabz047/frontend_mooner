@@ -21,6 +21,12 @@
 
     async function createsong(token, artist){
          await songStore.createSong(ArtistProgressStore.state.artist_create_song_fields[0].value, ArtistProgressStore.state.artist_create_song_fields[1].value, ArtistProgressStore.state.artist_create_song_fields[2].value, token, artist)
+    
+        setTimeout(() => {
+            ArtistProgressStore.state.artist_create_song_fields[0].value = ''
+            ArtistProgressStore.state.artist_create_song_fields[1].value = '' 
+            ArtistProgressStore.state.artist_create_song_fields[2].value = ''
+        }, 2000);
     }
 </script>
 <template>
