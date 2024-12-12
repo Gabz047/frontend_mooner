@@ -111,30 +111,12 @@ const updatePlaylist = (newSong) => {
 };
 
 const updateAllPlaylist = (playlist) => {
-    transformToId()
-    playlist.songs.forEach(element => {
-        playlistStore.newPlaylist.songs.push(element.id)
-    });
-    playlistStore.newPlaylist.owners.push(userStore.myuser.email)
-    playlistStore.newPlaylist.cover = playlist.cover.attachment_key
-
-  const newPlaylist = reactive({
-    id: playlistStore.selectedPlaylist.id,
-    name: playlist.name,
-    owners: playlistStore.newPlaylist.owners,
-    cover: playlistStore.newPlaylist.cover,
-    songs: playlistStore.newPlaylist.songs,
-  });
-  console.log(newPlaylist)
-    playlistStore.updatePlaylist(newPlaylist, token);
-    playlistStore.state.selectedPlaylist.songs.push(newSong)
-   
-    router.push('/')
+    
 }
 
   </script>
 <template>
-    <PlaylistEdition @addPlaylist="updatePlaylist" v-if="edit":data="playlistStore.selectedPlaylist" />
+    <PlaylistEdition @addPlaylist="updatePlaylist" v-if="edit" :data="playlistStore.selectedPlaylist" />
     <SideHeader :data="dataHeader" />
     <main class="w-[80%] lg:w-full absolute right-0 mt-4 pt-[65px] ">
     <GlobalHeader />

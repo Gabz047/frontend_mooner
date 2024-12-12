@@ -33,7 +33,9 @@ const communityBody = reactive({
 
 const createPlaylist = async (playlist, token) => {
   await playlistStore.createPlaylist(playlist, token)
+  setTimeout(()=>{
   window.location.reload()
+},700)
 }
 
 

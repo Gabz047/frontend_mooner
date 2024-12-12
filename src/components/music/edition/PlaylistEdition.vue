@@ -1,10 +1,13 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { AddPlaylistSongs, ButtonGlobal  } from '@/components';
-import { useSongStore, useImgStore, useLoginStore, usePlaylistStore } from '@/stores';
+import { useSongStore, useImgStore, useLoginStore, usePlaylistStore, useUserStore } from '@/stores';
+import { transformToId } from '@/utils/playlist/playlist';
+import router from '@/router';
 const playlistStore = usePlaylistStore()
 const loginStore = useLoginStore()
-const imgStore = useImgStore()
+const imgStore = useImgStore();
+const userStore = useUserStore()
 const songStore = useSongStore()
 const token = loginStore.access
 const props = defineProps({
@@ -31,38 +34,46 @@ async function handleFileUpload(e) {
 
 }
 
-const newPlaylist = reactive({
-    id: props.data.id,
-    name: props.data.name,
-    owners: props.data.owners,
-    cover: props.data.cover.url,
-    songs: props.data.songs,
-  });
+const name = ref(props.data.name)
 
   const addToPlaylist = (song) => {
-    newPlaylist.songs.push(song)
-    newPlaylist.cover = saveimg.value
-    const playlistUpdated = newPlaylist
-    emits('addPlaylist', playlistUpdated)
+    playlistStore.selectedPlaylist.songs.push(song)
+    
+    transformToId()
+   
   }
 
   const update = async () => {
-    await imgStore.CreateNewImg(saveimg, token).then((response) => {
+    
+    // emits('save', newPlaylist)
+    if (img.value != null && saveimg.value !=null ) {
+      await imgStore.CreateNewImg(saveimg.value, token).then((response) => {
         playlistStore.attach = response
       })
       await imgStore.GetImagesByAttachment_key(playlistStore.attach, token)
-      newPlaylist.cover = imgStore.selectedImage.attachment_key
-    emits('save', newPlaylist)
+      playlistStore.newPlaylist.cover = imgStore.selectedImage.attachment_key
+    }
+    playlistStore.newPlaylist.owners.push(userStore.myuser.email)
+    playlistStore.newPlaylist.name = name.value
+    playlistStore.updatePlaylist(playlistStore.newPlaylist, token)
+    console.log(playlistStore.newPlaylist)
+
+
+    router.push('/')
   }
+
+  onUnmounted(()=>{
+    window.location.reload()
+  })
 
  
 </script>
 <template>
     <section class="fixed bg-gradient-to-t from-black backdrop-blur-sm w-full min-h-screen h-auto flex flex-col z-[99999] gap-10">
-        <ButtonGlobal :title="'Salvar'" border="1px solid white" width="150px" border_radius="20px" color="white"
-        padding="5px" class="me-32 absolute right-0  top-20" @click="update()" />
+        <ButtonGlobal @click="update()" :title="'Salvar'" border="1px solid white" width="150px" border_radius="20px" color="white"
+        padding="5px" class="me-32 absolute right-0  top-20" />
         <div class="w-9/12 bg-[#151515] rounded-2xl mt-16 ml-5 text-xl text-white font-medium">
-            <input  type="text" v-model="newPlaylist.name"  class="w-full bg-transparent outline-none py-6 px-4">
+            <input  type="text" v-model="name"  class="w-full bg-transparent outline-none py-6 px-4">
         </div>
         
         <div class="w-full flex">

@@ -52,11 +52,9 @@ export const usePlaylistStore = defineStore('playlist', () => {
     id: state.value.selectedPlaylist.id,
     name: state.value.selectedPlaylist.name,
     owners: [],
-    cover: state.value.selectedPlaylist.cover,
-    songs: []
+    cover: state.value.selectedPlaylist.cover.attachment_key,
+    songs: [],
   })
-
-  const showNewPlaylist = computed(()=> newPlaylist)
   /**
    * Fetches organs data.
    * @async
@@ -170,7 +168,6 @@ export const usePlaylistStore = defineStore('playlist', () => {
     playlistsByOwner,
     attach,
     newPlaylist,
-    showNewPlaylist,
     getPlaylist,
     getPlaylistBySongs,
     getPlaylistsByOwner,
