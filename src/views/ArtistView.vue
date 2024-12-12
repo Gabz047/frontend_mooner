@@ -10,7 +10,7 @@ import GlobalBlur from '@/components/global/GlobalBlur.vue';
 import CommunityArtist from '@/components/artists/CommunityArtist.vue';
 import MusicBoxCard from '@/components/music/MusicBoxCard.vue';
 import router from '@/router';
-
+import GenreContainer from '@/components/music/FilterComponents/GenreContainer.vue';
 const route = useRoute()
 const ArtistStore = useArtistStore()
 const LoginStore = useLoginStore()
@@ -29,33 +29,27 @@ onMounted(async () => {
   const artist = route.params.id
   await ArtistStore.getArtistsByName(artist, LoginStore.access)
   await SongStore.getSongsByArtist(artist, LoginStore.access)
-  await AlbumStore.getAlbunsByAutor(ArtistStore.artistsByName[0]?.user?.email, LoginStore.access)
+  await AlbumStore.getAlbunsByAutor(artist, LoginStore.access)
   await CommunityStore.getCommunitysByAutor(artist, LoginStore.access)
   UserIsFollowing.value = FollowingStore.followersByUser.find(artistic => artistic.artist.artistic_name === artist)
-  
 })
   </script>
 <template>
   <div :style="{
-      backgroundImage: `linear-gradient(315deg, rgba(0,0,0, 0.65) 10%, rgba(0,0,0,1) 65%), url(${ArtistStore.artistsByName[0]?.user?.background_image?.url})`}"
+      backgroundImage: `linear-gradient(315deg, rgba(0,0,0, 0.65) 10%, rgba(0,0,0,1) 65%), url(${ArtistStore.selectedArtist?.user?.background_image?.url})`}"
     style="background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
-    <GlobalBlur :light_color="ArtistStore.artistsByName.user?.background_light_color" :dark_color="ArtistStore.artistsByName[0]?.user?.background_dark_color"/>
+    <GlobalBlur :light_color="ArtistStore?.artistsByName.user?.background_light_color" :dark_color="ArtistStore.selectedArtist?.user?.background_dark_color"/>
     <div class="z-20 relative">
-      <FollowArtist :artistic_name="ArtistStore.artistsByName[0]?.artistic_name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
+      <FollowArtist :artistic_name="ArtistStore.selectedArtist?.artistic_name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
       <div class="flex items-center w-full gap-20 p-5">
-        <img :src="ArtistStore.artistsByName[0]?.user?.perfil?.url" width="200" class="rounded-full object-cover h-[200px] mt-8">
+        <img :src="ArtistStore.selectedArtist?.user?.perfil?.url" width="200" class="rounded-full object-cover h-[200px] mt-8">
         <div class="flex flex-col gap-4 mt-5 w-full">
           <div class="flex justify-between items-center w-full">
             <h1 class="text-xl text-white font-bold">Albuns</h1>
-            <div class="flex text-white me-20">
-              <ButtonGlobal title="<" class="text-xl" />
-              <ButtonGlobal title=">" class="text-xl" />
-            </div>
           </div>
-          <div class="flex" v-if="AlbumStore.albunsByAutor.length > 0">
+          <GenreContainer Height="h-[200px]" :activeleft="AlbumStore.toLeft > 0 ? true : false" :activeRight="AlbumStore.toLeft < 500 ? true : false" @left="AlbumStore.toLeft <= 0 ? '' : AlbumStore.toLeft -= 188" @right="AlbumStore.toLeft >= 500 ? '' : AlbumStore.toLeft += 188"  v-if="AlbumStore.albunsByAutor.length > 0">
             <MusicBoxCard type="Álbuns" v-for="albuns in AlbumStore.albunsByAutor" :data="albuns"/>
-          
-          </div>
+          </GenreContainer>
           <div v-else>
             <h1 class="text-white ">O artista ainda não possui album</h1>
           </div>
@@ -68,7 +62,7 @@ onMounted(async () => {
         <CommunityArtist :artistcommunity="CommunityStore.communitysByAutor" @entercom="enterCommunity"/>
       </div>
       <div class="w-full flex p-5 justify-center items-center">
-        <BiographyArtist :perfil="ArtistStore.artistsByName[0]?.user?.perfil?.url" :description="ArtistStore.artistsByName[0]?.user?.description"/>
+        <BiographyArtist :perfil="ArtistStore.selectedArtist?.user?.perfil?.url" :description="ArtistStore.artistsByName[0]?.user?.description"/>
       </div>
     </div>
   </div>

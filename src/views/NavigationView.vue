@@ -45,9 +45,7 @@ onMounted(async() =>{
         <h1 class="text-white text-2xl font-bold ml-8" v-if="search.length === 0">Generos Musicais</h1>
         <div class="w-full p-5 flex gap-5 justify-center items-center flex-wrap">
             <GenreCard v-if="search.length === 0" />
-            <MusicBox v-for="filtersong in SongStore.songsByTitle" :key="filtersong.id" :music_data="filtersong" v-else-if="search.length > 0 && SongStore.songsByTitle.length > 0"/>
-                
-            
+            <MusicBox v-for="filtersong in SongStore.songsByTitle" :key="filtersong.id" :music_data="filtersong" v-else-if="search.length > 0 && SongStore.songsByTitle.length > 0"/>    
             <h1 class="text-white text-2xl" v-else>Resultados não Encontrados</h1>
         </div>
     </section>

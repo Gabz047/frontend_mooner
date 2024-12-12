@@ -4,6 +4,7 @@ import { useCommunityStore, useLoginStore, useUserStore } from '@/stores';
 import CommunityCreateSlide from '@/components/profile/CommunityCreateSlide.vue';
 import { onMounted } from 'vue';
 import CommunityUpdated from '@/components/profile/CommunityUpdated.vue';
+import BeAnArtistSlide from '@/components/profile/BeAnArtistSlide.vue';
 
 const storeUser = useUserStore()
 const LoginStore = useLoginStore()
@@ -19,6 +20,7 @@ onMounted( async () =>{
 
 <template>
     <GlobalBlur/>
-    <CommunityCreateSlide v-if="!storeCommunity.communitysByAutor[0]?.name"/> 
-    <CommunityUpdated :name="storeCommunity.communitysByAutor[0]?.name" :id="storeCommunity.communitysByAutor[0]?.id" :description="storeCommunity.communitysByAutor[0]?.description"  :photo="storeCommunity.communitysByAutor[0]?.cover?.url"  v-else/>
+    <BeAnArtistSlide v-if="!LoginStore.user.is_artist"/>
+    <CommunityCreateSlide v-if="!storeCommunity.communitysByAutor[0]?.name && LoginStore.user.is_artist"/> 
+    <CommunityUpdated :name="storeCommunity.communitysByAutor[0]?.name" :id="storeCommunity.communitysByAutor[0]?.id" :description="storeCommunity.communitysByAutor[0]?.description"  :photo="storeCommunity.communitysByAutor[0]?.cover?.url"  v-if="storeCommunity.communitysByAutor[0]?.name && LoginStore.user.is_artist"/>
 </template>

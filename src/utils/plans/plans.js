@@ -1,40 +1,25 @@
 export const plans = [
     {
         name: 'Eclipse',
-        advantages: ['1 usuário', 'Músicas sem Anúncio', 'Pular Músicas Sem Limite', 'baixar musicas',],
+        advantages: ['Compartilhe o plano com até um usuário', 'Sem Anúncios', 'Pule músias sem limites', 'Livre acesso a nossa inteligência artificial',],
         type: 'mensal',
-        price: 7,
-        gradient: "linear-gradient(180deg, rgba(155,118,231,1) 0%, rgba(117,78,203,1) 100%)"
+        price: "7,99",
+        subtittle: "Simples, acessível e perfeito para o uso casual.",
     },
     {
         name: 'Lua Nova',
-        advantages: ['2 usuários', 'Músicas sem Anúncio', 'Pular Músicas Sem Limite', 'Livre acesso a inteligência artificial',],
+        advantages: ['Compartilhe o plano com até dois usuários', 'Sem Anúncios','Pular músias sem limites','Livre acesso a nossa inteligência artificial'],
         type: 'mensal',
-        price: 15,
+        price: "15,99",
         notice: 'Melhor custo beneficio',
-        gradient: "linear-gradient(180deg, rgba(181,152,240,1) 0%, rgba(117,78,203,1) 100%)",
+        subtittle:"O equilíbrio perfeito entre qualidade e preço."
     },
     {
         name: 'Apollo 8',
-        advantages: ['3 usuários', 'Músicas sem Anúncio', 'Pular Músicas Sem Limite', 'Livre acesso a inteligência artificial', 'Escutar músicas offline', 'Acesso ao serviço de MoonWave'],
+        advantages: ['Compartilhe o plano com até três usuários', 'Sem Anúncios', 'Pular Músicas Sem Limite', 'Livre acesso a inteligência artificial', 'Baixar Músicas', ],
         type: 'mensal',
-        price: 25,
+        price: "25,99",
         notice: 'Mais assinado',
-        gradient: "linear-gradient(180deg, rgba(220,204,255,1) 0%, rgba(117,78,203,1) 100%)"
-    },
-    {
-        name: 'Ano Lunar',
-        advantages: ['4 usuários', 'Músicas sem Anúncio', 'Pular Músicas Sem Limite', 'Livre acesso a inteligência artificial', 'Escutar músicas offline'],
-        type: 'anual',
-        price: 175,
-        gradient: "linear-gradient(180deg, rgba(181,152,240,1) 0%, rgba(117,78,203,1) 100%)"
-    },
-    {
-        name: 'Apollo 11',
-        advantages: ['6 usuários', 'Músicas sem Anúncio', 'Pular Músicas Sem Limite', 'Livre acesso a inteligência artificial', 'Escutar músicas offline', 'Acesso ao serviço de MoonWave'],
-        type: 'anual',
-        price: 250,
-        notice: 'Recomendado',
-        gradient: "linear-gradient(180deg, rgba(220,204,255,1) 0%, rgba(117,78,203,1) 100%)"
+        subtittle:" A experiência premium completa e definitiva"
     },
 ]

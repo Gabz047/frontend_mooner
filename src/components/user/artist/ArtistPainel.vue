@@ -3,10 +3,11 @@
     import NavigateHomeButtons from '@/components/buttons/NavigateHomeButtons.vue';
     import RealizeSong from './RealizeSong.vue';
     import RealizeAlbum from './RealizeAlbum.vue';
-    import { useArtistProgress, useSongStore } from '@/stores';
+    import { useArtistProgress, useSongStore, } from '@/stores';
     const ArtistProgressStore = useArtistProgress()
     const songStore = useSongStore()
-    function selectSection(i, page){
+
+    function selectSection(i){
         ArtistProgressStore.state.Select_song_option.forEach((obj, index) =>{
             obj.active = index === i
         })

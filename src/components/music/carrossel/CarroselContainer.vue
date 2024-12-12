@@ -29,43 +29,21 @@ const startLoop = () => {
 
 const stopLoop = () => {
   connect.value = false
+  clearInterval(interval.value)
 }
 
 
 const runLoop = () => {
   if (QueueStore.state.currentSong == props.data[0] || QueueStore.state.currentSong == props.data[1] || QueueStore.state.currentSong == props.data[2] || QueueStore.state.currentSong == props.data[3] || QueueStore.state.currentSong == props.data[4]) {
-  connect.value = false
+  connect.value = 
+  clearInterval(interval.value)
     } else {
   if (connect.value) {
-    if (frames.frame_1 == 4) {
-      frames.frame_1 = 0
-    } else {
-      frames.frame_1++
-    }
-
-    if (frames.frame_2 == 4) {
-      frames.frame_2 = 0
-    } else {
-      frames.frame_2++
-    }
-
-    if (frames.frame_3 == 4) {
-      frames.frame_3 = 0
-    } else {
-      frames.frame_3++
-    }
-
-    if (frames.frame_4 == 4) {
-      frames.frame_4 = 0
-    } else {
-      frames.frame_4++
-    }
-
-    if (frames.frame_5 == 4) {
-      frames.frame_5 = 0
-    } else {
-      frames.frame_5++
-    }
+    frames.frame_1 = frames.frame_1 === 4 ? 0 : frames.frame_1 + 1;
+      frames.frame_2 = frames.frame_2 === 4 ? 0 : frames.frame_2 + 1;
+      frames.frame_3 = frames.frame_3 === 4 ? 0 : frames.frame_3 + 1;
+      frames.frame_4 = frames.frame_4 === 4 ? 0 : frames.frame_4 + 1;
+      frames.frame_5 = frames.frame_5 === 4 ? 0 : frames.frame_5 + 1;
  
   interval.value = setTimeout(runLoop, 3000)
 

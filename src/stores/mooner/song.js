@@ -155,6 +155,7 @@ export const useSongStore = defineStore('song', () => {
         msg.value = 'musica lançada com sucesso'
         state.value.songs.push(await SongService.createSong(newsong, token))
         err.value = false
+        console.log(newsong)
       }
     } catch (error) {
       state.value.error = error

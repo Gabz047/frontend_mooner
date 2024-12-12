@@ -4,12 +4,11 @@ import SideHeader from '@/components/newDesign/SideHeader.vue';
 import HeaderGlobal from '@/components/global/HeaderGlobal.vue';
 import { ref, shallowRef, computed } from 'vue';
 import { dataHeader } from '@/utils/header/header';
-import player from '@/components/global/MusicPlayer.vue';
 const getWidthScreen = shallowRef(window.innerWidth)
 
 const isActive = ref(false)
 
-const getActualWidth = computed(()=>{
+const getActualWidth = computed(() => {
   if (getWidthScreen.value <= 1024 && isActive.value) {
     return true
   } else if (getWidthScreen.value > 1024) {
@@ -18,16 +17,15 @@ const getActualWidth = computed(()=>{
 })
 </script>
 <template>
-  <player />
-     <main class="w-dvw h-dvh flex justify-between" >
-    <div class="w-[10%] 1.5xl:w-[5%]" >
-    <SideHeader :data="dataHeader" />
+  <main class="w-dvw h-dvh flex justify-between">
+    <div class="w-[10%] 1.5xl:w-[5%]">
+      <SideHeader :data="dataHeader" />
     </div>
-    
 
-   <section class="w-[80.5%] 1.5xl:w-[95%] xl:w-[91%] lg:w-[89%] md:w-[85%] sm:w-[82%] xsm:w-[75%]">
-    <HeaderGlobal @menu="isActive = !isActive" :isResponsive="!getActualWidth" :is_blink_layout="false" />
-    <RouterView class=" min-h-full min-w-full" />
-  </section>
+
+    <section class="w-[80.5%] 1.5xl:w-[95%] xl:w-[91%] lg:w-[89%] md:w-[85%] sm:w-[82%] xsm:w-[75%]">
+      <HeaderGlobal @menu="isActive = !isActive" :isResponsive="!getActualWidth" :is_blink_layout="false" />
+      <RouterView class=" min-h-full min-w-full" />
+    </section>
   </main>
 </template>
