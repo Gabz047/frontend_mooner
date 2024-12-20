@@ -22,7 +22,7 @@ const playlistBody = reactive({
   name: `Playlist de ${user.email}`,
   owners: [user.email],
   songs: [],
-  cover: '9704b1d6-687b-49ce-a697-f778228b80a3'
+  cover: 'f0890b8e-10a1-40a0-a3f0-7f3e2cdbf8be'
 })
 
 const communityBody = reactive({
@@ -33,7 +33,9 @@ const communityBody = reactive({
 
 const createPlaylist = async (playlist, token) => {
   await playlistStore.createPlaylist(playlist, token)
+  setTimeout(()=>{
   window.location.reload()
+},700)
 }
 
 
@@ -65,7 +67,7 @@ const isOpen = shallowRef(false)
 </script>
 
 <template>
-    <section class="overflow-auto duration-500 mt-3 ml-3 rounded-lg flex flex-col items-center bg-[#121212] fixed z-[999]" :class="responsive < 1500 ? isOpen ? 'w-[300px]' :  'w-[80px] bg-transparent' : 'w-[18%] lg:bg-transparent]', !queueStore.state?.currentSong ? 'h-[88dvh]' : 'h-[97dvh]'">
+    <section class="overflow-auto duration-500 mt-3 ml-3 rounded-lg flex flex-col items-center bg-[#121212] fixed z-[999]" :class="responsive < 1500 ? isOpen ? 'w-[300px]' :  'w-[80px] bg-transparent' : 'w-[18%] lg:bg-transparent]', queueStore.state?.currentSong ? 'h-[88dvh]' : 'h-[97dvh]'">
         <span v-if="responsive < 1500" @click="isOpen = !isOpen" :class="'duration-500 absolute bottom-10 bg-[#1f1f1f] px-4 py-2 text-white rounded-full lg:hidden'"><i class=" text-2xl" :class="!isOpen ? 'mdi mdi-arrow-right-thick' : 'mdi mdi-arrow-left-thick'"></i></span>
         <RouterLink v-if="responsive > 1024" to="/" class="w-full flex justify-center h-12 items-center gap-3 mt-4">
             <div class="h-full w-12" >
@@ -99,6 +101,7 @@ const isOpen = shallowRef(false)
                             <SideHeaderOptions :data="showData(item.name)" />
                     </div>
                 </li>
+                <li @click="loginStore.Logout" class="flex gap-3 select-none cursor-pointer text-white absolute bottom-0 left-1 p-5"><span class="mdi mdi-logout"></span> <p class=" font-medium">Encerrar Sessão</p></li>
             </ul>
         </div>
     </section>

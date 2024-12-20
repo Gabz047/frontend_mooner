@@ -81,7 +81,7 @@ export const useMoonStore = defineStore('moonWave', () => {
 
             case 'queue':
                 console.log(data.queue)
-                if (state.value.host) queueStore.state.queue = data.queue;
+                queueStore.state.queue = data.queue;
                 break;
 
             case 'history':

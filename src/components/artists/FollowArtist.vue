@@ -18,6 +18,9 @@
         artist: {
             type: String,
             required: true
+        },
+        email: {
+            type: String
         }
     })
 
@@ -25,11 +28,11 @@
     const index = FollowingStore.followersByUser.findIndex(artistic => artistic.artist.artistic_name === props.artist)
     if(props.UserIsFollowing){
       await FollowingStore.deleteFollow(props.UserIsFollowing.id, index, LoginStore.access)
-      location.reload()
+    //   location.reload()
     }
     else{
-      await FollowingStore.createFollow({user: LoginStore.user.email, artist: ArtistStore.artistsByName[0]?.user?.email }, LoginStore.access)
-      location.reload()
+      await FollowingStore.createFollow({user: LoginStore.user.email, artist: props.email }, LoginStore.access)
+    //   location.reload()
     }   
 } 
 
@@ -37,7 +40,7 @@
 <template>
     <div class="w-full flex justify-between p-5 items-center">
         <h1 class="text-white text-6xl font-semibold ms-3">{{ artistic_name }}</h1>
-        <ButtonGlobal :title="UserIsFollowing ? 'Deixar de Seguir' : 'Seguir' " border="1px solid white" width="150px" border_radius="20px" color="white"
-          padding="5px" class="me-32" @click="FolloworUnfollow" />
+        <!-- <ButtonGlobal :title="UserIsFollowing ? 'Deixar de Seguir' : 'Seguir' " border="1px solid white" width="150px" border_radius="20px" color="white"
+          padding="5px" class="me-32" @click="FolloworUnfollow" /> -->
       </div>
 </template>

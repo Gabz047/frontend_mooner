@@ -37,6 +37,8 @@ export const useSongStore = defineStore('song', () => {
     connection: false,
   })
 
+  const toLeft = ref(0)
+
   const simpleState = reactive({
     active: false,
     item_playlist: null,
@@ -147,6 +149,7 @@ export const useSongStore = defineStore('song', () => {
       newsong.lyrics = lyrics
       newsong.artists.push(email)
       newsong.artists.reverse()
+      console.log(newsong)
       if (!newsong.title || !newsong.player || !newsong.cover || !newsong.genre) {
         err.value = true
         msg.value = 'preencha os campos corretamente'
@@ -245,6 +248,7 @@ export const useSongStore = defineStore('song', () => {
     GetSongByGenre,
     createSongForAlbum,
     GetRecommendedSongs,
-    createLastSongs
+    createLastSongs,
+    toLeft
   }
 })

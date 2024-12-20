@@ -9,14 +9,14 @@ export const useQueueStore = defineStore('queue', () => {
     const state = useStorage('queue', reactive({
         queue: [],
         history: [],
-        currentSong: {},
+        currentSong: null,
         saveOrder: [],
     }))
 
     onMounted(() => {
         if (!state.value.history) state.value.history = [];
         if (!state.value.queue) state.value.queue = [];
-        if (!state.value.currentSong) state.value.currentSong = {};
+        if (!state.value.currentSong) state.value.currentSong = null;
         if (!state.value.saveOrder) state.value.saveOrder = [];
     })
     const playerStore = usePlayerStore()
@@ -58,8 +58,12 @@ export const useQueueStore = defineStore('queue', () => {
 
 
     function nextSong() {
+        if (state.value.queue.length > 0) {
         setCurrentSong(state.value.queue.shift());
         playerStore.play()
+        } else {
+            state.value.currentSong = null
+        }
     }
 
     function previousSong() {

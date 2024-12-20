@@ -1,4 +1,4 @@
-import {ref, computed, reactive} from 'vue'
+import {ref, computed, reactive, shallowRef} from 'vue'
 import { trash, wave, heart, disc, artist, copy, unlike, house, luuna, queue } from "@/assets/images/icons/settingsIndex"
 import Logo from '@/assets/images/Logo.png'
 import monn from '@/assets/images/monn.jpg'
@@ -67,3 +67,5 @@ export const selectSection = (index, data, type) => {
   };
 
 export const songs = ref([])
+
+export const search = shallowRef('Pesquise por uma música')

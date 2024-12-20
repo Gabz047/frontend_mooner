@@ -51,7 +51,7 @@ export const usePlaylistStore = defineStore('playlist', () => {
     id: state.value.selectedPlaylist.id,
     name: state.value.selectedPlaylist.name,
     owners: [],
-    cover: state.value.selectedPlaylist.cover,
+    cover: null,
     songs: []
   })
 
@@ -61,10 +61,10 @@ export const usePlaylistStore = defineStore('playlist', () => {
    * @async
    * @function getSpecies
    */
-  const getPlaylist = async (page) => {
+  const getPlaylist = async (token, page) => {
     state.value.loading = true
     try {
-      state.value.playlists = await PlaylistService.getPlaylist(page)
+      state.value.playlists = await PlaylistService.getPlaylist(token, page)
     } catch (error) {
       state.value.error = error
       navigationStore.simpleState.break = true

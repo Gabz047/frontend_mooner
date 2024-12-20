@@ -14,7 +14,7 @@ const storeCommunity = useCommunityStore()
 onMounted( async () =>{
     const artist = await storeUser.GetArtist(LoginStore.user.email, LoginStore.access)
     await storeCommunity.getCommunitysByAutor(artist, LoginStore.access)
-    
+    console.log(artist)
 })
 </script>
 

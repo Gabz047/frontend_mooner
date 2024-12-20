@@ -13,12 +13,11 @@ const props = defineProps({
         type: Boolean
     }, 
     Height:{
-        type: String,
-        default: 'min-h-12'
+        type: String
     },
-    top: {
+    title: {
         type: String,
-        default: '-50px'
+        default: ''
     }
 })
 
@@ -27,13 +26,19 @@ const emits = defineEmits([
 ])
 </script>
 <template>
-    <div :class="`w-full relative flex ${props.Height} justify-between items-center`">
-    <div :class="`absolute bottom-16 top-[${props.top}] right-24 flex text-2xl`">
+    <div class="w-full relative  flex min-h-56 justify-between items-center">
+    <div :class="`absolute bottom-16 top-[-8px] right-24 flex text-2xl`">
         <span @click="emits('left')" :class="`mdi mdi-chevron-left text-${props.activeLeft ? 'white' : 'slate-300'}`"></span>
         <span @click="emits('right')" :class="`mdi mdi-chevron-right text-${props.activeRight ? 'white' : 'slate-300'}`"></span>
     </div>
-    <section :class="`${props.width} px-12 flex items-center gap-4 overflow-x-hidden`">
+   
+    <section :class="`${props.width} px-12 flex items-center ${props.Height} gap-4 overflow-x-hidden h-full`">
+        <div class="flex w-full flex-col">
+        <p class="ml-5 text-xl text-white">{{ props.title }}</p>
+        <div class="w-full flex ">
         <slot></slot>
+        </div>
+        </div>
     </section>
     </div>
 </template>

@@ -2,6 +2,14 @@
 import { plans } from "@/utils/plans/plans";
 import GlobalBlur from "../global/GlobalBlur.vue";
 import router from '@/router'
+import { usePaymentStore } from "@/stores";
+
+const paymentStore = usePaymentStore()
+
+function GetPlan(name){
+    paymentStore.getAssign(name)
+    router.push('/plans/payments/')
+}
 </script>
 <template>
     <div class="h-screen flex flex-col  p-5">
@@ -22,7 +30,7 @@ import router from '@/router'
                             {{ plan.price }}
                         </h1>
                         <div class=" p-2 flex justify-center">
-                            <button class="w-[280px] h-[50px] border-white border-[1px] text-white font-medium rounded-[60px]" @click="router.push('/plans/payments/')">Obter</button>
+                            <button class="w-[280px] h-[50px] border-white border-[1px] text-white font-medium rounded-[60px]" @click="GetPlan(plan.name)">Obter</button>
                         </div>
 
                     </div>

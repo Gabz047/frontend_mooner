@@ -34,8 +34,8 @@ const stopLoop = () => {
 
 
 const runLoop = () => {
-  if (QueueStore.state.currentSong == props.data[0] || QueueStore.state.currentSong == props.data[1] || QueueStore.state.currentSong == props.data[2] || QueueStore.state.currentSong == props.data[3] || QueueStore.state.currentSong == props.data[4]) {
-  connect.value = 
+  if (props.data.includes(QueueStore.state.currentSong)) {
+  connect.value = false
   clearInterval(interval.value)
     } else {
   if (connect.value) {
@@ -74,9 +74,9 @@ watch(
   <section>
     <div class="h-[380px] items-center justify-center w-full flex">
       <CarroselItem :song="props.data[0]" :data="props.data[20]" :frame="`frame_${frames.frame_1}`" />
-      <CarroselItem :song="props.data[1]" :data="props.data[1]" :frame="`frame_${frames.frame_2}`" />
-      <CarroselItem :song="props.data[2]" :data="props.data[2]" :frame="`frame_${frames.frame_3}`" />
-      <CarroselItem :song="props.data[3]" :data="props.data[3]" :frame="`frame_${frames.frame_4}`" />
+      <CarroselItem :song="props.data[1]" :data="props.data[21]" :frame="`frame_${frames.frame_2}`" />
+      <CarroselItem :song="props.data[2]" :data="props.data[22]" :frame="`frame_${frames.frame_3}`" />
+      <CarroselItem :song="props.data[3]" :data="props.data[23]" :frame="`frame_${frames.frame_4}`" />
       <CarroselItem :song="props.data[4]" :data="props.data[4]" :frame="`frame_${frames.frame_5}`" />
 
     </div>

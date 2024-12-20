@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, reactive, shallowRef } from 'vue';
 import { adjusteSize } from '@/utils/music/music';
-import { useQueueStore, useMoonStore, usePlaylistStore, useSongStore, usePlayerStore, useArtistStore, useLoginStore } from '@/stores';
+import { useQueueStore, useMoonStore, usePlaylistStore, useAlbumStore, useSongStore, usePlayerStore, useArtistStore, useLoginStore } from '@/stores';
 import { SettingsGlobal, AddPlaylist, AudioPlayer } from '@/components';
 import router from '@/router';
 import axios from 'axios';
@@ -13,11 +13,14 @@ const playerStore = usePlayerStore()
 const LoginStore = useLoginStore()
 const token = LoginStore.access
 const artistStore = useArtistStore() 
-
+const albumStore = useAlbumStore()
 const songStore = useSongStore()
 const props = defineProps({
     data: {
         type: Object
+    },
+    artistForRoute: {
+      type: Object
     },
     type: {
         type: String
@@ -134,8 +137,10 @@ const emits = defineEmits([
 
 const toArtist = (id, artist) => {
   artistStore.state.selectedArtist = {}
+  albumStore.state.albunsByAutor = []
   localStorage.removeItem("artistStorage")
   artistStore.state.selectedArtist = artist
+  albumStore.getAlbunsByAutor(artist.artistic_name)
   router.push('/artistDetail/' + id)
 }
 

@@ -42,6 +42,9 @@ export const useLoginStore = defineStore('login', ()=>{
             const me = await UserMeService.getUser(token.access)
             state.value.user.premium = me.premium
             state.value.user.is_artist = me.is_artist
+            setTimeout(()=>{
+                window.location.reload()
+            },2000)
 
         }
     }

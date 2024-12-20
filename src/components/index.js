@@ -25,6 +25,7 @@ import PlaylistEdition from "./music/edition/PlaylistEdition.vue";
 import AddPlaylistSongs from "./music/edition/EditPlaylistSongs/AddPlaylistSongs.vue";
 import SearchGlobal from "./global/SearchGlobal.vue";
 import ButtonGlobal from "./global/ButtonGlobal.vue";
+import NavigationContainers from "./music/FilterComponents/NavigationContainers.vue";
 export {
     GlobalHeader,
     SideHeader,
@@ -44,6 +45,7 @@ export {
     GenreAndTypeFilterContainer,
     GenreBox,
     GenreContainer,
+    NavigationContainers,
     SettingsGlobal,
     AddPlaylist,
     AudioPlayer,

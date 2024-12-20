@@ -50,8 +50,9 @@ const getBackendResponses = (name) => {
 }
 
 onMounted(async () => {
-    const price = paymentStore.typeAssign.assign.price;
-    const name_product = paymentStore.typeAssign.assign.name.split('  ').join(' ');
+    const price = paymentStore.typeAssign.assign.price
+    console.log(price)
+    const name_product = paymentStore?.typeAssign?.assign?.name;
     await renderPaymentBrick(bricksBuilder, price, Loginstore.access, name_product);
     const response = await paymentStore.GetQrCode(Loginstore.access)
     QrCode.value = response.qr_code_base64
