@@ -2,13 +2,8 @@
     import BeArtistProcess from '@/components/user/artist/BeArtistProcess.vue';
     import BeArtistActions from '@/components/user/artist/BeArtistActions.vue';
     import { useArtistProgress } from '@/stores';   
-import { onMounted } from 'vue';
 
     const StoreProgressArtist = useArtistProgress()
-
-    onMounted(() =>{
-        StoreProgressArtist.state = null
-    })
 
 </script>
 <template>

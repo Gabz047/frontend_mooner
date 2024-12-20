@@ -11,6 +11,8 @@ import { MusicBoxCard, GlobalHeader, SideHeader, GlobalInfoHeader, AudioPlayer, 
 import { dataHeader } from '@/utils/header/header';
 import { transformToId, updatePlaylists } from '@/utils/playlist/playlist';
 import router from '@/router';
+import { useRouter } from 'vue-router';
+const id = useRouter.params
 const route = useRoute()
 const ArtistStore = useArtistStore()
 const LoginStore = useLoginStore()
@@ -126,6 +128,7 @@ const updateAllPlaylist = (playlist) => {
     <GlobalBlur :light_color="playlistStore.selectedPlaylist.background_light_color" :dark_color="playlistStore.selectedPlaylist.background_dark_color"/>
     <div class="z-20 relative ">
       <GlobalInfoHeader @edit="edit = !edit" @save="edit = !edit" :isEdit="edit" :isOwner="verifyOwner()" :title="playlistStore?.selectedPlaylist?.name" :UserIsFollowing="UserIsFollowing" :artist="artist"/>
+      
       <div class="flex items-center w-full gap-10 p-5 min-h-64 ">
         <div class="min-w-[140px] flex items-center justify-center h-[200px] ">
         <span @click="setPlaylistSongs()" :class="`${ playlistStore.state.currentPlaylist == playlistStore.selectedPlaylist.name && playerStore.state.is_playing ? 'mdi mdi-pause' : 'mdi mdi-play-outline'}`" class="w-[120px] h-[120px] px-4 py-3 flex justify-center items-center bg-[rgba(90,45,186,0.7)] backdrop-blur-sm brightness-100 text-white rounded-full text-7xl z-[30] hover:brightness-125 duration-200 active:scale-110"

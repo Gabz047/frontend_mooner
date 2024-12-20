@@ -28,6 +28,7 @@ const playlistStore = usePlaylistStore()
   playlistStore.newPlaylist.id = playlistStore.selectedPlaylist.id
   playlistStore.newPlaylist.cover = playlistStore.attach ? playlistStore.attach : playlistStore.selectedPlaylist.cover?.attachment_key
   router.push('/playlist/' + id)
+
 }
 
 </script>

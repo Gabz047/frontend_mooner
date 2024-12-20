@@ -52,6 +52,8 @@ const name = ref(props.data.name)
       })
       await imgStore.GetImagesByAttachment_key(playlistStore.attach, token)
       playlistStore.newPlaylist.cover = imgStore.selectedImage.attachment_key
+    } else {
+      playlistStore.newPlaylist.cover = playlistStore.selectedPlaylist.cover.attachment_key
     }
     playlistStore.newPlaylist.owners.push(userStore.myuser.email)
     playlistStore.newPlaylist.name = name.value

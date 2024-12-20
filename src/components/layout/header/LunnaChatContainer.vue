@@ -24,10 +24,13 @@ const LuunaChat = computed(() => {
 watch(
     () => LuunaChat.value,
     async (newV, oldV) => {
-        if (newV[newV.length - 1].id > oldV[oldV.length - 1].id) {
-            await nextTick();
-            StartBottom();
+        if(newV && oldV){
+            if (newV[newV.length - 1].id > oldV[oldV.length - 1].id) {
+                await nextTick();
+                StartBottom();
+            }
         }
+        console.log(LuunaChat.value)
     },
     { deep: true }
 );

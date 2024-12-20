@@ -1,7 +1,7 @@
 <script setup>
 import { useLoginStore, useUserStore } from '@/stores';
 import { useLunnaIAStore } from '@/stores';
-import {  onMounted, onUpdated, ref} from 'vue';
+import {  onMounted, onUnmounted, onUpdated, ref} from 'vue';
 import LunnaChatContainer from './LunnaChatContainer.vue';
 import LuunaApresentation from './LuunaApresentation.vue';
 const storeLunna = useLunnaIAStore()
@@ -9,6 +9,7 @@ const storeUser = useLoginStore()
 const userStore = useUserStore()
 const pagina = ref(1)
 const firstmsg = ref(false)
+const interval = ref('')
 
 async function Answer(answer){
     await storeLunna.CreateAnswer({usuario: userStore.myuser.email, answer: answer}, storeUser.state.access)
@@ -31,14 +32,21 @@ async function getPagination(token, command){
     }
 }
 
-onUpdated( async () => {
+const getRepsonse = () => {
     const token = storeUser.state.access
-    await storeLunna.GetChat(userStore.myuser.email, token, pagina.value)
-})
+    interval.value =  setInterval( async () => {
+        await storeLunna.GetChat(userStore.myuser.email, token, pagina.value)
+    }, 2000)
+}
 
 onMounted( async () =>{
     const token = storeUser.state.access
     await storeLunna.GetChat(userStore.myuser.email, token, pagina.value)
+    getRepsonse()
+})
+
+onUnmounted(() => {
+    clearInterval(interval.value)
 })
 </script>
 <template>

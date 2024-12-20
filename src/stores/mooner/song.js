@@ -149,6 +149,7 @@ export const useSongStore = defineStore('song', () => {
       newsong.lyrics = lyrics
       newsong.artists.push(email)
       newsong.artists.reverse()
+      console.log(newsong)
       if (!newsong.title || !newsong.player || !newsong.cover || !newsong.genre) {
         err.value = true
         msg.value = 'preencha os campos corretamente'
