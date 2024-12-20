@@ -1,0 +1,46 @@
+.luuna-desc{
+    display: flex;
+    color: white;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.lunna-chat{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    position: fixed;
+    bottom: 0
+}
+#sendsvg{
+    width: 23px;
+}
+#luuna-input{
+    background-color: #282828;
+    font-size: 15px;
+    width: 600px;
+    padding-left: 10px;
+    outline: 0;
+    color: white;
+}
+
+#lunna-input::placeholder{
+    color: white
+}
+
+@media(max-width:870px){
+    #luuna-input{
+        width: 300px
+    }
+}
+
+
+
+
+
+
