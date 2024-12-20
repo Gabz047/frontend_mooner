@@ -23,7 +23,7 @@ class FollowingService {
 
     async getFollowingsByUser(user, token) {
         try {
-            const {data} = await api.get(`/communitys/?user_id=${user}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/following/?user_email=${user}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getCommunityByAutor', error);
@@ -77,6 +77,18 @@ class FollowingService {
      * @returns {Promise<Object>} A promise that resolves to the updated slides Object
      * @throws {Error} If an error occurs while updating the slide
      */
+
+    async deleteFollowing(id, token){
+        try {
+            const { data } = await api.delete(`/following/${id}/`, {headers: {'authorization': `Bearer ${token}`}});
+            console.log( "Service: AddCommunity - return success")
+            return data.results;
+        } catch (error) {
+            console.log("Service: AddCommunity - return error", error);
+            throw error;
+        }
+        }
     }
+
 
 export default new FollowingService();

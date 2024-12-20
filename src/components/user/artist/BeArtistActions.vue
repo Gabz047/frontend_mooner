@@ -1,6 +1,6 @@
 <script setup>
 import BeArtistForm from './BeArtistForm.vue';
-import RealizeSong from './RealizeSong.vue';
+import ArtistPainel from './ArtistPainel.vue';
 import VerifyEmail from './VerifyEmail.vue'
 
 defineProps({
@@ -16,9 +16,9 @@ defineProps({
 
 </script>
 <template>
-    <div>
+    <div class="w-full flex justify-center items-center">
         <BeArtistForm :fields_input="fields" v-if="!page_activated[0].is_activate"/>
         <VerifyEmail v-else-if="page_activated[0].is_activate && !page_activated[1].is_activate"/>
-        <RealizeSong :fields="fields" v-else/>
+        <ArtistPainel :fields="fields" v-else/>
     </div>
 </template>

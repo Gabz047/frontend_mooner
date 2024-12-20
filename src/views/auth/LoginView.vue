@@ -4,13 +4,15 @@
     import { useLoginStore } from '@/stores';
     import MsgGlobal from '@/components/global/MsgGlobal.vue';
     import router from '@/router';
+    import { storage } from '@/utils/storage/apresentation';
     
     const store = useLoginStore()
     function gotoplans(is_logged){
         if(!is_logged){
             store.msg = ''
             store.is_logged = true
-            router.push('/plans')
+            storage.value.apresentation = true
+            router.push('/')
         }
         else{
             store.msg = ''

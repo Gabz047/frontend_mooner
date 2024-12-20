@@ -9,72 +9,38 @@
 }
 .lunna-chat{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 15px;
     align-items: center;
-    height: 40px;
-}
-.lunna-container{
-    background-color: black;
+    width: 100%;
     padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: fixed;
+    bottom: 0
 }
 #sendsvg{
     width: 23px;
 }
 #luuna-input{
     background-color: #282828;
-    padding: 10px;
     font-size: 15px;
-    width: 250px;
+    width: 600px;
+    padding-left: 10px;
+    outline: 0;
     color: white;
-    border-radius: 20px;
 }
+
 #lunna-input::placeholder{
     color: white
 }
-.response{
-    display: flex;
-    width: 100%;
-    margin-top: 30px;
-    & p{
-        background-color: #282828;
-        width: 300px;
-        padding: 10px;
-        border-radius: 20px;
-        font-size: 15px;
+
+@media(max-width:870px){
+    #luuna-input{
+        width: 300px
     }
 }
-.answer{
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    & p{
-        font-size: 15px;
-        background-color: blueviolet;
-        width: 300px;
-        padding: 10px;
-        border-radius: 20px;
-    }
-}
-.chat-container{
-    height: 275px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: auto;
-}
-.pagination{
-    display: flex;
-    align-items: center;
-    color: white;
-    width: 100%;
-    & p{
-        cursor: pointer;
-    }
-}
+
+
+
+
 
 

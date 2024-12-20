@@ -1,7 +1,6 @@
 <script setup>
 import { useHistoryStore, useLoginStore } from '@/stores';
 import MusicBox from '../global/MusicBox.vue';
-import HistoryMusicBox from './HistoryMusicBox.vue';
 const storeUser = useLoginStore()
 const storeHistory = useHistoryStore()
     const props = defineProps({
@@ -20,19 +19,20 @@ const storeHistory = useHistoryStore()
         is_history:{
             type: Boolean,
             required: true
+        },
+        history:{
+            type: Boolean,
+            default: false
         }
     })
 
     function deletesong(){
         storeHistory.DeleteSongHistory(props.id, storeUser.access)
     }
+    
 </script>
 <template>
-    <div class="w-100">
-        
+    <div class="">
+        <MusicBox :is_history="history" :music_data="song" @deletesong="deletesong"/>
     </div>
-      <div class="w-100  flex justify-between items-center flex-wrap ">
-        <MusicBox :music_data="song" v-if="is_history" />
-        <HistoryMusicBox :history="song"  @deletesong="deletesong" v-else/>
-      </div>
 </template>

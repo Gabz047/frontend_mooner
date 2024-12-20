@@ -10,11 +10,10 @@ class SongService {
      * @returns {Promise<Array>} A promise that resolves to an array of slides
      * @throws {Error} If an error occurs while retrieving the slides
      */
-    async getSong(token) {
+    async getSong(token, page) {
         try {
-            const { data } = await api.get('/songs', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get(`/songs/?page=${page != undefined ? page : ''}`);
             console.log( "Service: GetSong - return success")
-            console.log(data.results)
             return data.results;
         } catch (error) {
             console.log("Service: GetSong - return error", error);
@@ -24,10 +23,21 @@ class SongService {
 
     async getSongByTitle(name, token) {
         try {
-            const {data} = await api.get(`/songs/?search=${name}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/songs/?search=${name}`);
         return data.results
         } catch (error) {
             console.log('Error in getSongByTitle', error);
+            throw error;
+        }
+    }
+
+    async getSongByGenre(genre, artist){
+        try {
+            const { data } = await api.get(`/songs/?artists=${artist}&search=${genre}`);
+            console.log( "Service: AddSong - return success")
+            return data.results;
+        } catch (error) {
+            console.log("Service: AddSong - return error", error);
             throw error;
         }
     }
@@ -40,9 +50,9 @@ class SongService {
      */
     async createSong(newSong, token) {
         try {
-            const { data } = await api.post('/songs/', newSong, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.post('songs/', newSong, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddSong - return success")
-            return data.results;
+            return data
         } catch (error) {
             console.log("Service: AddSong - return error", error);
             throw error;
@@ -73,7 +83,7 @@ class SongService {
      * @returns {Promise<Object>} A promise that resolves to the deleted slide object.
      * @throws {Error} If an error occurs while deleting the slide
      */
-    async deletesong(idPost) {
+    async deletesong(idPost, token) {
         try {
             const { data } = await api.delete(`/songs/${idPost}`, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: DeletePost - return success")

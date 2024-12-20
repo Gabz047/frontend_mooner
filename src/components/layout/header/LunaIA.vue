@@ -1,80 +1,61 @@
 <script setup>
-import ButtonGlobal from '@/components/global/ButtonGlobal.vue';
-import InputGlobal from '@/components/global/InputGlobal.vue';
-import api from '@/plugins/api';
-import { useLoginStore } from '@/stores';
+import { useLoginStore, useUserStore } from '@/stores';
 import { useLunnaIAStore } from '@/stores';
-import { onMounted, onUpdated, ref} from 'vue';
-import LunaChat from './LunaChat.vue';
-import { UserMeService } from '@/services';
-const useranswer = ref('')
+import {  onMounted, onUnmounted, onUpdated, ref} from 'vue';
+import LunnaChatContainer from './LunnaChatContainer.vue';
+import LuunaApresentation from './LuunaApresentation.vue';
 const storeLunna = useLunnaIAStore()
 const storeUser = useLoginStore()
+const userStore = useUserStore()
 const pagina = ref(1)
-const chat = ref(null)
-const user = ref(null)
-const counter = ref(0)
+const firstmsg = ref(false)
+const interval = ref('')
 
-async function Answer(){
-    counter.value = 0
-    storeLunna.CreateAnswer({usuario: user.value, answer: useranswer.value}, storeUser.state.access)
-    useranswer.value = ''
+async function Answer(answer){
+    await storeLunna.CreateAnswer({usuario: userStore.myuser.email, answer: answer}, storeUser.state.access)
+    firstmsg.value = true
 } 
 
-const scrolltoEnd = () =>{
-    if(chat.value){
-        chat.value.scrollTop = chat.value.scrollHeight
-    }
+async function GetAutoResponses(answer){
+    await storeLunna.CreateAnswer({usuario: userStore.myuser.email, answer: answer}, storeUser.state.access)
+    firstmsg.value = true
 }
 
 async function getPagination(token, command){
     if(command === 'next'){
         pagina.value++
-        counter.value = 0
         await storeLunna.GetChat(token, pagina.value)
     }
     else {
         pagina.value--
-        counter.value = 0
         await storeLunna.GetChat(token, pagina.value)
     }
 }
 
-onUpdated(async() =>{
+const getRepsonse = () => {
     const token = storeUser.state.access
-    await storeLunna.GetChat(user.value, token, pagina.value)
-    counter.value++
-    if(counter.value <= 50){
-        scrolltoEnd()
-    }   
-})
+    interval.value =  setInterval( async () => {
+        await storeLunna.GetChat(userStore.myuser.email, token, pagina.value)
+    }, 2000)
+}
 
 onMounted( async () =>{
     const token = storeUser.state.access
-    const me = await UserMeService.GetMe(token)
-    await storeLunna.GetChat(me, token, pagina.value)
-    user.value = me.id
-    scrolltoEnd()
+    await storeLunna.GetChat(userStore.myuser.email, token, pagina.value)
+    getRepsonse()
+})
+
+onUnmounted(() => {
+    clearInterval(interval.value)
 })
 </script>
 <template>
-    <div class="lunna-container">
-        <div class="pagination" :style="storeLunna.chat.next && !storeLunna.chat.previous  ? {justifyContent: 'end'} : {justifyContent: 'space-between'}">
-            <p @click="getPagination(storeUser.state.access, 'previous')" v-if="storeLunna.chat.previous" id="prev">anterior</p>
-            <p @click="getPagination(storeUser.state.access, 'next')" v-if="storeLunna.chat.next" id="next">proximo</p>
+    <div class="flex flex-col max-h-[150dvh] w-screen" >
+        <div class="pagination" :style="storeLunna.state.chat.next && !storeLunna.state.chat.previous  ? {justifyContent: 'end'} : {justifyContent: 'space-between'}">
+            <p @click="getPagination(storeUser.state.access, 'previous')" v-if="storeLunna.state.chat.previous" id="prev">anterior</p>
+            <p @click="getPagination(storeUser.state.access, 'next')" v-if="storeLunna.state.chat.next" id="next">proximo</p>
         </div>
-        <div class="luuna-desc">
-            <img src="../../../assets/images/luuna.png">
-            <h1>Ola eu sou Lunna</h1>
-        </div>
-        <div>
-            <div class="chat-container" ref="chat">
-                <LunaChat v-for="chat in storeLunna.chatorder" :key="chat.id" :answer="chat.answer" :response="chat.response"/>
-            </div>
-            <div class="lunna-chat">
-                <InputGlobal placeholder="ola" id="luuna-input" v-model:value="useranswer"/>
-                <ButtonGlobal class="flex justify-center items-center"width="50px" height="40px" background="#6340AE" border="none" border_radius="10px"  :is_arrow="true" @click="Answer"/>
-            </div>
-        </div>
+        <LuunaApresentation @autoresponse="GetAutoResponses" v-if="!firstmsg"/>
+        <LunnaChatContainer @getanswer="Answer" :FirstMsg="firstmsg"/>
     </div>
 </template>

@@ -12,7 +12,7 @@ class CommunityPostsService {
      */
     async getCommunitysPosts(token) {
         try {
-            const { data } = await api.get('/community-posts', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get('/community-posts/', {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: GetCommunity - return success")
             return data.results;
         } catch (error) {
@@ -33,7 +33,7 @@ class CommunityPostsService {
 
     async getCommunitysPostsByCommunity(community, token) {
         try {
-            const {data} = await api.get(`/communitys/?search=${community}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/community-posts/?community_id=${community}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getCommunitysByAutor', error);
@@ -62,9 +62,9 @@ class CommunityPostsService {
      */
     async createCommunityPost(newPost, token) {
         try {
-            const { data } = await api.post('/communitys/', newPost, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.post('/community-posts/', newPost, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddCommunity - return success")
-            return data.results;
+            return data
         } catch (error) {
             console.log("Service: AddCommunity - return error", error);
             throw error;

@@ -1,0 +1,54 @@
+.artist-fields-container{
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.artist-fields-container > input, .artist-fields-container > select{
+    width: 100%;
+    padding: 5px; 
+    border-radius: 10px; 
+    background-color: #1f1f1f;
+    color: #fff; 
+    font-size: 15px;
+    outline: none;
+    background-color: #303030;
+}
+
+.artist-fields-container input::placeholder {
+    color: transparent; 
+}
+
+.artist-fields-container label {
+    position: absolute;
+    pointer-events: none;
+    font-size: 40px;
+  }
+
+.artist-fields-container > textarea{
+    width: 100%;
+    padding: 10px; 
+    border-radius: 10px; 
+    height: 350px;
+    background-color: #303030;
+    color: #fff; 
+    font-size: 15px;
+    outline: none;
+}
+
+.artist-fields-container input + label,
+.artist-fields-container select + label,
+.artist-fields-container input:not(:placeholder-shown) + label,
+.artist-fields-container textarea + label{
+    top: 0;
+    left: 10px;
+    transform: translateY(-100%);
+    font-size: 17px;
+    color: white
+}
+#perfil{
+    display: none;
+}
+#audio{
+    display: none;
+}

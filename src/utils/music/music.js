@@ -1,12 +1,14 @@
-import {ref, computed} from 'vue'
-import { trash, wave, heart, disc, artist, copy, unlike, house, luuna } from "@/assets/images/icons/settingsIndex"
+import {ref, computed, reactive, shallowRef} from 'vue'
+import { trash, wave, heart, disc, artist, copy, unlike, house, luuna, queue } from "@/assets/images/icons/settingsIndex"
 import Logo from '@/assets/images/Logo.png'
 import monn from '@/assets/images/monn.jpg'
+import router from '@/router'
 
 export const verify_active = ref(false)
 
 export const data =  ref([
     {tittle: 'Remover', img: trash},
+    {tittle: 'Adicionar a Fila', img: queue},
     {tittle: 'Iniciar MoonWave', img: wave},
     {tittle: 'Curtir', img: [heart, unlike], liked: false},
     {tittle: 'Album', img: disc},
@@ -14,30 +16,12 @@ export const data =  ref([
     {tittle: 'Copiar Link', img: copy},
 ])
 
-export const data_playlist = [
-    {tittle: 'Melhores do ano', img: monn},
-    {tittle: 'Treino pesado', img: wave},
-    {tittle: 'Melhores do ano com certeza tropa', img: monn},
-    {tittle: 'Treino pesado', img: wave},
-    {tittle: 'Melhores do ano', img: monn},
-    {tittle: 'Treino pesado', img: wave},
-]
-
 export const adjusteSize = (item, lenght, index) => {
     if (item.length > lenght) {
         item = item.replace(item.substring(index), '') + '...'
     }
     return item
 }
-
-export const data_music = ref([
-    {tittle: 'Melhores do ano', artist: 'monn', has_playlist: false},
-    {tittle: 'Treino pesado', artist: 'wave', has_playlist: false},
-    {tittle: 'Melhores do ano com certeza tropa', artist: 'monn', has_playlist: false},
-    {tittle: 'Treino pesado', artist: 'wave', has_playlist: false},
-    {tittle: 'Melhores do ano', artist: 'monn', has_playlist: false},
-    {tittle: 'Treino pesado', artist: 'wave', has_playlist: false},
-])
 
 export const data_header_icons = ref([
     {icon: house, active: true, comp: 'home'},
@@ -56,19 +40,32 @@ export const returnActive = computed(() => {
   })
 
 export const data_section = ref([
-    {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Podcasts', active: false}, {title: 'Artistas', active: false}
+    {title: 'Geral', active: true},
+    {title: 'Playlists', active: false}, {title: 'Músicas', active: false}, {title: 'Artistas', active: false},
+    
   ])
 
 export const data_page = ref([
     {title: 'Minha Biblioteca', active: true}, {title: 'Navegar', active: false}
   ])
 
-export  const data_music_home = ref([
-    {music: [], title: ''}, {music: [], title: 'Recomendamos para você'}, {music: [], title: 'Artistas que Você Gosta'}, {music: [], title: 'Descobertas da Semana'}
+export const data_music_home = ref([
+    {music: [], title: ''}, {music: [], title: 'Recomendamos para você'}
   ])
 
-export const selectSection = (index, data) => {
+export const selectSection = (index, data, type) => {
     for (let i = 0; i < data.length; i++) {
-      data[i].active = i === index ? data[i].active = true : false;
+      data[i].active = i === index ? data[i].active = true : false;      
     }
+
+    if (type == 'navigate') {
+
+    data[index].title == 'Músicas' ? router.push('/musics') : data[index].title == 'Playlists' ? router.push('/playlists') : data[index].title == 'Artistas' ? router.push('/artists') : router.push('/')
+  } else {
+    data[index].title == 'Minha Biblioteca' ? router.push('/') : router.push('/navigation')
+  }
   };
+
+export const songs = ref([])
+
+export const search = shallowRef('Pesquise por uma música')

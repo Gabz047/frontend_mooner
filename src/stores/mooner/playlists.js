@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { PlaylistService } from '@/services'
+import { useStorage } from '@vueuse/core'
+import { useNavigationStore } from '../global/navigation'
 
 /**
  * Store for managing organs data.
@@ -24,36 +26,52 @@ import { PlaylistService } from '@/services'
  * @returns {SpecieStore} The OrganStore instance.
  */
 export const usePlaylistStore = defineStore('playlist', () => {
-  const state = reactive({
+
+  const navigationStore = useNavigationStore()
+
+  const state = useStorage('playlistStorage', {
     playlists: [],
     selectedPlaylist: {},
     playlistsBySong: [],
     playlistsByOwner: [],
     loading: false,
     error: null,
-    connection: false
+    connection: false,
   })
-  const playlists = computed(() => state.playlists)
-  const playlistsBySong = computed(() => state.playlistsBySong)
-  const selectedPlaylist = computed(()=> state.selectedPlaylist)
-  const isLoading = computed(() => state.loading)
-  const playlistsCount = computed(() => state.playlists.length)
-  const playlistsByOwner = computed(() => state.playlistsByOwner)
 
+  const attach = ref(null)
+  const playlists = computed(() => state.value.playlists)
+  const playlistsBySong = computed(() => state.value.playlistsBySong)
+  const selectedPlaylist = computed(()=> state.value.selectedPlaylist)
+  const isLoading = computed(() => state.value.loading)
+  const playlistsCount = computed(() => state.value.playlists.length)
+  const playlistsByOwner = computed(() => state.value.playlistsByOwner)
+
+  const newPlaylist = reactive({
+    id: state.value.selectedPlaylist.id,
+    name: state.value.selectedPlaylist.name,
+    owners: [],
+    cover: null,
+    songs: []
+  })
+
+  const showNewPlaylist = computed(()=> newPlaylist)
   /**
    * Fetches organs data.
    * @async
    * @function getSpecies
    */
-  const getPlaylist = async (token) => {
-    state.loading = true
+  const getPlaylist = async (token, page) => {
+    state.value.loading = true
     try {
-      state.playlists = await PlaylistService.getPlaylist(token)
+      state.value.playlists = await PlaylistService.getPlaylist(token, page)
     } catch (error) {
-      state.error = error
+      state.value.error = error
+      navigationStore.simpleState.break = true
+      
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -63,29 +81,28 @@ export const usePlaylistStore = defineStore('playlist', () => {
    * @function getOrgansBySystem
    */
    const getPlaylistBySongs = async (songs,token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       const response = await PlaylistService.getPlaylistsBySongs(songs, token)
-      state.playlistsBySong = response
+      state.value.playlistsBySong = response
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
   const getPlaylistsByOwner = async (owner,token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       const response = await PlaylistService.getPlaylistsByOwner(owner, token)
-      console.log(response)
-      state.playlistsByOwner = response
+      state.value.playlistsByOwner = response
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -96,13 +113,14 @@ export const usePlaylistStore = defineStore('playlist', () => {
    * @param {Object} newSpecie - The new organ object to create.
    */
   const createPlaylist = async (newPlaylist, token) => {
-    state.loading = true
+    state.value.loading = true
+  
     try {
-      state.playlists.push(await PlaylistService.createPlaylist(newPlaylist, token))
+      state.value.playlists.push(await PlaylistService.createPlaylist(newPlaylist, token))
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 
@@ -113,14 +131,14 @@ export const usePlaylistStore = defineStore('playlist', () => {
    * @param {Object} specie - The organ object to update.
    */
   const updatePlaylist = async (playlist, token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      const index = state.songs.findIndex((s) => s.id === playlist.id)
-      state.playlists[index] = await PlaylistService.updatePlaylist(playlist, token)
+      await PlaylistService.updatePlaylist(playlist, token)
     } catch (error) {
-      state.error = error
+      state.value.error = error
+      console.log(error)
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
   /**
@@ -130,14 +148,14 @@ export const usePlaylistStore = defineStore('playlist', () => {
    * @param {number} id - The ID of the organ to delete.
    */
   const deleteOrgan = async (id) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      const index = state.organs.findIndex((s) => s.id === id)
-      state.organs.splice(index, 1)
+      const index = state.value.organs.findIndex((s) => s.id === id)
+      state.value.organs.splice(index, 1)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 
@@ -149,6 +167,9 @@ export const usePlaylistStore = defineStore('playlist', () => {
     playlistsBySong,
     selectedPlaylist,
     playlistsByOwner,
+    attach,
+    newPlaylist,
+    showNewPlaylist,
     getPlaylist,
     getPlaylistBySongs,
     getPlaylistsByOwner,

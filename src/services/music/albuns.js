@@ -12,21 +12,21 @@ class AlbumService {
      */
     async getAlbuns(token) {
         try {
-            const { data } = await api.get('/albuns', {headers: {'authorization': `Bearer ${token}`}});
-            console.log( "Service: GetCommunity - return success")
+            const { data } = await api.get('albuns/');
+            console.log( "Service: GetAlbuns - return success")
             return data.results;
         } catch (error) {
-            console.log("Service: GetCommunity - return error", error);
+            console.log("Service: GetAlbuns - return error", error);
             throw error;
         }
     }
 
     async getAlbunsByAutor(autor, token) {
         try {
-            const {data} = await api.get(`/albuns/?autor_id=${autor}`, {headers: {'authorization': `Bearer ${token}`}});
-        return data.results
+            const {data} = await api.get(`/albuns/?autor=${autor}`);
+            return data.results
         } catch (error) {
-            console.log('Error in getCommunityByAutor', error);
+            console.log('Error in getAlbunsByAutor', error);
             throw error;
         }
     }
@@ -74,7 +74,7 @@ class AlbumService {
         try {
             const { data } = await api.post('/albuns/', newAlbum, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: AddCommunity - return success")
-            return data.results;
+            return data
         } catch (error) {
             console.log("Service: AddCommunity - return error", error);
             throw error;

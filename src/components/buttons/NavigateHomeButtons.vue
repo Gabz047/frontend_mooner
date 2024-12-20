@@ -19,5 +19,5 @@ const props = defineProps({
 })
 </script>
 <template>
-    <span @click="emits('goSection')" :class="props.active ? 'font-semibold' : 'font-light', props.has_active_bg ? props.active ? 'bg-[#242424]' : 'bg-none' : 'bg-[#242424]' " class="px-3 py-1 text-white rounded-xl cursor-pointer">{{ props.title }}</span>
+    <span @click="emits('goSection', title)" :class="props.active ? 'font-semibold' : 'font-light', props.has_active_bg ? props.active ? 'bg-[#242424]' : 'bg-none' : 'bg-[#242424]' " class="px-3 py-1 text-white rounded-xl cursor-pointer">{{ props.title }}</span>
 </template>

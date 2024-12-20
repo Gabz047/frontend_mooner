@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, reactive } from 'vue'
 import { UserMeService } from '@/services'
+import { useStorage } from '@vueuse/core'
 
 /**
  * Store for managing organs data.
@@ -24,19 +25,20 @@ import { UserMeService } from '@/services'
  * @returns {SpecieStore} The OrganStore instance.
  */
 export const useUserStore = defineStore('user', () => {
-  const state = reactive({
+  const state = useStorage('userMe', {
     users: [],
     selectedUser: {},
     myuser: {},
     loading: false,
     error: null,
-    connection: false
+    connection: false,
   })
-  const users = computed(() => state.users)
-  const myuser = computed(()=> state.myuser)
-  const selectedUser = computed(()=> state.selectedUser)
-  const isLoading = computed(() => state.loading)
-  const usersCount = computed(() => state.songs.length)
+
+  const users = computed(() => state.value.users)
+  const myuser = computed(()=> state.value.myuser)
+  const selectedUser = computed(()=> state.value.selectedUser)
+  const isLoading = computed(() => state.value.loading)
+  const usersCount = computed(() => state.value.songs.length)
 
   /**
    * Fetches organs data.
@@ -44,26 +46,39 @@ export const useUserStore = defineStore('user', () => {
    * @function getSpecies
    */
   const getUsers = async (token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      state.users = await UserMeService.getUsers(token)
+      state.value.users = await UserMeService.getUsers(token)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
   const getUser = async (token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      state.myuser = await UserMeService.getUser(token)
+      state.value.myuser = await UserMeService.getUser(token)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
+    }
+  }
+
+  const GetArtist = async (email, token) => {
+    state.value.loading = true
+    try {
+      const response = await UserMeService.GetMeArtist(email, token)
+      return response.artistic_name
+    } catch (error) {
+      state.value.error = error
+    } finally {
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -73,15 +88,15 @@ export const useUserStore = defineStore('user', () => {
    * @function getOrgansBySystem
    */
    const getSongByTitle = async (title,token) => {
-    state.loading = true
+    state.value.loading = true
     try {
       const response = await SongService.getSongByTitle(title,token)  
-      state.organsBySystem = response
+      state.value.organsBySystem = response
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -92,13 +107,13 @@ export const useUserStore = defineStore('user', () => {
    * @param {Object} newSpecie - The new organ object to create.
    */
   const createSong = async (newSong, token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      state.songs.push(await SongService.createSong(newSong, token))
+      state.value.songs.push(await SongService.createSong(newSong, token))
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 
@@ -109,14 +124,14 @@ export const useUserStore = defineStore('user', () => {
    * @param {Object} specie - The organ object to update.
    */
   const updateOrgan = async (organ) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      const index = state.organs.findIndex((s) => s.id === organ.id)
-      state.organs[index] = await OrganService.getOrgans()
+      const index = state.value.organs.findIndex((s) => s.id === organ.id)
+      state.value.organs[index] = await OrganService.getOrgans()
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
   /**
@@ -126,14 +141,14 @@ export const useUserStore = defineStore('user', () => {
    * @param {number} id - The ID of the organ to delete.
    */
   const deleteOrgan = async (id) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      const index = state.organs.findIndex((s) => s.id === id)
-      state.organs.splice(index, 1)
+      const index = state.value.organs.findIndex((s) => s.id === id)
+      state.value.organs.splice(index, 1)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
   }
 
@@ -144,6 +159,7 @@ export const useUserStore = defineStore('user', () => {
     users,
     myuser,
     selectedUser,
+    GetArtist,
     getUsers,
     getUser,
     updateOrgan,

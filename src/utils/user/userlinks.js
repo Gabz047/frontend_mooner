@@ -7,7 +7,7 @@ export const UserLinks = [
     {
         name: 'Seja um artista',
         icon: 'mdi mdi-star-outline',
-        link: '/beanartist'
+        link: '/beanartist',
     },
     {
         name: 'Encerrar Sessão',

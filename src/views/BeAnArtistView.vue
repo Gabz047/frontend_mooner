@@ -1,10 +1,10 @@
 <script setup>
     import BeArtistProcess from '@/components/user/artist/BeArtistProcess.vue';
     import BeArtistActions from '@/components/user/artist/BeArtistActions.vue';
-    import { useArtistProgress } from '@/stores';
+    import { useArtistProgress } from '@/stores';   
 
     const StoreProgressArtist = useArtistProgress()
-   
+
 </script>
 <template>
     <div :class="!StoreProgressArtist.state.progress_artist[0].is_activate ? 'container-artist-creation' : StoreProgressArtist.state.progress_artist[1].is_activate && StoreProgressArtist.state.progress_artist[0].is_activate  ? 'container-song-creation' : 'container-email-verify'">
@@ -32,6 +32,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 200vh;
+        height: 170vh;
     }
 </style>

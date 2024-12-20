@@ -10,9 +10,9 @@ class PlaylistService {
      * @returns {Promise<Array>} A promise that resolves to an array of slides
      * @throws {Error} If an error occurs while retrieving the slides
      */
-    async getPlaylist(token) {
+    async getPlaylist(token, page) {
         try {
-            const { data } = await api.get('/playlists', {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.get(`/playlists/?page=${page != undefined ? page : ''}`);
             console.log( "Service: GetPlaylist - return success")
             return data.results;
         } catch (error) {
@@ -23,7 +23,7 @@ class PlaylistService {
 
     async getPlaylistsBySongs(songs, token) {
         try {
-            const {data} = await api.get(`/playlists/?songs=${songs}`, {headers: {'authorization': `Bearer ${token}`}});
+            const {data} = await api.get(`/playlists/?song_id=${songs}`);
         return data.results
         } catch (error) {
             console.log('Error in getPlaylistsBySongs', error);
@@ -33,7 +33,8 @@ class PlaylistService {
 
     async getPlaylistsByOwner(owner, token) {
         try {
-            const {data} = await api.get(`/playlists/?owners=${owner}`, {headers: {'authorization': `Bearer ${token}`}});
+            
+            const {data} = await api.get(`/playlists/?owners_email=${owner}`, {headers: {'authorization': `Bearer ${token}`}});
         return data.results
         } catch (error) {
             console.log('Error in getPlaylistsBySongs', error);
@@ -62,7 +63,9 @@ class PlaylistService {
      */
     async createPlaylist(newPlaylist, token) {
         try {
-            const { data } = await api.post('/playlist/', newPlaylist, {headers: {'authorization': `Bearer ${token}`}});
+            console.log(newPlaylist)
+            const { data } = await api.post('/playlists/', newPlaylist, {headers: {'authorization': `Bearer ${token}`}});
+            console.log(data)
             console.log( "Service: AddPlaylist - return success")
             return data.results;
         } catch (error) {
@@ -78,9 +81,9 @@ class PlaylistService {
      * @returns {Promise<Object>} A promise that resolves to the updated slides Object
      * @throws {Error} If an error occurs while updating the slide
      */
-    async updatePlaylist(playlist, token) {
+    async updatePlaylist(newPlaylist, token) {
         try {
-            const { data } = await api.put(`/playlists/${playlist.id}/`, song, {headers: {'authorization': `Bearer ${token}`}});
+            const { data } = await api.put(`/playlists/${newPlaylist.id}/`, newPlaylist, {headers: {'authorization': `Bearer ${token}`}});
             console.log( "Service: UpdateSong - return success")
             return data.results;
         } catch (error) {

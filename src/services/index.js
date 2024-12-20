@@ -1,7 +1,6 @@
 import LoginService from "./auth/login";
 import SignUpService from "./auth/signup";
 import LunnaIAService from "./IA/luuna";
-import SearchService from "./search/search";
 import HistoryService from "./history/history";
 import UserMeService from "./me/userme";
 import SongService from './music/song'
@@ -15,13 +14,16 @@ import AlbumService from './music/albuns'
 import GenreService from "./genre/genre";
 import DocumentService from "./document/document";
 import ImageService from "./images/image";
-
+import PaymentMethodService from "./payments/paymentMethod";
+import MoonWaveService from "./music/moonWave"
+import RecomendationService from './music/recomendation'
+import CommunityUsersService from './music/CommunityUsers'
 
 export {
+    AlbumService,
     LoginService,
     SignUpService,
-    LunnaIAService, 
-    SearchService,
+    LunnaIAService,
     HistoryService,
     UserMeService,
     SongService,
@@ -31,8 +33,11 @@ export {
     CommunityService,
     CommunityPostsService,
     LikedSongService,
-    AlbumService,
     GenreService,
     ImageService,
-    DocumentService
+    DocumentService,
+    PaymentMethodService,
+    MoonWaveService,
+    RecomendationService,
+    CommunityUsersService
 }

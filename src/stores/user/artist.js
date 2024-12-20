@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { ArtistService } from '@/services'
-
+import { aboutvalidation } from '@/utils/validations/artist/aboutvalidation'
+import { artistnamevalidation } from '@/utils/validations/artist/artisticnamevalidation'
+import { useStorage } from '@vueuse/core'
 /**
  * Store for managing organs data.
  * @typedef {Object} SpecieStore
@@ -24,18 +26,23 @@ import { ArtistService } from '@/services'
  * @returns {SpecieStore} The OrganStore instance.
  */
 export const useArtistStore = defineStore('artist', () => {
-  const state = reactive({
-    artists: [],
+
+  const state = useStorage('artistStorage', {
     selectedArtist: {},
     artistsByName: [],
     loading: false,
     error: null,
     connection: false
   })
-  const artists = computed(() => state.artists)
-  const artistsByName = computed(() => state.artistsByName)
-  const selectedArtist = computed(()=> state.selectedArtist)
-  const isLoading = computed(() => state.loading)
+
+
+  const msg = ref(null)
+  const err = ref(false)
+
+  const artists = computed(() => state.value.artists)
+  const artistsByName = computed(() => state.value.artistsByName)
+  const selectedArtist = computed(() => state.value.selectedArtist)
+  const isLoading = computed(() => state.value.loading)
 
 
   /**
@@ -44,32 +51,33 @@ export const useArtistStore = defineStore('artist', () => {
    * @function getSpecies
    */
   const getArtists = async (token) => {
-    state.loading = true
+    state.value.loading = true
     try {
-      state.artists = await ArtistService.getArtists(token)
+      state.value.artists = await ArtistService.getArtists(token)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
-   /**
-   * Fetches organs data.
-   * @async
-   * @function getOrgansBySystem
-   */
-   const getArtistsByName = async (name,token) => {
-    state.loading = true
+  /**
+  * Fetches organs data.
+  * @async
+  * @function getOrgansBySystem
+  */
+  const getArtistsByName = async (name) => {
+    state.value.loading = true
     try {
-      const response = await ArtistService.getArtistsByName(name,token)  
-      state.songsByTitle = response
+      const response = await ArtistService.getArtistsByName(name)
+      state.value.artistsByName = response
+      console.log(response)
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
-      state.connection = true
+      state.value.loading = false
+      state.value.connection = true
     }
   }
 
@@ -79,15 +87,33 @@ export const useArtistStore = defineStore('artist', () => {
    * @function createSpecie
    * @param {Object} newSpecie - The new organ object to create.
    */
-  const createArtist = async (newArtist, token) => {
-    state.loading = true
+  const createArtist = async (newartist, token) => {
+    state.value.loading = true
     try {
-      state.artists.push(await ArtistService.createArtist(newArtist, token))
+      if (artistnamevalidation.value !== true && aboutvalidation.value !== true) {
+        err.value = true
+        msg.value = 'preencha os campos obrigatórios'
+      }
+      else if (artistnamevalidation.value !== true) {
+        err.value = true
+        msg.value = aboutvalidation.value
+      }
+      else if (aboutvalidation.value !== true) {
+        err.value = true
+        msg.value = aboutvalidation.value
+      }
+      else {
+        state.value.artistsByName.push(await ArtistService.createArtist(newartist, token))
+        msg.value = 'verifique seu email'
+        err.value = false
+      }
     } catch (error) {
-      state.error = error
+      state.value.error = error
     } finally {
-      state.loading = false
+      state.value.loading = false
     }
+
+    console.log(newartist)
   }
 
   /**
@@ -103,6 +129,8 @@ export const useArtistStore = defineStore('artist', () => {
     isLoading,
     artists,
     artistsByName,
+    msg,
+    err,
     selectedArtist,
     getArtists,
     getArtistsByName,
